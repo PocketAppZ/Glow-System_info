@@ -6,7 +6,7 @@
 
 # Download Glow
 
-Download: 
+Download: https://github.com/roines45/glow/releases/latest
 
 # Supported Languages
 
