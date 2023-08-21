@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Linq;
 using System.Drawing;
 using Microsoft.Win32;
 using System.Threading;
@@ -1549,299 +1548,297 @@ namespace Glow{
         // DISK
         // ======================================================================================================
         List<string> disk_model_list = new List<string>();
-        List<string> disk_man_list = new List<string>();
-        List<string> disk_volume_list = new List<string>();
+        List<string> disk_volume_id_list = new List<string>();
         List<string> disk_volume_name_list = new List<string>();
+        List<string> disk_physical_name_list = new List<string>();
         List<string> disk_firmware_list = new List<string>();
         List<string> disk_serial_list = new List<string>();
-        List<string> disk_size_list = new List<string>();
+        List<string> disk_volume_serial_list = new List<string>();
+        List<string> disk_total_space_list = new List<string>();
         List<string> disk_free_space_list = new List<string>();
         List<string> disk_file_system_list = new List<string>();
-        List<string> disk_partition_layout_list = new List<string>();
-        List<string> disk_type_list = new List<string>();
-        List<string> disk_drive_type_list = new List<string>();
+        List<string> disk_media_type_list = new List<string>();
         List<string> disk_interface_list = new List<string>();
         List<string> disk_partition_list = new List<string>();
-        List<string> disk_uniquq_id_list = new List<string>();
-        List<string> disk_location_list = new List<string>();
-        List<string> disk_healt_list = new List<string>();
-        List<string> disk_boot_list = new List<string>();
-        List<string> disk_boot_status_list = new List<string>();
+        List<string> disk_media_loaded_list = new List<string>();
+        List<string> disk_media_status_list = new List<string>();
+        List<string> disk_drive_compressed_list = new List<string>();
         private void disk(){
             GlowGetLangs g_lang = new GlowGetLangs(lang_path);
             try{
-                DriveInfo[] get_drives = DriveInfo.GetDrives();
-                for (int d = 0; d < get_drives.Count(); d++){
-                    // DISK VOLUME ID
-                    disk_volume_list.Add(get_drives[d].Name);
-                    // DISK FILE SYSTEM
-                    disk_file_system_list.Add(get_drives[d].DriveFormat);
-                    // DISK DRIVE TYPE
-                    string disk_drive_type = get_drives[d].DriveType.ToString().Trim();
-                    if (disk_drive_type != string.Empty && disk_drive_type != ""){
-                        if (disk_drive_type == "Fixed"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
-                        }else if (disk_drive_type == "CDRom"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_2").Trim())));
-                        }else if (disk_drive_type == "Network"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_3").Trim())));
-                        }else if (disk_drive_type == "NoRootDirectory"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_4").Trim())));
-                        }else if (disk_drive_type == "Ram"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_5").Trim())));
-                        }else if (disk_drive_type == "Removable"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_6").Trim())));
-                        }else if (disk_drive_type == "Unknown"){
-                            disk_drive_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_7").Trim())));
+                var get_drives = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
+                foreach (ManagementObject drive_info in get_drives.Get()){
+                    var device_id = drive_info.Properties["DeviceId"].Value;
+                    var disk_part_text_query = string.Format("associators of {{{0}}} where AssocClass = Win32_DiskDriveToDiskPartition", drive_info.Path.RelativePath);
+                    var disk_part_query = new ManagementObjectSearcher(disk_part_text_query);
+                    foreach (ManagementObject disk_partition in disk_part_query.Get()){
+                        var logical_disk_text_query = string.Format("associators of {{{0}}} where AssocClass = Win32_LogicalDiskToPartition", disk_partition.Path.RelativePath);
+                        var logical_disk_query = new ManagementObjectSearcher(logical_disk_text_query);
+                        foreach (ManagementObject logical_drive_info in logical_disk_query.Get()){
+                            try{
+                                // DISK CAPTION / DISK SELECT LIST
+                                var disk_caption = Convert.ToString(drive_info.Properties["Caption"].Value).Trim();
+                                if (disk_caption != "" || disk_caption != string.Empty){
+                                    DISK_CaptionList.Items.Add(disk_caption);
+                                }else{
+                                    DISK_CaptionList.Items.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                            }catch (Exception){ }
+                            try{
+                                // DISK MODEL
+                                var disk_model = Convert.ToString(drive_info.Properties["Model"].Value).Trim();
+                                if (disk_model != "" || disk_model != string.Empty){
+                                    disk_model_list.Add(disk_model);
+                                }else{
+                                    disk_model_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_Model_V.Text = disk_model_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK VOLUME ID
+                                var disk_volume_id = Convert.ToString(logical_drive_info.Properties["Name"].Value).Trim();
+                                if (disk_volume_id != "" || disk_volume_id != string.Empty){
+                                    disk_volume_id_list.Add(disk_volume_id + @"\");
+                                }else{
+                                    disk_volume_id_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_VolumeID_V.Text = disk_volume_id_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK VOLUME NAME
+                                var disk_volume_name = Convert.ToString(logical_drive_info.Properties["VolumeName"].Value).Trim();
+                                if (disk_volume_name != "" || disk_volume_name != string.Empty){
+                                    disk_volume_name_list.Add(disk_volume_name);
+                                }else{
+                                    disk_volume_name_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_2").Trim())));
+                                }
+                                DISK_VolumeName_V.Text = disk_volume_name_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK VOLUME NAME
+                                var disk_physical_name = Convert.ToString(drive_info.Properties["Name"].Value).Trim();
+                                if (disk_physical_name != "" || disk_physical_name != string.Empty){
+                                    disk_physical_name_list.Add(disk_physical_name);
+                                }else{
+                                    disk_physical_name_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_PhysicalName_V.Text = disk_physical_name_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK FIRMWARE VERSION
+                                var disk_firmware_version = Convert.ToString(drive_info.Properties["FirmwareRevision"].Value).Trim();
+                                if (disk_firmware_version != "" || disk_firmware_version != string.Empty){
+                                    disk_firmware_list.Add(disk_firmware_version);
+                                }else{
+                                    disk_firmware_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_Firmware_V.Text = disk_firmware_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK SERIAL NUMBER
+                                var disk_serial_number = Convert.ToString(drive_info.Properties["SerialNumber"].Value).Trim();
+                                if (disk_serial_number != "" || disk_serial_number != string.Empty){
+                                    disk_serial_list.Add(disk_serial_number);
+                                }else{
+                                    disk_serial_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_Serial_V.Text = disk_serial_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK VOLUME SERIAL NUMBER
+                                var disk_volume_serial_number = Convert.ToString(logical_drive_info.Properties["VolumeSerialNumber"].Value).Trim();
+                                if (disk_volume_serial_number != "" || disk_volume_serial_number != string.Empty){
+                                    disk_volume_serial_list.Add(disk_volume_serial_number);
+                                }else{
+                                    disk_volume_serial_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_VolumeSerial_V.Text = disk_volume_serial_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK TOTAL SIZE
+                                var disk_total_size = Convert.ToDouble(logical_drive_info.Properties["Size"].Value) / 1024 / 1024; // in mb
+                                if (disk_total_size > 1024){
+                                    if ((disk_total_size / 1024) > 1024){
+                                        disk_total_space_list.Add(String.Format("{0:0.00} TB", disk_total_size / 1024 / 1024));
+                                    }else{
+                                        disk_total_space_list.Add(String.Format("{0:0.00} GB", disk_total_size / 1024));
+                                    }
+                                }else{
+                                    disk_total_space_list.Add(String.Format("{0:0.0} MB", disk_total_size));
+                                }
+                                DISK_Size_V.Text = disk_total_space_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK FREE SPACE
+                                var disk_free_space = Convert.ToDouble(logical_drive_info.Properties["FreeSpace"].Value) / 1024 / 1024; // in mb
+                                if (disk_free_space > 1024){
+                                    if ((disk_free_space / 1024) > 1024){
+                                        disk_free_space_list.Add(String.Format("{0:0.00} TB", disk_free_space / 1024 / 1024));
+                                    }else{
+                                        disk_free_space_list.Add(String.Format("{0:0.00} GB", disk_free_space / 1024));
+                                    }
+                                }else{
+                                    disk_free_space_list.Add(String.Format("{0:0.0} MB", disk_free_space));
+                                }
+                                DISK_FreeSpace_V.Text = disk_free_space_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK FILE SYSTEM
+                                var disk_file_system = Convert.ToString(logical_drive_info.Properties["FileSystem"].Value).Trim();
+                                if (disk_file_system != "" || disk_file_system != string.Empty){
+                                    disk_file_system_list.Add(disk_file_system);
+                                }else{
+                                    disk_file_system_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_FileSystem_V.Text = disk_file_system_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK DRIVE TYPE
+                                var disk_media_type = Convert.ToString(drive_info.Properties["MediaType"].Value).ToLower().Trim();
+                                switch (disk_media_type){
+                                    case "fixed hard disk media":
+                                        disk_media_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_3").Trim())));
+                                        break;
+                                    case "external hard disk media":
+                                        disk_media_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_4").Trim())));
+                                        break;
+                                    case "removable media":
+                                        disk_media_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_5").Trim())));
+                                        break;
+                                    default:
+                                        disk_media_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                        break;
+                                }
+                                DISK_DriveType_V.Text = disk_media_type_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK INTERFACE
+                                var disk_interface = Convert.ToString(drive_info.Properties["InterfaceType"].Value).Trim();
+                                switch (disk_interface){
+                                    case "SCSI":
+                                        disk_interface_list.Add(disk_interface);
+                                        break;
+                                    case "IDE":
+                                        disk_interface_list.Add("SATA");
+                                        break;
+                                    case "USB":
+                                        disk_interface_list.Add(disk_interface);
+                                        break;
+                                    case "1394":
+                                        disk_interface_list.Add(disk_interface);
+                                        break;
+                                    default:
+                                        disk_interface_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                        break;
+                                }
+                                DISK_InterFace_V.Text = disk_interface_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK PARTITION COUNT
+                                var disk_partitions = Convert.ToString(drive_info.Properties["Partitions"].Value).Trim();
+                                if (disk_partitions != "" || disk_partitions != string.Empty){
+                                    disk_partition_list.Add(disk_partitions);
+                                }else{
+                                    disk_partition_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_1").Trim())));
+                                }
+                                DISK_PartitionCount_V.Text = disk_partition_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK MEDIA STATUS
+                                var disk_media_loaded = Convert.ToBoolean(drive_info.Properties["MediaLoaded"].Value); // bool
+                                if (disk_media_loaded == true){
+                                    disk_media_loaded_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_6").Trim())));
+                                }else if (disk_media_loaded == false){
+                                    disk_media_loaded_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_7").Trim())));
+                                }
+                                DISK_MediaLoaded_V.Text = disk_media_loaded_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK MEDIA STATUS
+                                var disk_media_status = Convert.ToString(drive_info.Properties["Status"].Value).ToLower().Trim();
+                                switch (disk_media_status){
+                                    case "ok":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_8").Trim())));
+                                        break;
+                                    case "error":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_9").Trim())));
+                                        break;
+                                    case "degraded":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_10").Trim())));
+                                        break;
+                                    case "unknown":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_11").Trim())));
+                                        break;
+                                    case "pred fail":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_12").Trim())));
+                                        break;
+                                    case "starting":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_13").Trim())));
+                                        break;
+                                    case "stopping":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_14").Trim())));
+                                        break;
+                                    case "service":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_15").Trim())));
+                                        break;
+                                    case "stressed":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_16").Trim())));
+                                        break;
+                                    case "nonrecover":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_17").Trim())));
+                                        break;
+                                    case "no contact":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_18").Trim())));
+                                        break;
+                                    case "lost comm":
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_19").Trim())));
+                                        break;
+                                    default:
+                                        disk_media_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_20").Trim())));
+                                        break;
+                                }
+                                DISK_MediaStatus_V.Text = disk_media_status_list[0];
+                            }catch (Exception){ }
+                            try{
+                                // DISK COMPRESSED STATUS
+                                var disk_compressed_status = Convert.ToBoolean(logical_drive_info.Properties["Compressed"].Value);
+                                if (disk_compressed_status == true){
+                                    disk_drive_compressed_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_21").Trim())));   
+                                }else if (disk_compressed_status == false){
+                                    disk_drive_compressed_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_22").Trim())));
+                                }
+                                DISK_DriveCompressed_V.Text = disk_drive_compressed_list[0];
+                            }catch (Exception){ }
                         }
-                        DISK_DriveType_V.Text = disk_drive_type_list[0];
-                    }
-                    // DISK VOLUME NAME
-                    if (get_drives[d].VolumeLabel == string.Empty || get_drives[d].VolumeLabel == ""){
-                        disk_volume_name_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_8").Trim())));
-                    }else{
-                        disk_volume_name_list.Add(get_drives[d].VolumeLabel);
-                    }
-                    // DISK FREE SPACE
-                    double disk_free = get_drives[d].AvailableFreeSpace / 1024 / 1024;
-                    if (disk_free > 1024){
-                        if ((disk_free / 1024) > 1024){
-                            disk_free_space_list.Add(String.Format("{0:0.00} TB", disk_free / 1024 / 1024));
-                        }else{
-                            disk_free_space_list.Add(String.Format("{0:0.00} GB", disk_free / 1024));
-                        }
-                    }else{
-                        disk_free_space_list.Add(String.Format("{0:0.0} MB", disk_free));
                     }
                 }
-                DISK_VolumeID_V.Text = disk_volume_list[0];
-                DISK_FileSystem_V.Text = disk_file_system_list[0];
-                DISK_VolumeName_V.Text = disk_volume_name_list[0];
-                DISK_FreeSpace_V.Text = disk_free_space_list[0];
             }catch (Exception){ }
-            ManagementObjectSearcher search_disk = new ManagementObjectSearcher("root\\Microsoft\\Windows\\Storage", "SELECT * FROM MSFT_Disk");
-            foreach (ManagementObject query_disk in search_disk.Get()){
-                try{
-                    // DISK NAME
-                    DISK_SelectBox.Items.Add(Convert.ToString(query_disk["FriendlyName"]));
-                }catch (Exception){ }
-                try{
-                    // DISK MODEL
-                    string disk_model = Convert.ToString(query_disk["Model"]).Trim();
-                    if (disk_model == string.Empty || disk_model == ""){
-                        disk_model_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_9").Trim())));
-                    }else{
-                        disk_model_list.Add(disk_model);
-                    }
-                    DISK_Model_V.Text = disk_model_list[0];
-                    // DISK MANUFACTURER
-                    List<string> disk_mfr = new List<string>(){ "acer", "adata", "a-data", "addlink", "alpin", "apacer", "apple",
-                    "asus", "biostar", "codegen", "colorful", "corsair", "crucial", "ezcool", "geil", "gigabyte", "goodram",
-                    "hi level", "hikvision", "hi-level", "hp", "intel", "intenso", "james donkey", "kingspec", "kingston", "kioxia",
-                    "leven", "lexar", "micron", "mld", "msi", "mushkin", "neo forza", "neoforza", "netac", "patriot", "pioneer",
-                    "pny", "samsung", "san disk", "sandisk", "seagate", "siliconpower", "team", "toshiba", "turbox", "wd", "western digital" };
-                    string disk_man = Convert.ToString(query_disk["Manufacturer"]).Trim();
-                    if (disk_man == string.Empty || disk_man == ""){
-                        string disk_mod_lowercase = disk_model.ToLower().Replace("ı", "i");
-                        for (int i = 0; i <= disk_mfr.Count - 1; i++){
-                            bool target_detect_disk = disk_mod_lowercase.Contains(disk_mfr[i]);
-                            if (target_detect_disk == true){
-                                disk_man_list.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(disk_mfr[i]));
-                                //disk_man_list.Add(disk_mans[i].ToUpper());
-                                break;
-                            }
-                            if (i == disk_mfr.Count - 1){
-                                disk_man_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_9").Trim())));
-                            }
-                        }
-                    }else{
-                        disk_man_list.Add(disk_man);
-                    }
-                    DISK_Man_V.Text = disk_man_list[0]; 
-                }catch (Exception){ }
-                try{
-                    // DISK FIMWARE VERSION
-                    disk_firmware_list.Add(Convert.ToString(query_disk["FirmwareVersion"]));
-                    DISK_FirmWare_V.Text = disk_firmware_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK SERIAL
-                    disk_serial_list.Add(Convert.ToString(query_disk["SerialNumber"]).Trim());
-                    DISK_Seri_V.Text = disk_serial_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK SIZE
-                    double disk_size = Convert.ToDouble(query_disk["Size"]) / 1024 / 1024;
-                    if (disk_size > 1024){
-                        if ((disk_size / 1024) > 1024){
-                            disk_size_list.Add(String.Format("{0:0.00} TB", disk_size / 1024 / 1024));
-                        }else{
-                            disk_size_list.Add(String.Format("{0:0.00} GB", disk_size / 1024));
-                        }
-                    }else{
-                        disk_size_list.Add(String.Format("{0:0.0} MB", disk_size));
-                    }
-                    DISK_Size_V.Text = disk_size_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK PARTITON LAYOUT
-                    int disk_partition_layout = Convert.ToInt32(query_disk["PartitionStyle"]);
-                    if (disk_partition_layout == 0){
-                        disk_partition_layout_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_10").Trim())));
-                    }else if (disk_partition_layout == 1){
-                        disk_partition_layout_list.Add("MBR");
-                    }else if (disk_partition_layout == 2){
-                        disk_partition_layout_list.Add("GPT");
-                    }
-                    DISK_PartitionLayout_V.Text = disk_partition_layout_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK TYPE
-                    int disk_type = Convert.ToInt32(query_disk["BusType"]);
-                    if (disk_type == 0){
-                        disk_interface_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_11").Trim())));
-                    }else if (disk_type == 1){
-                        disk_interface_list.Add("SCSI");
-                    }else if (disk_type == 2){
-                        disk_interface_list.Add("ATAPI");
-                    }else if (disk_type == 3){
-                        disk_interface_list.Add("ATA");
-                    }else if (disk_type == 4){
-                        disk_interface_list.Add("IEEE 1394");
-                    }else if (disk_type == 5){
-                        disk_interface_list.Add("SSA");
-                    }else if (disk_type == 6){
-                        disk_interface_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_12").Trim())));
-                    }else if (disk_type == 7){
-                        disk_interface_list.Add("USB");
-                    }else if (disk_type == 8){
-                        disk_interface_list.Add("RAID");
-                    }else if (disk_type == 9){
-                        disk_interface_list.Add("iSCSI");
-                    }else if (disk_type == 10){
-                        disk_interface_list.Add("SAS");
-                    }else if (disk_type == 11){
-                        disk_interface_list.Add("SATA");
-                    }else if (disk_type == 12){
-                        disk_interface_list.Add("SD");
-                    }else if (disk_type == 13){
-                        disk_interface_list.Add("MMC");
-                    }else if (disk_type == 14){
-                        disk_interface_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_13").Trim())));
-                    }else if (disk_type == 15){
-                        disk_interface_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_14").Trim())));
-                    }else if (disk_type == 16){
-                        disk_interface_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_15").Trim())));
-                    }else if (disk_type == 17){
-                        disk_interface_list.Add("NVMe");
-                    }
-                    DISK_InterFace_V.Text = disk_interface_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK PARTITION
-                    int disk_partition = Convert.ToInt32(query_disk["NumberOfPartitions"]);
-                    disk_partition_list.Add(disk_partition.ToString().Trim());
-                    DISK_Partition_V.Text = disk_partition_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK UNIQUE ID
-                    string disk_unique_id = Convert.ToString(query_disk["UniqueId"]).Trim();
-                    if (disk_unique_id == string.Empty || disk_unique_id == ""){
-                        disk_uniquq_id_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_16").Trim())));
-                    }else{
-                        disk_uniquq_id_list.Add(disk_unique_id);
-                    }
-                    DISK_UniqueID_V.Text = disk_uniquq_id_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK LOCATION
-                    string disk_locaiton = Convert.ToString(query_disk["Location"]).Trim();
-                    string disk_process_1 = disk_locaiton.Replace("Integrated", Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_17").Trim())));
-                    string disk_process_2 = disk_process_1.Replace("Device", Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_18").Trim())));
-                    string disk_process_3 = disk_process_2.Replace("Function", Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_19").Trim())));
-                    string disk_process_4 = disk_process_3.Replace("Adapter", Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_20").Trim())));
-                    disk_location_list.Add(disk_process_4);
-                    DISK_Location_V.Text = disk_location_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK HEALT
-                    int disk_healt = Convert.ToInt32(query_disk["HealthStatus"]);
-                    if (disk_healt == 0){
-                        disk_healt_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_21").Trim())));
-                    }else if (disk_healt == 1){
-                        disk_healt_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_22").Trim())));
-                    }else if (disk_healt == 2){
-                        disk_healt_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_23").Trim())));
-                    }
-                    DISK_Healt_V.Text = disk_healt_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK BOOT STATUS
-                    bool boot_status = Convert.ToBoolean(query_disk["BootFromDisk"]);
-                    if (boot_status == true){
-                        disk_boot_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_24").Trim())));
-                    }else if (boot_status == false){
-                        disk_boot_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_25").Trim())));
-                    }
-                    DISK_BootPartition_V.Text = disk_boot_list[0];
-                }catch (Exception){ }
-                try{
-                    // DISK BOOTABLE IS BOOT
-                    bool disk_bootable_status = Convert.ToBoolean(query_disk["IsBoot"]);
-                    if (disk_bootable_status == true){
-                        disk_boot_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_26").Trim())));
-                    }else if (disk_bootable_status == false){
-                        disk_boot_status_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_27").Trim())));
-                    }
-                    DISK_BootableStatus_V.Text = disk_boot_status_list[0];
-                }catch (Exception){ }
-            }
-            ManagementObjectSearcher search_pd = new ManagementObjectSearcher("root\\Microsoft\\Windows\\Storage", "SELECT * FROM MSFT_PhysicalDisk");
-            foreach (ManagementObject query_pdisk in search_pd.Get()){
-                try{
-                    // DISK TYPE
-                    int disk_type = Convert.ToInt32(query_pdisk["MediaType"]);
-                    if (disk_type == 0){
-                        disk_type_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_28").Trim())));
-                    }else if (disk_type == 3){
-                        disk_type_list.Add("HDD");
-                    }else if (disk_type == 4){
-                        disk_type_list.Add("SSD");
-                    }else if (disk_type == 5){
-                        disk_type_list.Add("SCM");
-                    }
-                    DISK_Type_V.Text = disk_type_list[0];
-                }catch (Exception){ }
-            }
             // SELECT DISK
-            try{ DISK_SelectBox.SelectedIndex = 0; }catch(Exception){ }
+            try { DISK_CaptionList.SelectedIndex = 0; }catch(Exception){ }
             // DISK PROCESS END ENABLED
             DISK_RotateBtn.Enabled = true;
             disk_status = 1;
         }
-        private void disklist_SelectedIndexChanged(object sender, EventArgs e){
+        private void DISK_CaptionList_SelectedIndexChanged(object sender, EventArgs e){
             try{
-                int disk_select = DISK_SelectBox.SelectedIndex;
-                DISK_Model_V.Text = disk_model_list[disk_select];
-                DISK_Man_V.Text = disk_man_list[disk_select];
-                DISK_VolumeID_V.Text = disk_volume_list[disk_select];
-                DISK_VolumeName_V.Text = disk_volume_name_list[disk_select];
-                DISK_FirmWare_V.Text = disk_firmware_list[disk_select];
-                DISK_Seri_V.Text = disk_serial_list[disk_select];
-                DISK_Size_V.Text = disk_size_list[disk_select];
-                DISK_FreeSpace_V.Text = disk_free_space_list[disk_select];
-                DISK_PartitionLayout_V.Text = disk_partition_layout_list[disk_select];
-                DISK_FileSystem_V.Text = disk_file_system_list[disk_select];
-                DISK_Type_V.Text = disk_type_list[disk_select];
-                DISK_DriveType_V.Text = disk_drive_type_list[disk_select];
-                DISK_InterFace_V.Text = disk_interface_list[disk_select];
-                DISK_Partition_V.Text = disk_partition_list[disk_select];
-                DISK_UniqueID_V.Text = disk_uniquq_id_list[disk_select];
-                DISK_Location_V.Text = disk_location_list[disk_select];
-                DISK_Healt_V.Text = disk_healt_list[disk_select];
-                DISK_BootPartition_V.Text = disk_boot_list[disk_select];
-                DISK_BootableStatus_V.Text = disk_boot_status_list[disk_select];
-            }catch(Exception){ }
+                int disk_percent = DISK_CaptionList.SelectedIndex;
+                DISK_Model_V.Text = disk_model_list[disk_percent];
+                DISK_VolumeID_V.Text = disk_volume_id_list[disk_percent];
+                DISK_VolumeName_V.Text = disk_volume_name_list[disk_percent];
+                DISK_PhysicalName_V.Text = disk_physical_name_list[disk_percent];
+                DISK_Firmware_V.Text = disk_firmware_list[disk_percent];
+                DISK_Serial_V.Text = disk_serial_list[disk_percent];
+                DISK_VolumeSerial_V.Text = disk_volume_serial_list[disk_percent];
+                DISK_Size_V.Text = disk_total_space_list[disk_percent];
+                DISK_FreeSpace_V.Text = disk_free_space_list[disk_percent];
+                DISK_FileSystem_V.Text = disk_file_system_list[disk_percent];
+                DISK_DriveType_V.Text = disk_media_type_list[disk_percent];
+                DISK_InterFace_V.Text = disk_interface_list[disk_percent];
+                DISK_PartitionCount_V.Text = disk_partition_list[disk_percent];
+                DISK_MediaLoaded_V.Text = disk_media_loaded_list[disk_percent];
+                DISK_MediaStatus_V.Text = disk_media_status_list[disk_percent];
+                DISK_DriveCompressed_V.Text = disk_drive_compressed_list[disk_percent];
+            }catch (Exception){ }
         }
         // NETWORK
         // ======================================================================================================
@@ -2894,26 +2891,23 @@ namespace Glow{
                 GPU_ScreenRefreshRate.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Gpu", "gpu_16").Trim()));
                 GPU_MonitorPrimary.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Gpu", "gpu_17").Trim()));
                 // DISK
-                DISK_Name.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_1").Trim()));
+                DISK_Caption.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_1").Trim()));
                 DISK_Model.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_2").Trim()));
-                DISK_Man.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_3").Trim()));
-                DISK_VolumeID.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_4").Trim()));
-                DISK_VolumeName.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_5").Trim()));
-                DISK_FirmWare.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_6").Trim()));
-                DISK_Seri.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_7").Trim()));
-                DISK_Size.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_8").Trim()));
-                DISK_FreeSpace.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_9").Trim()));
-                DISK_PartitionLayout.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_10").Trim()));
+                DISK_VolumeID.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_3").Trim()));
+                DISK_VolumeName.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_4").Trim()));
+                DISK_PhysicalName.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_5").Trim()));
+                DISK_Firmware.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_6").Trim()));
+                DISK_Serial.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_7").Trim()));
+                DISK_VolumeSerial.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_8").Trim()));
+                DISK_Size.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_9").Trim()));
+                DISK_FreeSpace.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_10").Trim()));
                 DISK_FileSystem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_11").Trim()));
-                DISK_Type.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_12").Trim()));
-                DISK_DriveType.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_13").Trim()));
-                DISK_InterFace.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_14").Trim()));
-                DISK_Partition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_15").Trim()));
-                DISK_UniqueID.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_16").Trim()));
-                DISK_Location.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_17").Trim()));
-                DISK_Healt.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_18").Trim()));
-                DISK_BootPartition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_19").Trim()));
-                DISK_BootableStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_20").Trim()));
+                DISK_DriveType.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_12").Trim()));
+                DISK_InterFace.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_13").Trim()));
+                DISK_PartitionCount.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_14").Trim()));
+                DISK_MediaLoaded.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_15").Trim()));
+                DISK_MediaStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_16").Trim()));
+                DISK_DriveCompressed.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_17").Trim()));
                 // NETWORK
                 NET_ConnType.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Network", "nk_1").Trim()));
                 NET_MacAdress.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Network", "nk_2").Trim()));
@@ -3501,47 +3495,41 @@ namespace Glow{
                 disk_panel_1.BackColor = ui_colors[6];
                 disk_panel_2.BackColor = ui_colors[6];
                 disk_bottom_label.ForeColor = ui_colors[9];
-                DISK_Name.ForeColor = ui_colors[7];
-                DISK_SelectBox.BackColor = ui_colors[10];
-                DISK_SelectBox.ForeColor = ui_colors[8];
+                DISK_Caption.ForeColor = ui_colors[7];
+                DISK_CaptionList.BackColor = ui_colors[10];
+                DISK_CaptionList.ForeColor = ui_colors[8];
                 DISK_Model.ForeColor = ui_colors[7];
                 DISK_Model_V.ForeColor = ui_colors[8];
-                DISK_Man.ForeColor = ui_colors[7];
-                DISK_Man_V.ForeColor = ui_colors[8];
                 DISK_VolumeID.ForeColor = ui_colors[7];
                 DISK_VolumeID_V.ForeColor = ui_colors[8];
                 DISK_VolumeName.ForeColor = ui_colors[7];
                 DISK_VolumeName_V.ForeColor = ui_colors[8];
-                DISK_FirmWare.ForeColor = ui_colors[7];
-                DISK_FirmWare_V.ForeColor = ui_colors[8];
-                DISK_Seri.ForeColor = ui_colors[7];
-                DISK_Seri_V.ForeColor = ui_colors[8];
+                DISK_PhysicalName.ForeColor = ui_colors[7];
+                DISK_PhysicalName_V.ForeColor = ui_colors[8];
+                DISK_Firmware.ForeColor = ui_colors[7];
+                DISK_Firmware_V.ForeColor = ui_colors[8];
+                DISK_Serial.ForeColor = ui_colors[7];
+                DISK_Serial_V.ForeColor = ui_colors[8];
+                DISK_VolumeSerial.ForeColor = ui_colors[7];
+                DISK_VolumeSerial_V.ForeColor = ui_colors[8];
                 DISK_Size.ForeColor = ui_colors[7];
                 DISK_Size_V.ForeColor = ui_colors[8];
                 DISK_FreeSpace.ForeColor = ui_colors[7];
                 DISK_FreeSpace_V.ForeColor = ui_colors[8];
-                DISK_PartitionLayout.ForeColor = ui_colors[7];
-                DISK_PartitionLayout_V.ForeColor = ui_colors[8];
                 DISK_FileSystem.ForeColor = ui_colors[7];
                 DISK_FileSystem_V.ForeColor = ui_colors[8];
-                DISK_Type.ForeColor = ui_colors[7];
-                DISK_Type_V.ForeColor = ui_colors[8];
                 DISK_DriveType.ForeColor = ui_colors[7];
                 DISK_DriveType_V.ForeColor = ui_colors[8];
                 DISK_InterFace.ForeColor = ui_colors[7];
                 DISK_InterFace_V.ForeColor = ui_colors[8];
-                DISK_Partition.ForeColor = ui_colors[7];
-                DISK_Partition_V.ForeColor = ui_colors[8];
-                DISK_UniqueID.ForeColor = ui_colors[7];
-                DISK_UniqueID_V.ForeColor = ui_colors[8];
-                DISK_Location.ForeColor = ui_colors[7];
-                DISK_Location_V.ForeColor = ui_colors[8];
-                DISK_BootPartition.ForeColor = ui_colors[7];
-                DISK_BootPartition_V.ForeColor = ui_colors[8];
-                DISK_Healt.ForeColor = ui_colors[7];
-                DISK_Healt_V.ForeColor = ui_colors[8];
-                DISK_BootableStatus.ForeColor = ui_colors[7];
-                DISK_BootableStatus_V.ForeColor = ui_colors[8];
+                DISK_PartitionCount.ForeColor = ui_colors[7];
+                DISK_PartitionCount_V.ForeColor = ui_colors[8];
+                DISK_MediaLoaded.ForeColor = ui_colors[7];
+                DISK_MediaLoaded_V.ForeColor = ui_colors[8];
+                DISK_MediaStatus.ForeColor = ui_colors[7];
+                DISK_MediaStatus_V.ForeColor = ui_colors[8];
+                DISK_DriveCompressed.ForeColor = ui_colors[7];
+                DISK_DriveCompressed_V.ForeColor = ui_colors[8];
                 // NETWORK
                 network_panel_1.BackColor = ui_colors[6];
                 network_panel_2.BackColor = ui_colors[6];
@@ -3681,17 +3669,11 @@ namespace Glow{
                 }
             }catch (Exception){ }
         }
-
-
-        private void header_image_reloader(int hi_value)
-        {
-            try
-            {
-                switch (theme)
-                {
+        private void header_image_reloader(int hi_value){
+            try{
+                switch (theme){
                     case 1:
-                        switch (hi_value)
-                        {
+                        switch (hi_value){
                             case 1:
                                 HeaderImage.BackgroundImage = Properties.Resources.left_os_light;
                                 break;
@@ -3731,8 +3713,7 @@ namespace Glow{
                         }
                         break;
                     case 2:
-                        switch (hi_value)
-                        {
+                        switch (hi_value){
                             case 1:
                                 HeaderImage.BackgroundImage = Properties.Resources.left_os_dark;
                                 break;
@@ -3772,16 +3753,8 @@ namespace Glow{
                         }
                         break;
                 }
-            }
-            catch (Exception)
-            {
-
-            }
+            }catch (Exception){ }
         }
-
-
-
-
         // INITIAL SETINGS
         // ======================================================================================================
         private ToolStripMenuItem selected_initial_mode;
@@ -3994,32 +3967,29 @@ namespace Glow{
             // STORAGE
             PrintEngineList.Add($"<------- {Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_6").Trim()))} ------->" + Environment.NewLine);
             try{
-                int disk_amount = DISK_SelectBox.Items.Count;
+                int disk_amount = DISK_CaptionList.Items.Count;
                 for (int disk_render = 1; disk_render <= disk_amount; disk_render++){
-                    DISK_SelectBox.SelectedIndex = disk_render - 1;
-                    PrintEngineList.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_21").Trim())) + " #" + disk_render + Environment.NewLine);
-                    PrintEngineList.Add(DISK_Name.Text + " " + DISK_SelectBox.SelectedItem.ToString());
+                    DISK_CaptionList.SelectedIndex = disk_render - 1;
+                    PrintEngineList.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_18").Trim())) + " #" + disk_render + Environment.NewLine);
+                    PrintEngineList.Add(DISK_Caption.Text + " " + DISK_CaptionList.SelectedItem.ToString());
                     PrintEngineList.Add(DISK_Model.Text + " " + DISK_Model_V.Text);
-                    PrintEngineList.Add(DISK_Man.Text + " " + DISK_Man_V.Text);
                     PrintEngineList.Add(DISK_VolumeID.Text + " " + DISK_VolumeID_V.Text);
                     PrintEngineList.Add(DISK_VolumeName.Text + " " + DISK_VolumeName_V.Text);
-                    PrintEngineList.Add(DISK_FirmWare.Text + " " + DISK_FirmWare_V.Text);
-                    PrintEngineList.Add(DISK_Seri.Text + " " + DISK_Seri_V.Text);
+                    PrintEngineList.Add(DISK_PhysicalName.Text + " " + DISK_PhysicalName_V.Text);
+                    PrintEngineList.Add(DISK_Firmware.Text + " " + DISK_Firmware_V.Text);
+                    PrintEngineList.Add(DISK_Serial.Text + " " + DISK_Serial_V.Text);
+                    PrintEngineList.Add(DISK_VolumeSerial.Text + " " + DISK_VolumeSerial_V.Text);
                     PrintEngineList.Add(DISK_Size.Text + " " + DISK_Size_V.Text);
                     PrintEngineList.Add(DISK_FreeSpace.Text + " " + DISK_FreeSpace_V.Text);
-                    PrintEngineList.Add(DISK_PartitionLayout.Text + " " + DISK_PartitionLayout_V.Text);
                     PrintEngineList.Add(DISK_FileSystem.Text + " " + DISK_FileSystem_V.Text);
-                    PrintEngineList.Add(DISK_Type.Text + " " + DISK_Type_V.Text);
                     PrintEngineList.Add(DISK_DriveType.Text + " " + DISK_DriveType_V.Text);
                     PrintEngineList.Add(DISK_InterFace.Text + " " + DISK_InterFace_V.Text);
-                    PrintEngineList.Add(DISK_Partition.Text + " " + DISK_Partition_V.Text);
-                    PrintEngineList.Add(DISK_UniqueID.Text + " " + DISK_UniqueID_V.Text);
-                    PrintEngineList.Add(DISK_Location.Text + " " + DISK_Location_V.Text);
-                    PrintEngineList.Add(DISK_Healt.Text + " " + DISK_Healt_V.Text);
-                    PrintEngineList.Add(DISK_BootPartition.Text + " " + DISK_BootPartition_V.Text);
-                    PrintEngineList.Add(DISK_BootableStatus.Text + " " + DISK_BootableStatus_V.Text + Environment.NewLine);
+                    PrintEngineList.Add(DISK_PartitionCount.Text + " " + DISK_PartitionCount_V.Text);
+                    PrintEngineList.Add(DISK_MediaLoaded.Text + " " + DISK_MediaLoaded_V.Text);
+                    PrintEngineList.Add(DISK_MediaStatus.Text + " " + DISK_MediaStatus_V.Text);
+                    PrintEngineList.Add(DISK_DriveCompressed.Text + " " + DISK_DriveCompressed_V.Text + Environment.NewLine);
                 }
-                DISK_SelectBox.SelectedIndex = 0;
+                DISK_CaptionList.SelectedIndex = 0;
             }catch (Exception){ }
             PrintEngineList.Add("------------------------------------------------------------" + Environment.NewLine);
             // NETWORK
@@ -4365,34 +4335,31 @@ namespace Glow{
             PrintEngineList.Add("\t\t<div class='middle_box'>");
             PrintEngineList.Add($"\t\t\t<h3>{Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_6").Trim()))}</h3>");
             try{
-                int disk_amount = DISK_SelectBox.Items.Count;
+                int disk_amount = DISK_CaptionList.Items.Count;
                 for (int disk_render = 1; disk_render <= disk_amount; disk_render++){
-                    DISK_SelectBox.SelectedIndex = disk_render - 1;
-                    PrintEngineList.Add($"\t\t\t\t<h4><span>{Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_21").Trim())) + "</span><span>#" + disk_render}</span></h4>");
+                    DISK_CaptionList.SelectedIndex = disk_render - 1;
+                    PrintEngineList.Add($"\t\t\t\t<h4><span>{Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Storage", "se_18").Trim())) + "</span><span>#" + disk_render}</span></h4>");
                     PrintEngineList.Add("\t\t\t<ul>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Name.Text}</span><span>{DISK_SelectBox.SelectedItem}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Caption.Text}</span><span>{DISK_CaptionList.SelectedItem}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Model.Text}</span><span>{DISK_Model_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Man.Text}</span><span>{DISK_Man_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_VolumeID.Text}</span><span>{DISK_VolumeID_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_VolumeName.Text}</span><span>{DISK_VolumeName_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_FirmWare.Text}</span><span>{DISK_FirmWare_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Seri.Text}</span><span>{DISK_Seri_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_PhysicalName.Text}</span><span>{DISK_PhysicalName_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Firmware.Text}</span><span>{DISK_Firmware_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Serial.Text}</span><span>{DISK_Serial_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_VolumeSerial.Text}</span><span>{DISK_VolumeSerial_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Size.Text}</span><span>{DISK_Size_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_FreeSpace.Text}</span><span>{DISK_FreeSpace_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_PartitionLayout.Text}</span><span>{DISK_PartitionLayout_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_FileSystem.Text}</span><span>{DISK_FileSystem_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Type.Text}</span><span>{DISK_Type_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_DriveType.Text}</span><span>{DISK_DriveType_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_InterFace.Text}</span><span>{DISK_InterFace_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Partition.Text}</span><span>{DISK_Partition_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_UniqueID.Text}</span><span>{DISK_UniqueID_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Location.Text}</span><span>{DISK_Location_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_Healt.Text}</span><span>{DISK_Healt_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_BootPartition.Text}</span><span>{DISK_BootPartition_V.Text}</span></li>");
-                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_BootableStatus.Text}</span><span>{DISK_BootableStatus_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_PartitionCount.Text}</span><span>{DISK_PartitionCount_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_MediaLoaded.Text}</span><span>{DISK_MediaLoaded_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_MediaStatus.Text}</span><span>{DISK_MediaStatus_V.Text}</span></li>");
+                    PrintEngineList.Add($"\t\t\t\t<li><span>{DISK_DriveCompressed.Text}</span><span>{DISK_DriveCompressed_V.Text}</span></li>");
                     PrintEngineList.Add("\t\t\t</ul>");
                 }
-                DISK_SelectBox.SelectedIndex = 0;
+                DISK_CaptionList.SelectedIndex = 0;
             }catch (Exception) { }
             PrintEngineList.Add("\t\t</div>");
             // NETWORK

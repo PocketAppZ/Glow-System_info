@@ -307,24 +307,16 @@
             this.DISK_DriveType_V = new System.Windows.Forms.Label();
             this.DISK_FileSystem = new System.Windows.Forms.Label();
             this.DISK_FileSystem_V = new System.Windows.Forms.Label();
-            this.DISK_Location_V = new System.Windows.Forms.Label();
-            this.DISK_Type = new System.Windows.Forms.Label();
-            this.DISK_Location = new System.Windows.Forms.Label();
-            this.DISK_Type_V = new System.Windows.Forms.Label();
+            this.DISK_DriveCompressed_V = new System.Windows.Forms.Label();
+            this.DISK_PartitionCount = new System.Windows.Forms.Label();
+            this.DISK_DriveCompressed = new System.Windows.Forms.Label();
+            this.DISK_PartitionCount_V = new System.Windows.Forms.Label();
             this.DISK_InterFace = new System.Windows.Forms.Label();
             this.DISK_InterFace_V = new System.Windows.Forms.Label();
-            this.DISK_BootPartition = new System.Windows.Forms.Label();
-            this.DISK_BootPartition_V = new System.Windows.Forms.Label();
-            this.DISK_Healt = new System.Windows.Forms.Label();
-            this.DISK_Healt_V = new System.Windows.Forms.Label();
-            this.DISK_BootableStatus_V = new System.Windows.Forms.Label();
-            this.DISK_UniqueID_V = new System.Windows.Forms.Label();
-            this.DISK_BootableStatus = new System.Windows.Forms.Label();
-            this.DISK_Partition = new System.Windows.Forms.Label();
-            this.DISK_UniqueID = new System.Windows.Forms.Label();
-            this.DISK_Partition_V = new System.Windows.Forms.Label();
-            this.DISK_PartitionLayout_V = new System.Windows.Forms.Label();
-            this.DISK_PartitionLayout = new System.Windows.Forms.Label();
+            this.DISK_MediaStatus_V = new System.Windows.Forms.Label();
+            this.DISK_MediaLoaded = new System.Windows.Forms.Label();
+            this.DISK_MediaStatus = new System.Windows.Forms.Label();
+            this.DISK_MediaLoaded_V = new System.Windows.Forms.Label();
             this.disk_panel_1 = new System.Windows.Forms.Panel();
             this.DISK_VolumeName_V = new System.Windows.Forms.Label();
             this.DISK_VolumeName = new System.Windows.Forms.Label();
@@ -334,16 +326,18 @@
             this.DISK_VolumeID = new System.Windows.Forms.Label();
             this.DISK_Model_V = new System.Windows.Forms.Label();
             this.DISK_Model = new System.Windows.Forms.Label();
-            this.DISK_Man_V = new System.Windows.Forms.Label();
-            this.DISK_Man = new System.Windows.Forms.Label();
+            this.DISK_PhysicalName_V = new System.Windows.Forms.Label();
+            this.DISK_PhysicalName = new System.Windows.Forms.Label();
             this.DISK_Size = new System.Windows.Forms.Label();
             this.DISK_Size_V = new System.Windows.Forms.Label();
-            this.DISK_Name = new System.Windows.Forms.Label();
-            this.DISK_FirmWare = new System.Windows.Forms.Label();
-            this.DISK_FirmWare_V = new System.Windows.Forms.Label();
-            this.DISK_Seri = new System.Windows.Forms.Label();
-            this.DISK_Seri_V = new System.Windows.Forms.Label();
-            this.DISK_SelectBox = new System.Windows.Forms.ComboBox();
+            this.DISK_Caption = new System.Windows.Forms.Label();
+            this.DISK_Firmware = new System.Windows.Forms.Label();
+            this.DISK_Firmware_V = new System.Windows.Forms.Label();
+            this.DISK_Serial = new System.Windows.Forms.Label();
+            this.DISK_VolumeSerial_V = new System.Windows.Forms.Label();
+            this.DISK_Serial_V = new System.Windows.Forms.Label();
+            this.DISK_VolumeSerial = new System.Windows.Forms.Label();
+            this.DISK_CaptionList = new System.Windows.Forms.ComboBox();
             this.disk_bottom_label = new System.Windows.Forms.Label();
             this.NETWORK = new System.Windows.Forms.TabPage();
             this.network_panel_2 = new System.Windows.Forms.Panel();
@@ -1038,7 +1032,7 @@
             this.os_panel_5.Location = new System.Drawing.Point(10, 1281);
             this.os_panel_5.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_5.Name = "os_panel_5";
-            this.os_panel_5.Size = new System.Drawing.Size(616, 318);
+            this.os_panel_5.Size = new System.Drawing.Size(548, 318);
             this.os_panel_5.TabIndex = 0;
             // 
             // OS_AntiSpywareProgram
@@ -1278,7 +1272,7 @@
             this.os_panel_4.Location = new System.Drawing.Point(10, 963);
             this.os_panel_4.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_4.Name = "os_panel_4";
-            this.os_panel_4.Size = new System.Drawing.Size(616, 316);
+            this.os_panel_4.Size = new System.Drawing.Size(548, 316);
             this.os_panel_4.TabIndex = 0;
             // 
             // OS_SystemWorkTime_V
@@ -1493,7 +1487,7 @@
             this.os_panel_3.Location = new System.Drawing.Point(10, 645);
             this.os_panel_3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_3.Name = "os_panel_3";
-            this.os_panel_3.Size = new System.Drawing.Size(616, 316);
+            this.os_panel_3.Size = new System.Drawing.Size(548, 316);
             this.os_panel_3.TabIndex = 0;
             // 
             // OS_TimeZone
@@ -1723,7 +1717,7 @@
             this.os_panel_2.Location = new System.Drawing.Point(10, 327);
             this.os_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_2.Name = "os_panel_2";
-            this.os_panel_2.Size = new System.Drawing.Size(616, 316);
+            this.os_panel_2.Size = new System.Drawing.Size(548, 316);
             this.os_panel_2.TabIndex = 0;
             // 
             // OS_SystemBuild
@@ -1938,7 +1932,7 @@
             this.os_panel_1.Location = new System.Drawing.Point(10, 9);
             this.os_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.os_panel_1.Name = "os_panel_1";
-            this.os_panel_1.Size = new System.Drawing.Size(616, 316);
+            this.os_panel_1.Size = new System.Drawing.Size(548, 316);
             this.os_panel_1.TabIndex = 0;
             // 
             // OS_SystemType_V
@@ -2163,7 +2157,7 @@
             this.mb_panel_3.Location = new System.Drawing.Point(10, 645);
             this.mb_panel_3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_3.Name = "mb_panel_3";
-            this.mb_panel_3.Size = new System.Drawing.Size(615, 138);
+            this.mb_panel_3.Size = new System.Drawing.Size(547, 138);
             this.mb_panel_3.TabIndex = 0;
             // 
             // MB_BiosMajorMinor
@@ -2270,7 +2264,7 @@
             this.mb_panel_2.Location = new System.Drawing.Point(10, 327);
             this.mb_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_2.Name = "mb_panel_2";
-            this.mb_panel_2.Size = new System.Drawing.Size(615, 316);
+            this.mb_panel_2.Size = new System.Drawing.Size(547, 316);
             this.mb_panel_2.TabIndex = 0;
             // 
             // MB_TPMStatus
@@ -2499,7 +2493,7 @@
             this.mb_panel_1.Location = new System.Drawing.Point(10, 9);
             this.mb_panel_1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
             this.mb_panel_1.Name = "mb_panel_1";
-            this.mb_panel_1.Size = new System.Drawing.Size(615, 316);
+            this.mb_panel_1.Size = new System.Drawing.Size(547, 316);
             this.mb_panel_1.TabIndex = 0;
             // 
             // MB_SystemSKU
@@ -2727,7 +2721,7 @@
             this.cpu_panel_2.Location = new System.Drawing.Point(10, 372);
             this.cpu_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.cpu_panel_2.Name = "cpu_panel_2";
-            this.cpu_panel_2.Size = new System.Drawing.Size(609, 320);
+            this.cpu_panel_2.Size = new System.Drawing.Size(541, 320);
             this.cpu_panel_2.TabIndex = 1;
             // 
             // CPU_VMMonitorExtension_V
@@ -2958,7 +2952,7 @@
             this.cpu_panel_1.Location = new System.Drawing.Point(10, 9);
             this.cpu_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.cpu_panel_1.Name = "cpu_panel_1";
-            this.cpu_panel_1.Size = new System.Drawing.Size(609, 361);
+            this.cpu_panel_1.Size = new System.Drawing.Size(541, 361);
             this.cpu_panel_1.TabIndex = 0;
             // 
             // CPU_L1
@@ -3223,7 +3217,7 @@
             this.ram_panel_2.Location = new System.Drawing.Point(10, 327);
             this.ram_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.ram_panel_2.Name = "ram_panel_2";
-            this.ram_panel_2.Size = new System.Drawing.Size(407, 542);
+            this.ram_panel_2.Size = new System.Drawing.Size(339, 542);
             this.ram_panel_2.TabIndex = 1;
             // 
             // RAM_SelectList
@@ -3589,7 +3583,7 @@
             this.ram_panel_1.Location = new System.Drawing.Point(10, 9);
             this.ram_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.ram_panel_1.Name = "ram_panel_1";
-            this.ram_panel_1.Size = new System.Drawing.Size(407, 316);
+            this.ram_panel_1.Size = new System.Drawing.Size(339, 316);
             this.ram_panel_1.TabIndex = 0;
             // 
             // RAM_UsageVirtualRam
@@ -3817,7 +3811,7 @@
             this.gpu_panel_2.Location = new System.Drawing.Point(10, 466);
             this.gpu_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.gpu_panel_2.Name = "gpu_panel_2";
-            this.gpu_panel_2.Size = new System.Drawing.Size(616, 317);
+            this.gpu_panel_2.Size = new System.Drawing.Size(548, 317);
             this.gpu_panel_2.TabIndex = 0;
             // 
             // GPU_ScreenRefreshRate
@@ -4054,7 +4048,7 @@
             this.gpu_panel_1.Location = new System.Drawing.Point(10, 9);
             this.gpu_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.gpu_panel_1.Name = "gpu_panel_1";
-            this.gpu_panel_1.Size = new System.Drawing.Size(616, 455);
+            this.gpu_panel_1.Size = new System.Drawing.Size(548, 455);
             this.gpu_panel_1.TabIndex = 0;
             // 
             // GPU_DeviceID
@@ -4351,28 +4345,20 @@
             this.disk_panel_2.Controls.Add(this.DISK_DriveType_V);
             this.disk_panel_2.Controls.Add(this.DISK_FileSystem);
             this.disk_panel_2.Controls.Add(this.DISK_FileSystem_V);
-            this.disk_panel_2.Controls.Add(this.DISK_Location_V);
-            this.disk_panel_2.Controls.Add(this.DISK_Type);
-            this.disk_panel_2.Controls.Add(this.DISK_Location);
-            this.disk_panel_2.Controls.Add(this.DISK_Type_V);
+            this.disk_panel_2.Controls.Add(this.DISK_DriveCompressed_V);
+            this.disk_panel_2.Controls.Add(this.DISK_PartitionCount);
+            this.disk_panel_2.Controls.Add(this.DISK_DriveCompressed);
+            this.disk_panel_2.Controls.Add(this.DISK_PartitionCount_V);
             this.disk_panel_2.Controls.Add(this.DISK_InterFace);
             this.disk_panel_2.Controls.Add(this.DISK_InterFace_V);
-            this.disk_panel_2.Controls.Add(this.DISK_BootPartition);
-            this.disk_panel_2.Controls.Add(this.DISK_BootPartition_V);
-            this.disk_panel_2.Controls.Add(this.DISK_Healt);
-            this.disk_panel_2.Controls.Add(this.DISK_Healt_V);
-            this.disk_panel_2.Controls.Add(this.DISK_BootableStatus_V);
-            this.disk_panel_2.Controls.Add(this.DISK_UniqueID_V);
-            this.disk_panel_2.Controls.Add(this.DISK_BootableStatus);
-            this.disk_panel_2.Controls.Add(this.DISK_Partition);
-            this.disk_panel_2.Controls.Add(this.DISK_UniqueID);
-            this.disk_panel_2.Controls.Add(this.DISK_Partition_V);
-            this.disk_panel_2.Controls.Add(this.DISK_PartitionLayout_V);
-            this.disk_panel_2.Controls.Add(this.DISK_PartitionLayout);
-            this.disk_panel_2.Location = new System.Drawing.Point(10, 421);
+            this.disk_panel_2.Controls.Add(this.DISK_MediaStatus_V);
+            this.disk_panel_2.Controls.Add(this.DISK_MediaLoaded);
+            this.disk_panel_2.Controls.Add(this.DISK_MediaStatus);
+            this.disk_panel_2.Controls.Add(this.DISK_MediaLoaded_V);
+            this.disk_panel_2.Location = new System.Drawing.Point(10, 467);
             this.disk_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.disk_panel_2.Name = "disk_panel_2";
-            this.disk_panel_2.Size = new System.Drawing.Size(614, 497);
+            this.disk_panel_2.Size = new System.Drawing.Size(750, 320);
             this.disk_panel_2.TabIndex = 1;
             // 
             // DISK_DriveType
@@ -4381,7 +4367,7 @@
             this.DISK_DriveType.BackColor = System.Drawing.Color.Transparent;
             this.DISK_DriveType.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_DriveType.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_DriveType.Location = new System.Drawing.Point(10, 148);
+            this.DISK_DriveType.Location = new System.Drawing.Point(10, 58);
             this.DISK_DriveType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_DriveType.Name = "DISK_DriveType";
             this.DISK_DriveType.Size = new System.Drawing.Size(138, 20);
@@ -4395,7 +4381,7 @@
             this.DISK_DriveType_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_DriveType_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_DriveType_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_DriveType_V.Location = new System.Drawing.Point(330, 148);
+            this.DISK_DriveType_V.Location = new System.Drawing.Point(330, 58);
             this.DISK_DriveType_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_DriveType_V.Name = "DISK_DriveType_V";
             this.DISK_DriveType_V.Size = new System.Drawing.Size(37, 20);
@@ -4408,7 +4394,7 @@
             this.DISK_FileSystem.BackColor = System.Drawing.Color.Transparent;
             this.DISK_FileSystem.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_FileSystem.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_FileSystem.Location = new System.Drawing.Point(10, 58);
+            this.DISK_FileSystem.Location = new System.Drawing.Point(10, 13);
             this.DISK_FileSystem.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_FileSystem.Name = "DISK_FileSystem";
             this.DISK_FileSystem.Size = new System.Drawing.Size(140, 20);
@@ -4422,66 +4408,66 @@
             this.DISK_FileSystem_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_FileSystem_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_FileSystem_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_FileSystem_V.Location = new System.Drawing.Point(330, 58);
+            this.DISK_FileSystem_V.Location = new System.Drawing.Point(330, 13);
             this.DISK_FileSystem_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_FileSystem_V.Name = "DISK_FileSystem_V";
             this.DISK_FileSystem_V.Size = new System.Drawing.Size(37, 20);
             this.DISK_FileSystem_V.TabIndex = 3;
             this.DISK_FileSystem_V.Text = "N/A";
             // 
-            // DISK_Location_V
+            // DISK_DriveCompressed_V
             // 
-            this.DISK_Location_V.AutoSize = true;
-            this.DISK_Location_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Location_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Location_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_Location_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Location_V.Location = new System.Drawing.Point(330, 328);
-            this.DISK_Location_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Location_V.Name = "DISK_Location_V";
-            this.DISK_Location_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_Location_V.TabIndex = 15;
-            this.DISK_Location_V.Text = "N/A";
+            this.DISK_DriveCompressed_V.AutoSize = true;
+            this.DISK_DriveCompressed_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_DriveCompressed_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_DriveCompressed_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_DriveCompressed_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_DriveCompressed_V.Location = new System.Drawing.Point(330, 283);
+            this.DISK_DriveCompressed_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_DriveCompressed_V.Name = "DISK_DriveCompressed_V";
+            this.DISK_DriveCompressed_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_DriveCompressed_V.TabIndex = 15;
+            this.DISK_DriveCompressed_V.Text = "N/A";
             // 
-            // DISK_Type
+            // DISK_PartitionCount
             // 
-            this.DISK_Type.AutoSize = true;
-            this.DISK_Type.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Type.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Type.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Type.Location = new System.Drawing.Point(10, 103);
-            this.DISK_Type.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Type.Name = "DISK_Type";
-            this.DISK_Type.Size = new System.Drawing.Size(77, 20);
-            this.DISK_Type.TabIndex = 4;
-            this.DISK_Type.Text = "Disk Türü:";
+            this.DISK_PartitionCount.AutoSize = true;
+            this.DISK_PartitionCount.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_PartitionCount.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_PartitionCount.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_PartitionCount.Location = new System.Drawing.Point(10, 148);
+            this.DISK_PartitionCount.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_PartitionCount.Name = "DISK_PartitionCount";
+            this.DISK_PartitionCount.Size = new System.Drawing.Size(132, 20);
+            this.DISK_PartitionCount.TabIndex = 4;
+            this.DISK_PartitionCount.Text = "Disk Bölüm Sayısı:";
             // 
-            // DISK_Location
+            // DISK_DriveCompressed
             // 
-            this.DISK_Location.AutoSize = true;
-            this.DISK_Location.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Location.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Location.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Location.Location = new System.Drawing.Point(10, 328);
-            this.DISK_Location.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Location.Name = "DISK_Location";
-            this.DISK_Location.Size = new System.Drawing.Size(104, 20);
-            this.DISK_Location.TabIndex = 14;
-            this.DISK_Location.Text = "Disk Konumu:";
+            this.DISK_DriveCompressed.AutoSize = true;
+            this.DISK_DriveCompressed.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_DriveCompressed.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_DriveCompressed.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_DriveCompressed.Location = new System.Drawing.Point(10, 283);
+            this.DISK_DriveCompressed.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_DriveCompressed.Name = "DISK_DriveCompressed";
+            this.DISK_DriveCompressed.Size = new System.Drawing.Size(104, 20);
+            this.DISK_DriveCompressed.TabIndex = 14;
+            this.DISK_DriveCompressed.Text = "Disk Konumu:";
             // 
-            // DISK_Type_V
+            // DISK_PartitionCount_V
             // 
-            this.DISK_Type_V.AutoSize = true;
-            this.DISK_Type_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Type_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Type_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_Type_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Type_V.Location = new System.Drawing.Point(330, 103);
-            this.DISK_Type_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Type_V.Name = "DISK_Type_V";
-            this.DISK_Type_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_Type_V.TabIndex = 5;
-            this.DISK_Type_V.Text = "N/A";
+            this.DISK_PartitionCount_V.AutoSize = true;
+            this.DISK_PartitionCount_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_PartitionCount_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_PartitionCount_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_PartitionCount_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_PartitionCount_V.Location = new System.Drawing.Point(330, 148);
+            this.DISK_PartitionCount_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_PartitionCount_V.Name = "DISK_PartitionCount_V";
+            this.DISK_PartitionCount_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_PartitionCount_V.TabIndex = 5;
+            this.DISK_PartitionCount_V.Text = "N/A";
             // 
             // DISK_InterFace
             // 
@@ -4489,7 +4475,7 @@
             this.DISK_InterFace.BackColor = System.Drawing.Color.Transparent;
             this.DISK_InterFace.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_InterFace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_InterFace.Location = new System.Drawing.Point(10, 193);
+            this.DISK_InterFace.Location = new System.Drawing.Point(10, 103);
             this.DISK_InterFace.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_InterFace.Name = "DISK_InterFace";
             this.DISK_InterFace.Size = new System.Drawing.Size(96, 20);
@@ -4503,174 +4489,66 @@
             this.DISK_InterFace_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_InterFace_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_InterFace_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_InterFace_V.Location = new System.Drawing.Point(330, 193);
+            this.DISK_InterFace_V.Location = new System.Drawing.Point(330, 103);
             this.DISK_InterFace_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_InterFace_V.Name = "DISK_InterFace_V";
             this.DISK_InterFace_V.Size = new System.Drawing.Size(37, 20);
             this.DISK_InterFace_V.TabIndex = 9;
             this.DISK_InterFace_V.Text = "N/A";
             // 
-            // DISK_BootPartition
+            // DISK_MediaStatus_V
             // 
-            this.DISK_BootPartition.AutoSize = true;
-            this.DISK_BootPartition.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_BootPartition.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_BootPartition.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_BootPartition.Location = new System.Drawing.Point(10, 418);
-            this.DISK_BootPartition.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_BootPartition.Name = "DISK_BootPartition";
-            this.DISK_BootPartition.Size = new System.Drawing.Size(148, 20);
-            this.DISK_BootPartition.TabIndex = 18;
-            this.DISK_BootPartition.Text = "Önyükleme Bölümü:";
+            this.DISK_MediaStatus_V.AutoSize = true;
+            this.DISK_MediaStatus_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_MediaStatus_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_MediaStatus_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_MediaStatus_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_MediaStatus_V.Location = new System.Drawing.Point(330, 238);
+            this.DISK_MediaStatus_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_MediaStatus_V.Name = "DISK_MediaStatus_V";
+            this.DISK_MediaStatus_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_MediaStatus_V.TabIndex = 13;
+            this.DISK_MediaStatus_V.Text = "N/A";
             // 
-            // DISK_BootPartition_V
+            // DISK_MediaLoaded
             // 
-            this.DISK_BootPartition_V.AutoSize = true;
-            this.DISK_BootPartition_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_BootPartition_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_BootPartition_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_BootPartition_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_BootPartition_V.Location = new System.Drawing.Point(330, 418);
-            this.DISK_BootPartition_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_BootPartition_V.Name = "DISK_BootPartition_V";
-            this.DISK_BootPartition_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_BootPartition_V.TabIndex = 19;
-            this.DISK_BootPartition_V.Text = "N/A";
+            this.DISK_MediaLoaded.AutoSize = true;
+            this.DISK_MediaLoaded.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_MediaLoaded.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_MediaLoaded.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_MediaLoaded.Location = new System.Drawing.Point(10, 193);
+            this.DISK_MediaLoaded.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_MediaLoaded.Name = "DISK_MediaLoaded";
+            this.DISK_MediaLoaded.Size = new System.Drawing.Size(132, 20);
+            this.DISK_MediaLoaded.TabIndex = 10;
+            this.DISK_MediaLoaded.Text = "Disk Bölüm Sayısı:";
             // 
-            // DISK_Healt
+            // DISK_MediaStatus
             // 
-            this.DISK_Healt.AutoSize = true;
-            this.DISK_Healt.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Healt.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Healt.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Healt.Location = new System.Drawing.Point(10, 373);
-            this.DISK_Healt.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Healt.Name = "DISK_Healt";
-            this.DISK_Healt.Size = new System.Drawing.Size(92, 20);
-            this.DISK_Healt.TabIndex = 16;
-            this.DISK_Healt.Text = "Disk Sağlığı:";
+            this.DISK_MediaStatus.AutoSize = true;
+            this.DISK_MediaStatus.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_MediaStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_MediaStatus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_MediaStatus.Location = new System.Drawing.Point(10, 238);
+            this.DISK_MediaStatus.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_MediaStatus.Name = "DISK_MediaStatus";
+            this.DISK_MediaStatus.Size = new System.Drawing.Size(161, 20);
+            this.DISK_MediaStatus.TabIndex = 12;
+            this.DISK_MediaStatus.Text = "Benzersiz Disk Kimliği:";
             // 
-            // DISK_Healt_V
+            // DISK_MediaLoaded_V
             // 
-            this.DISK_Healt_V.AutoSize = true;
-            this.DISK_Healt_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Healt_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Healt_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_Healt_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Healt_V.Location = new System.Drawing.Point(330, 373);
-            this.DISK_Healt_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Healt_V.Name = "DISK_Healt_V";
-            this.DISK_Healt_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_Healt_V.TabIndex = 17;
-            this.DISK_Healt_V.Text = "N/A";
-            // 
-            // DISK_BootableStatus_V
-            // 
-            this.DISK_BootableStatus_V.AutoSize = true;
-            this.DISK_BootableStatus_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_BootableStatus_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_BootableStatus_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_BootableStatus_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_BootableStatus_V.Location = new System.Drawing.Point(330, 463);
-            this.DISK_BootableStatus_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_BootableStatus_V.Name = "DISK_BootableStatus_V";
-            this.DISK_BootableStatus_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_BootableStatus_V.TabIndex = 21;
-            this.DISK_BootableStatus_V.Text = "N/A";
-            // 
-            // DISK_UniqueID_V
-            // 
-            this.DISK_UniqueID_V.AutoSize = true;
-            this.DISK_UniqueID_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_UniqueID_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_UniqueID_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_UniqueID_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_UniqueID_V.Location = new System.Drawing.Point(330, 283);
-            this.DISK_UniqueID_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_UniqueID_V.Name = "DISK_UniqueID_V";
-            this.DISK_UniqueID_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_UniqueID_V.TabIndex = 13;
-            this.DISK_UniqueID_V.Text = "N/A";
-            // 
-            // DISK_BootableStatus
-            // 
-            this.DISK_BootableStatus.AutoSize = true;
-            this.DISK_BootableStatus.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_BootableStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_BootableStatus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_BootableStatus.Location = new System.Drawing.Point(10, 463);
-            this.DISK_BootableStatus.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_BootableStatus.Name = "DISK_BootableStatus";
-            this.DISK_BootableStatus.Size = new System.Drawing.Size(209, 20);
-            this.DISK_BootableStatus.TabIndex = 20;
-            this.DISK_BootableStatus.Text = "Önyükleme Bölümü Durumu:";
-            // 
-            // DISK_Partition
-            // 
-            this.DISK_Partition.AutoSize = true;
-            this.DISK_Partition.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Partition.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Partition.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Partition.Location = new System.Drawing.Point(10, 238);
-            this.DISK_Partition.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Partition.Name = "DISK_Partition";
-            this.DISK_Partition.Size = new System.Drawing.Size(132, 20);
-            this.DISK_Partition.TabIndex = 10;
-            this.DISK_Partition.Text = "Disk Bölüm Sayısı:";
-            // 
-            // DISK_UniqueID
-            // 
-            this.DISK_UniqueID.AutoSize = true;
-            this.DISK_UniqueID.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_UniqueID.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_UniqueID.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_UniqueID.Location = new System.Drawing.Point(10, 283);
-            this.DISK_UniqueID.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_UniqueID.Name = "DISK_UniqueID";
-            this.DISK_UniqueID.Size = new System.Drawing.Size(161, 20);
-            this.DISK_UniqueID.TabIndex = 12;
-            this.DISK_UniqueID.Text = "Benzersiz Disk Kimliği:";
-            // 
-            // DISK_Partition_V
-            // 
-            this.DISK_Partition_V.AutoSize = true;
-            this.DISK_Partition_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Partition_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Partition_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_Partition_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Partition_V.Location = new System.Drawing.Point(330, 238);
-            this.DISK_Partition_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Partition_V.Name = "DISK_Partition_V";
-            this.DISK_Partition_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_Partition_V.TabIndex = 11;
-            this.DISK_Partition_V.Text = "N/A";
-            // 
-            // DISK_PartitionLayout_V
-            // 
-            this.DISK_PartitionLayout_V.AutoSize = true;
-            this.DISK_PartitionLayout_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_PartitionLayout_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_PartitionLayout_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_PartitionLayout_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_PartitionLayout_V.Location = new System.Drawing.Point(330, 13);
-            this.DISK_PartitionLayout_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_PartitionLayout_V.Name = "DISK_PartitionLayout_V";
-            this.DISK_PartitionLayout_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_PartitionLayout_V.TabIndex = 1;
-            this.DISK_PartitionLayout_V.Text = "N/A";
-            // 
-            // DISK_PartitionLayout
-            // 
-            this.DISK_PartitionLayout.AutoSize = true;
-            this.DISK_PartitionLayout.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_PartitionLayout.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_PartitionLayout.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_PartitionLayout.Location = new System.Drawing.Point(10, 13);
-            this.DISK_PartitionLayout.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_PartitionLayout.Name = "DISK_PartitionLayout";
-            this.DISK_PartitionLayout.Size = new System.Drawing.Size(142, 20);
-            this.DISK_PartitionLayout.TabIndex = 0;
-            this.DISK_PartitionLayout.Text = "Disk Bölüm Düzeni:";
+            this.DISK_MediaLoaded_V.AutoSize = true;
+            this.DISK_MediaLoaded_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_MediaLoaded_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_MediaLoaded_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_MediaLoaded_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_MediaLoaded_V.Location = new System.Drawing.Point(330, 193);
+            this.DISK_MediaLoaded_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_MediaLoaded_V.Name = "DISK_MediaLoaded_V";
+            this.DISK_MediaLoaded_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_MediaLoaded_V.TabIndex = 11;
+            this.DISK_MediaLoaded_V.Text = "N/A";
             // 
             // disk_panel_1
             // 
@@ -4686,20 +4564,22 @@
             this.disk_panel_1.Controls.Add(this.DISK_VolumeID);
             this.disk_panel_1.Controls.Add(this.DISK_Model_V);
             this.disk_panel_1.Controls.Add(this.DISK_Model);
-            this.disk_panel_1.Controls.Add(this.DISK_Man_V);
-            this.disk_panel_1.Controls.Add(this.DISK_Man);
+            this.disk_panel_1.Controls.Add(this.DISK_PhysicalName_V);
+            this.disk_panel_1.Controls.Add(this.DISK_PhysicalName);
             this.disk_panel_1.Controls.Add(this.DISK_Size);
             this.disk_panel_1.Controls.Add(this.DISK_Size_V);
-            this.disk_panel_1.Controls.Add(this.DISK_Name);
-            this.disk_panel_1.Controls.Add(this.DISK_FirmWare);
-            this.disk_panel_1.Controls.Add(this.DISK_FirmWare_V);
-            this.disk_panel_1.Controls.Add(this.DISK_Seri);
-            this.disk_panel_1.Controls.Add(this.DISK_Seri_V);
-            this.disk_panel_1.Controls.Add(this.DISK_SelectBox);
+            this.disk_panel_1.Controls.Add(this.DISK_Caption);
+            this.disk_panel_1.Controls.Add(this.DISK_Firmware);
+            this.disk_panel_1.Controls.Add(this.DISK_Firmware_V);
+            this.disk_panel_1.Controls.Add(this.DISK_Serial);
+            this.disk_panel_1.Controls.Add(this.DISK_VolumeSerial_V);
+            this.disk_panel_1.Controls.Add(this.DISK_Serial_V);
+            this.disk_panel_1.Controls.Add(this.DISK_VolumeSerial);
+            this.disk_panel_1.Controls.Add(this.DISK_CaptionList);
             this.disk_panel_1.Location = new System.Drawing.Point(10, 9);
             this.disk_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.disk_panel_1.Name = "disk_panel_1";
-            this.disk_panel_1.Size = new System.Drawing.Size(614, 410);
+            this.disk_panel_1.Size = new System.Drawing.Size(750, 456);
             this.disk_panel_1.TabIndex = 0;
             // 
             // DISK_VolumeName_V
@@ -4709,7 +4589,7 @@
             this.DISK_VolumeName_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_VolumeName_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_VolumeName_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_VolumeName_V.Location = new System.Drawing.Point(330, 193);
+            this.DISK_VolumeName_V.Location = new System.Drawing.Point(330, 148);
             this.DISK_VolumeName_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_VolumeName_V.Name = "DISK_VolumeName_V";
             this.DISK_VolumeName_V.Size = new System.Drawing.Size(37, 20);
@@ -4722,7 +4602,7 @@
             this.DISK_VolumeName.BackColor = System.Drawing.Color.Transparent;
             this.DISK_VolumeName.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_VolumeName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_VolumeName.Location = new System.Drawing.Point(10, 193);
+            this.DISK_VolumeName.Location = new System.Drawing.Point(10, 148);
             this.DISK_VolumeName.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_VolumeName.Name = "DISK_VolumeName";
             this.DISK_VolumeName.Size = new System.Drawing.Size(117, 20);
@@ -4736,7 +4616,7 @@
             this.DISK_FreeSpace_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_FreeSpace_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_FreeSpace_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_FreeSpace_V.Location = new System.Drawing.Point(330, 373);
+            this.DISK_FreeSpace_V.Location = new System.Drawing.Point(330, 418);
             this.DISK_FreeSpace_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_FreeSpace_V.Name = "DISK_FreeSpace_V";
             this.DISK_FreeSpace_V.Size = new System.Drawing.Size(37, 20);
@@ -4749,7 +4629,7 @@
             this.DISK_FreeSpace.BackColor = System.Drawing.Color.Transparent;
             this.DISK_FreeSpace.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_FreeSpace.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_FreeSpace.Location = new System.Drawing.Point(10, 373);
+            this.DISK_FreeSpace.Location = new System.Drawing.Point(10, 418);
             this.DISK_FreeSpace.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_FreeSpace.Name = "DISK_FreeSpace";
             this.DISK_FreeSpace.Size = new System.Drawing.Size(109, 20);
@@ -4763,7 +4643,7 @@
             this.DISK_VolumeID_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_VolumeID_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_VolumeID_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_VolumeID_V.Location = new System.Drawing.Point(330, 148);
+            this.DISK_VolumeID_V.Location = new System.Drawing.Point(330, 103);
             this.DISK_VolumeID_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_VolumeID_V.Name = "DISK_VolumeID_V";
             this.DISK_VolumeID_V.Size = new System.Drawing.Size(37, 20);
@@ -4776,7 +4656,7 @@
             this.DISK_VolumeID.BackColor = System.Drawing.Color.Transparent;
             this.DISK_VolumeID.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_VolumeID.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_VolumeID.Location = new System.Drawing.Point(10, 148);
+            this.DISK_VolumeID.Location = new System.Drawing.Point(10, 103);
             this.DISK_VolumeID.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_VolumeID.Name = "DISK_VolumeID";
             this.DISK_VolumeID.Size = new System.Drawing.Size(80, 20);
@@ -4810,32 +4690,32 @@
             this.DISK_Model.TabIndex = 2;
             this.DISK_Model.Text = "Disk Modeli:";
             // 
-            // DISK_Man_V
+            // DISK_PhysicalName_V
             // 
-            this.DISK_Man_V.AutoSize = true;
-            this.DISK_Man_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Man_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Man_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_Man_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Man_V.Location = new System.Drawing.Point(330, 103);
-            this.DISK_Man_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Man_V.Name = "DISK_Man_V";
-            this.DISK_Man_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_Man_V.TabIndex = 5;
-            this.DISK_Man_V.Text = "N/A";
+            this.DISK_PhysicalName_V.AutoSize = true;
+            this.DISK_PhysicalName_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_PhysicalName_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_PhysicalName_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_PhysicalName_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_PhysicalName_V.Location = new System.Drawing.Point(330, 193);
+            this.DISK_PhysicalName_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_PhysicalName_V.Name = "DISK_PhysicalName_V";
+            this.DISK_PhysicalName_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_PhysicalName_V.TabIndex = 5;
+            this.DISK_PhysicalName_V.Text = "N/A";
             // 
-            // DISK_Man
+            // DISK_PhysicalName
             // 
-            this.DISK_Man.AutoSize = true;
-            this.DISK_Man.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Man.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Man.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Man.Location = new System.Drawing.Point(10, 103);
-            this.DISK_Man.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Man.Name = "DISK_Man";
-            this.DISK_Man.Size = new System.Drawing.Size(101, 20);
-            this.DISK_Man.TabIndex = 4;
-            this.DISK_Man.Text = "Disk Üreticisi:";
+            this.DISK_PhysicalName.AutoSize = true;
+            this.DISK_PhysicalName.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_PhysicalName.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_PhysicalName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_PhysicalName.Location = new System.Drawing.Point(10, 193);
+            this.DISK_PhysicalName.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_PhysicalName.Name = "DISK_PhysicalName";
+            this.DISK_PhysicalName.Size = new System.Drawing.Size(122, 20);
+            this.DISK_PhysicalName.TabIndex = 4;
+            this.DISK_PhysicalName.Text = "Disk Fiziksel Adı:";
             // 
             // DISK_Size
             // 
@@ -4843,7 +4723,7 @@
             this.DISK_Size.BackColor = System.Drawing.Color.Transparent;
             this.DISK_Size.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_Size.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Size.Location = new System.Drawing.Point(10, 328);
+            this.DISK_Size.Location = new System.Drawing.Point(10, 373);
             this.DISK_Size.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_Size.Name = "DISK_Size";
             this.DISK_Size.Size = new System.Drawing.Size(95, 20);
@@ -4857,95 +4737,122 @@
             this.DISK_Size_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.DISK_Size_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.DISK_Size_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Size_V.Location = new System.Drawing.Point(330, 328);
+            this.DISK_Size_V.Location = new System.Drawing.Point(330, 373);
             this.DISK_Size_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.DISK_Size_V.Name = "DISK_Size_V";
             this.DISK_Size_V.Size = new System.Drawing.Size(37, 20);
             this.DISK_Size_V.TabIndex = 15;
             this.DISK_Size_V.Text = "N/A";
             // 
-            // DISK_Name
+            // DISK_Caption
             // 
-            this.DISK_Name.AutoSize = true;
-            this.DISK_Name.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Name.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Name.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Name.Location = new System.Drawing.Point(10, 13);
-            this.DISK_Name.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Name.Name = "DISK_Name";
-            this.DISK_Name.Size = new System.Drawing.Size(94, 20);
-            this.DISK_Name.TabIndex = 0;
-            this.DISK_Name.Text = "Disk Modeli:";
+            this.DISK_Caption.AutoSize = true;
+            this.DISK_Caption.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_Caption.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_Caption.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_Caption.Location = new System.Drawing.Point(10, 13);
+            this.DISK_Caption.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_Caption.Name = "DISK_Caption";
+            this.DISK_Caption.Size = new System.Drawing.Size(69, 20);
+            this.DISK_Caption.TabIndex = 0;
+            this.DISK_Caption.Text = "Disk Adı:";
             // 
-            // DISK_FirmWare
+            // DISK_Firmware
             // 
-            this.DISK_FirmWare.AutoSize = true;
-            this.DISK_FirmWare.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_FirmWare.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_FirmWare.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_FirmWare.Location = new System.Drawing.Point(10, 238);
-            this.DISK_FirmWare.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_FirmWare.Name = "DISK_FirmWare";
-            this.DISK_FirmWare.Size = new System.Drawing.Size(172, 20);
-            this.DISK_FirmWare.TabIndex = 10;
-            this.DISK_FirmWare.Text = "Üretici Yazılımı Sürümü:";
+            this.DISK_Firmware.AutoSize = true;
+            this.DISK_Firmware.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_Firmware.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_Firmware.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_Firmware.Location = new System.Drawing.Point(10, 238);
+            this.DISK_Firmware.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_Firmware.Name = "DISK_Firmware";
+            this.DISK_Firmware.Size = new System.Drawing.Size(172, 20);
+            this.DISK_Firmware.TabIndex = 10;
+            this.DISK_Firmware.Text = "Üretici Yazılımı Sürümü:";
             // 
-            // DISK_FirmWare_V
+            // DISK_Firmware_V
             // 
-            this.DISK_FirmWare_V.AutoSize = true;
-            this.DISK_FirmWare_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_FirmWare_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_FirmWare_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_FirmWare_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_FirmWare_V.Location = new System.Drawing.Point(330, 238);
-            this.DISK_FirmWare_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_FirmWare_V.Name = "DISK_FirmWare_V";
-            this.DISK_FirmWare_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_FirmWare_V.TabIndex = 11;
-            this.DISK_FirmWare_V.Text = "N/A";
+            this.DISK_Firmware_V.AutoSize = true;
+            this.DISK_Firmware_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_Firmware_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_Firmware_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_Firmware_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_Firmware_V.Location = new System.Drawing.Point(330, 238);
+            this.DISK_Firmware_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_Firmware_V.Name = "DISK_Firmware_V";
+            this.DISK_Firmware_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_Firmware_V.TabIndex = 11;
+            this.DISK_Firmware_V.Text = "N/A";
             // 
-            // DISK_Seri
+            // DISK_Serial
             // 
-            this.DISK_Seri.AutoSize = true;
-            this.DISK_Seri.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Seri.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Seri.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Seri.Location = new System.Drawing.Point(10, 283);
-            this.DISK_Seri.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Seri.Name = "DISK_Seri";
-            this.DISK_Seri.Size = new System.Drawing.Size(109, 20);
-            this.DISK_Seri.TabIndex = 12;
-            this.DISK_Seri.Text = "Seri Numarası:";
+            this.DISK_Serial.AutoSize = true;
+            this.DISK_Serial.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_Serial.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_Serial.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_Serial.Location = new System.Drawing.Point(10, 283);
+            this.DISK_Serial.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_Serial.Name = "DISK_Serial";
+            this.DISK_Serial.Size = new System.Drawing.Size(109, 20);
+            this.DISK_Serial.TabIndex = 12;
+            this.DISK_Serial.Text = "Seri Numarası:";
             // 
-            // DISK_Seri_V
+            // DISK_VolumeSerial_V
             // 
-            this.DISK_Seri_V.AutoSize = true;
-            this.DISK_Seri_V.BackColor = System.Drawing.Color.Transparent;
-            this.DISK_Seri_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.DISK_Seri_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_Seri_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DISK_Seri_V.Location = new System.Drawing.Point(330, 283);
-            this.DISK_Seri_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.DISK_Seri_V.Name = "DISK_Seri_V";
-            this.DISK_Seri_V.Size = new System.Drawing.Size(37, 20);
-            this.DISK_Seri_V.TabIndex = 13;
-            this.DISK_Seri_V.Text = "N/A";
+            this.DISK_VolumeSerial_V.AutoSize = true;
+            this.DISK_VolumeSerial_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_VolumeSerial_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_VolumeSerial_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_VolumeSerial_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_VolumeSerial_V.Location = new System.Drawing.Point(330, 328);
+            this.DISK_VolumeSerial_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_VolumeSerial_V.Name = "DISK_VolumeSerial_V";
+            this.DISK_VolumeSerial_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_VolumeSerial_V.TabIndex = 1;
+            this.DISK_VolumeSerial_V.Text = "N/A";
             // 
-            // DISK_SelectBox
+            // DISK_Serial_V
             // 
-            this.DISK_SelectBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.DISK_SelectBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.DISK_SelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DISK_SelectBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DISK_SelectBox.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
-            this.DISK_SelectBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.DISK_SelectBox.FormattingEnabled = true;
-            this.DISK_SelectBox.Location = new System.Drawing.Point(330, 9);
-            this.DISK_SelectBox.Margin = new System.Windows.Forms.Padding(3, 3, 3, 25);
-            this.DISK_SelectBox.Name = "DISK_SelectBox";
-            this.DISK_SelectBox.Size = new System.Drawing.Size(335, 28);
-            this.DISK_SelectBox.TabIndex = 1;
-            this.DISK_SelectBox.SelectedIndexChanged += new System.EventHandler(this.disklist_SelectedIndexChanged);
+            this.DISK_Serial_V.AutoSize = true;
+            this.DISK_Serial_V.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_Serial_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_Serial_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_Serial_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_Serial_V.Location = new System.Drawing.Point(330, 283);
+            this.DISK_Serial_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_Serial_V.Name = "DISK_Serial_V";
+            this.DISK_Serial_V.Size = new System.Drawing.Size(37, 20);
+            this.DISK_Serial_V.TabIndex = 13;
+            this.DISK_Serial_V.Text = "N/A";
+            // 
+            // DISK_VolumeSerial
+            // 
+            this.DISK_VolumeSerial.AutoSize = true;
+            this.DISK_VolumeSerial.BackColor = System.Drawing.Color.Transparent;
+            this.DISK_VolumeSerial.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.DISK_VolumeSerial.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.DISK_VolumeSerial.Location = new System.Drawing.Point(10, 328);
+            this.DISK_VolumeSerial.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.DISK_VolumeSerial.Name = "DISK_VolumeSerial";
+            this.DISK_VolumeSerial.Size = new System.Drawing.Size(142, 20);
+            this.DISK_VolumeSerial.TabIndex = 0;
+            this.DISK_VolumeSerial.Text = "Disk Bölüm Düzeni:";
+            // 
+            // DISK_CaptionList
+            // 
+            this.DISK_CaptionList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.DISK_CaptionList.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.DISK_CaptionList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DISK_CaptionList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.DISK_CaptionList.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold);
+            this.DISK_CaptionList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.DISK_CaptionList.FormattingEnabled = true;
+            this.DISK_CaptionList.Location = new System.Drawing.Point(330, 9);
+            this.DISK_CaptionList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 25);
+            this.DISK_CaptionList.Name = "DISK_CaptionList";
+            this.DISK_CaptionList.Size = new System.Drawing.Size(335, 28);
+            this.DISK_CaptionList.TabIndex = 1;
+            this.DISK_CaptionList.SelectedIndexChanged += new System.EventHandler(this.DISK_CaptionList_SelectedIndexChanged);
             // 
             // disk_bottom_label
             // 
@@ -4954,7 +4861,7 @@
             this.disk_bottom_label.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.disk_bottom_label.ForeColor = System.Drawing.Color.Black;
             this.disk_bottom_label.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.disk_bottom_label.Location = new System.Drawing.Point(10, 907);
+            this.disk_bottom_label.Location = new System.Drawing.Point(10, 776);
             this.disk_bottom_label.Margin = new System.Windows.Forms.Padding(3);
             this.disk_bottom_label.Name = "disk_bottom_label";
             this.disk_bottom_label.Size = new System.Drawing.Size(333, 20);
@@ -4986,7 +4893,7 @@
             this.network_panel_2.Location = new System.Drawing.Point(10, 513);
             this.network_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.network_panel_2.Name = "network_panel_2";
-            this.network_panel_2.Size = new System.Drawing.Size(407, 92);
+            this.network_panel_2.Size = new System.Drawing.Size(339, 92);
             this.network_panel_2.TabIndex = 0;
             // 
             // NET_IPv6Adress_V
@@ -5074,7 +4981,7 @@
             this.network_panel_1.Location = new System.Drawing.Point(10, 9);
             this.network_panel_1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
             this.network_panel_1.Name = "network_panel_1";
-            this.network_panel_1.Size = new System.Drawing.Size(407, 502);
+            this.network_panel_1.Size = new System.Drawing.Size(339, 502);
             this.network_panel_1.TabIndex = 0;
             // 
             // NET_DeviceID_V
@@ -6563,16 +6470,16 @@
         internal System.Windows.Forms.Panel disk_panel_1;
         internal System.Windows.Forms.Label DISK_Size;
         internal System.Windows.Forms.Label DISK_Size_V;
-        internal System.Windows.Forms.Label DISK_Name;
-        internal System.Windows.Forms.Label DISK_FirmWare;
-        internal System.Windows.Forms.Label DISK_FirmWare_V;
+        internal System.Windows.Forms.Label DISK_Caption;
+        internal System.Windows.Forms.Label DISK_Firmware;
+        internal System.Windows.Forms.Label DISK_Firmware_V;
         internal System.Windows.Forms.Label DISK_InterFace_V;
-        internal System.Windows.Forms.Label DISK_Seri;
+        internal System.Windows.Forms.Label DISK_Serial;
         internal System.Windows.Forms.Label DISK_InterFace;
-        internal System.Windows.Forms.Label DISK_Seri_V;
-        internal System.Windows.Forms.Label DISK_Type;
-        internal System.Windows.Forms.Label DISK_Type_V;
-        internal System.Windows.Forms.ComboBox DISK_SelectBox;
+        internal System.Windows.Forms.Label DISK_Serial_V;
+        internal System.Windows.Forms.Label DISK_PartitionCount;
+        internal System.Windows.Forms.Label DISK_PartitionCount_V;
+        internal System.Windows.Forms.ComboBox DISK_CaptionList;
         internal System.Windows.Forms.Panel battery_panel_1;
         internal System.Windows.Forms.Label BATTERY_Status;
         internal System.Windows.Forms.Label BATTERY_Status_V;
@@ -6662,30 +6569,24 @@
         private System.Windows.Forms.DataGridView SERVICE_DataMainTable;
         internal System.Windows.Forms.Label OS_SystemWorkTime_V;
         internal System.Windows.Forms.Label OS_SystemWorkTime;
-        internal System.Windows.Forms.Label DISK_BootPartition_V;
-        internal System.Windows.Forms.Label DISK_BootPartition;
-        internal System.Windows.Forms.Label DISK_Healt_V;
-        internal System.Windows.Forms.Label DISK_Healt;
-        internal System.Windows.Forms.Label DISK_BootableStatus_V;
-        internal System.Windows.Forms.Label DISK_BootableStatus;
-        internal System.Windows.Forms.Label DISK_Man_V;
-        internal System.Windows.Forms.Label DISK_Man;
+        internal System.Windows.Forms.Label DISK_PhysicalName_V;
+        internal System.Windows.Forms.Label DISK_PhysicalName;
         internal System.Windows.Forms.Label DISK_Model_V;
         internal System.Windows.Forms.Label DISK_Model;
-        internal System.Windows.Forms.Label DISK_Partition_V;
-        internal System.Windows.Forms.Label DISK_Partition;
-        internal System.Windows.Forms.Label DISK_PartitionLayout_V;
-        internal System.Windows.Forms.Label DISK_PartitionLayout;
-        internal System.Windows.Forms.Label DISK_UniqueID_V;
-        internal System.Windows.Forms.Label DISK_UniqueID;
+        internal System.Windows.Forms.Label DISK_MediaLoaded_V;
+        internal System.Windows.Forms.Label DISK_MediaLoaded;
+        internal System.Windows.Forms.Label DISK_VolumeSerial_V;
+        internal System.Windows.Forms.Label DISK_VolumeSerial;
+        internal System.Windows.Forms.Label DISK_MediaStatus_V;
+        internal System.Windows.Forms.Label DISK_MediaStatus;
         internal System.Windows.Forms.Label DISK_VolumeName_V;
         internal System.Windows.Forms.Label DISK_VolumeName;
         internal System.Windows.Forms.Label DISK_FreeSpace_V;
         internal System.Windows.Forms.Label DISK_FreeSpace;
         internal System.Windows.Forms.Label DISK_VolumeID_V;
         internal System.Windows.Forms.Label DISK_VolumeID;
-        internal System.Windows.Forms.Label DISK_Location_V;
-        internal System.Windows.Forms.Label DISK_Location;
+        internal System.Windows.Forms.Label DISK_DriveCompressed_V;
+        internal System.Windows.Forms.Label DISK_DriveCompressed;
         private System.Windows.Forms.Panel disk_panel_2;
         internal System.Windows.Forms.Label BATTERY_Voltage_V;
         internal System.Windows.Forms.Label BATTERY_Voltage;
