@@ -398,6 +398,8 @@ namespace Glow{
                         string os_device_id_replace_1 = os_device_id.Replace("{", string.Empty);
                         string os_device_id_replace_2 = os_device_id_replace_1.Replace("}", string.Empty);
                         OS_DeviceID_V.Text = os_device_id_replace_2;
+                        // SS MODE
+                        //OS_DeviceID_V.Text = os_device_id_replace_2.Substring(0, 4);
                     }else{
                         OS_DeviceID_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_c_1").Trim()));
                     }
@@ -2492,7 +2494,6 @@ namespace Glow{
                     Single battery = power.BatteryLifePercent;
                     Single battery_process = battery * 100;
                     string battery_status = "%" + Convert.ToString(battery_process);
-                    BATTERY_Status_V.Text = battery_status;
                     foreach (ManagementObject query_battery_rotate in search_battery.Get()){
                         try{
                             // BATTERY VOLTAGE
