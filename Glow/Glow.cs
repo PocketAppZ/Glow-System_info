@@ -24,9 +24,9 @@ namespace Glow{
         // ======================================================================================================
         // VARIABLES
         int theme, menu_btns = 1, menu_rp = 1, initial_status;
-        string lang, lang_path, wp_rotate, wp_resoulation;
-        bool loop_status = true, pe_loop_status = true;
-        readonly string website_link = "https://roines45.github.io", github_link = "https://github.com/roines45";
+        string lang, lang_path, wp_rotate, wp_resoulation, preloader_os;
+        bool loop_status = true, pe_loop_status = true, os_support_check_status;
+        readonly string website_link = "https://roines45.github.io", github_link = "https://github.com/roines45", glow_last_support_version_link = "https://github.com/roines45/glow/releases/tag/v1.79";
         // ======================================================================================================
         // PRINT ENGINE ASYNC STATUS
         int os_status = 0, mb_status = 0, cpu_status = 0, ram_status = 0, gpu_status = 0, disk_status = 0, network_status = 0,
@@ -66,52 +66,87 @@ namespace Glow{
         // ======================================================================================================
         // GLOW PRELOADER
         /*
-              -- THEME --    |  -- LANGUAGE --   |  -- INITIAL MODE --
-            0 = Dark Theme   |   tr = Turkish    |  0 = Normal Windowed
-            1 = Light Theme  |   en = English    |  1 = FullScreen Mode
+            -- THEME --      |  -- LANGUAGE --   |   -- INITIAL MODE --    |   -- OS SUPPORTED --
+            0 = Dark Theme   |  tr = Turkish     |   0 = Normal Windowed   |   True = Supported
+            1 = Light Theme  |  en = English     |   1 = FullScreen Mode   |   False = Not Supported
         */
         private void glow_preloader(){
             try{
+                // CHECK OS NAME
                 string ui_lang = CultureInfo.InstalledUICulture.TwoLetterISOLanguageName.Trim();
-                // CHECK GLOW LANG FOLDER
-                if (Directory.Exists(glow_lf)){
-                    // CHECK LANG FILES
-                    int get_langs_file = Directory.GetFiles(glow_lf, "*.ini", SearchOption.AllDirectories).Length;
-                    if (get_langs_file > 0){
-                        // EN | TR
-                        if (!File.Exists(glow_lang_en)){ englishToolStripMenuItem.Enabled = false; }
-                        if (!File.Exists(glow_lang_tr)){ turkishToolStripMenuItem.Enabled = false; }
-                        // CHECK SETTINGS
-                        try{
-                            if (File.Exists(glow_sf)){
-                                GetGlowSetting();
+                ManagementObjectSearcher search_os = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_OperatingSystem");
+                foreach (ManagementObject query_os in search_os.Get()){
+                    var os_name = Convert.ToString(query_os["Caption"]).Trim();
+                    string os_name_process = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(os_name);
+                    //string os_name_process = "Windows 7";
+                    // PRELOADER OS GLOBAL STRING SET VALUE
+                    preloader_os = os_name_process;
+                    string[] supported_os = { "Windows 10", "Windows 11" };
+                    for (int i = 0; i <= supported_os.Length - 1; i++){
+                        //Console.WriteLine(supported_os[i]);
+                        if (os_name_process.Contains(supported_os[i])){
+                            os_support_check_status = true;
+                            break;
+                        }else{
+                            os_support_check_status = false;
+                        }
+                    }
+                }
+                // CHECK OS SUPPORTED MODE
+                if (os_support_check_status == true){
+                    // CHECK GLOW LANG FOLDER
+                    if (Directory.Exists(glow_lf)){
+                        // CHECK LANG FILES
+                        int get_langs_file = Directory.GetFiles(glow_lf, "*.ini", SearchOption.AllDirectories).Length;
+                        if (get_langs_file > 0){
+                            // EN | TR
+                            if (!File.Exists(glow_lang_en)){ englishToolStripMenuItem.Enabled = false; }
+                            if (!File.Exists(glow_lang_tr)){ turkishToolStripMenuItem.Enabled = false; }
+                            // CHECK SETTINGS
+                            try{
+                                if (File.Exists(glow_sf)){
+                                    GetGlowSetting();
+                                }else{
+                                    // DETECT SYSTEM THEME
+                                    GlowSettingsSave glow_settings_save = new GlowSettingsSave(glow_sf);
+                                    string get_system_theme = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", "").ToString().Trim();
+                                    glow_settings_save.GlowWriteSettings("Theme", "ThemeStatus", get_system_theme);
+                                    // DETECT SYSTEM LANG
+                                    glow_settings_save.GlowWriteSettings("Language", "LanguageStatus", ui_lang);
+                                    // SET INITIAL MODE
+                                    glow_settings_save.GlowWriteSettings("InitialMode", "InitialStatus", "0");
+                                    GetGlowSetting();
+                                }
+                            }catch (Exception){ }
+                        }else{
+                            if (ui_lang == "tr"){
+                                MessageBox.Show($"Hiçbir dil dosyası bulunamadı.\n{Application.ProductName} kapatılıyor.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }else{
-                                // DETECT SYSTEM THEME
-                                GlowSettingsSave glow_settings_save = new GlowSettingsSave(glow_sf);
-                                string get_system_theme = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", "").ToString().Trim();
-                                glow_settings_save.GlowWriteSettings("Theme", "ThemeStatus", get_system_theme);
-                                // DETECT SYSTEM LANG
-                                glow_settings_save.GlowWriteSettings("Language", "LanguageStatus", ui_lang);
-                                // SET INITIAL MODE
-                                glow_settings_save.GlowWriteSettings("InitialMode", "InitialStatus", "0");
-                                GetGlowSetting();
+                                MessageBox.Show($"No language files were found.\nThe {Application.ProductName} is closing.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
-                        }catch (Exception){ }
+                            glow_exit();
+                        }
                     }else{
                         if (ui_lang == "tr"){
-                            MessageBox.Show($"Hiçbir dil dosyası bulunamadı.\n{Application.ProductName} kapatılıyor.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Langs klasörü bulunamadı.\n{Application.ProductName} kapatılıyor.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }else{
-                            MessageBox.Show($"No language files were found.\nThe {Application.ProductName} is closing.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"Langs folder not found.\nThe {Application.ProductName} is closing.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        Application.Exit();
+                        glow_exit();
                     }
-                }else{
+                }else if (os_support_check_status == false){
                     if (ui_lang == "tr"){
-                        MessageBox.Show($"Langs klasörü bulunamadı.\n{Application.ProductName} kapatılıyor.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DialogResult check_user_select = MessageBox.Show($"{Application.ProductName}, Windows 10'un altındaki işletim sistemlerini desteklememektedir.\n\nKullandığınız İşletim Sistemi: {preloader_os}\n\nEğer Windows 10 altı desteklenen son sürümü görüntülemek veya indirmek isterseniz Evet tuşuna basmanız yeterli.\n\nEvet veya Hayır tuşuna bastıktan sonra program otomatik olarak kapanacaktır.", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (check_user_select == DialogResult.Yes){
+                            Process.Start(glow_last_support_version_link);
+                        }
                     }else{
-                        MessageBox.Show($"Langs folder not found.\nThe {Application.ProductName} is closing.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DialogResult check_user_select = MessageBox.Show($"{Application.ProductName}, does not support operating systems below Windows 10.\n\nThe Operating System you are using: {preloader_os}\n\nIf you want to view or download the latest supported version under Windows 10, just press Yes.\n\nAfter pressing Yes or No, the program will close automatically.", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (check_user_select == DialogResult.Yes){
+                            Process.Start(glow_last_support_version_link);
+                        }
                     }
-                    Application.Exit();
+                    glow_exit();
                 }
             }catch (Exception){ }
         }
