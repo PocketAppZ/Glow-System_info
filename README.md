@@ -33,7 +33,7 @@ Download: https://github.com/roines45/glow/releases/latest
 |--|:--:|:--:|
 | OS: | Windows 10 20H2 x64 | Windows 10 22H2 x64 |
 | CPU: | 1 Core, 2 GHz CPU Speed | 2 Core, 3 GHz CPU Speed |
-| RAM: | 50 MB Free RAM | 75 MB Free RAM |
+| RAM: | 35 MB Free RAM | 50 MB Free RAM |
 | STORAGE: | 10 MB Free Space | 20 MB Free Space |
 | GPU: | DirectX 9 Support | DirectX 10.1 Support |
 | MONITOR: | 1280x720 Resolution | 1600x900 Resolution |
