@@ -4003,10 +4003,10 @@ namespace Glow{
             }
         }
         private void windowedToolStripMenuItem_Click(object sender, EventArgs e){
-            if (initial_status != 0){ initial_mode_settings("0"); select_initial_mode_active(sender); }
+            if (initial_status != 0){ initial_status = 0; initial_mode_settings("0"); select_initial_mode_active(sender); }
         }
         private void fullScreenToolStripMenuItem_Click(object sender, EventArgs e){
-            if (initial_status != 1){ initial_mode_settings("1"); select_initial_mode_active(sender); }
+            if (initial_status != 1){ initial_status = 1; initial_mode_settings("1"); select_initial_mode_active(sender); }
         }
         private void initial_mode_settings(string get_inital_value){
             try{
