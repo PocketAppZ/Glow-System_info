@@ -1042,7 +1042,7 @@
             this.os_panel_5.Location = new System.Drawing.Point(10, 1281);
             this.os_panel_5.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_5.Name = "os_panel_5";
-            this.os_panel_5.Size = new System.Drawing.Size(730, 275);
+            this.os_panel_5.Size = new System.Drawing.Size(713, 275);
             this.os_panel_5.TabIndex = 0;
             // 
             // OS_AntiSpywareProgram
@@ -1255,7 +1255,7 @@
             this.os_panel_4.Location = new System.Drawing.Point(10, 963);
             this.os_panel_4.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_4.Name = "os_panel_4";
-            this.os_panel_4.Size = new System.Drawing.Size(730, 316);
+            this.os_panel_4.Size = new System.Drawing.Size(713, 316);
             this.os_panel_4.TabIndex = 0;
             // 
             // OS_SystemWorkTime_V
@@ -1470,7 +1470,7 @@
             this.os_panel_3.Location = new System.Drawing.Point(10, 645);
             this.os_panel_3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_3.Name = "os_panel_3";
-            this.os_panel_3.Size = new System.Drawing.Size(730, 316);
+            this.os_panel_3.Size = new System.Drawing.Size(713, 316);
             this.os_panel_3.TabIndex = 0;
             // 
             // OS_TimeZone
@@ -1700,7 +1700,7 @@
             this.os_panel_2.Location = new System.Drawing.Point(10, 327);
             this.os_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_2.Name = "os_panel_2";
-            this.os_panel_2.Size = new System.Drawing.Size(730, 316);
+            this.os_panel_2.Size = new System.Drawing.Size(713, 316);
             this.os_panel_2.TabIndex = 0;
             // 
             // OS_SystemBuild
@@ -1914,7 +1914,7 @@
             this.os_panel_1.Location = new System.Drawing.Point(10, 9);
             this.os_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.os_panel_1.Name = "os_panel_1";
-            this.os_panel_1.Size = new System.Drawing.Size(730, 316);
+            this.os_panel_1.Size = new System.Drawing.Size(713, 316);
             this.os_panel_1.TabIndex = 0;
             // 
             // OS_SystemUser
@@ -2140,7 +2140,7 @@
             this.mb_panel_3.Location = new System.Drawing.Point(10, 645);
             this.mb_panel_3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_3.Name = "mb_panel_3";
-            this.mb_panel_3.Size = new System.Drawing.Size(360, 138);
+            this.mb_panel_3.Size = new System.Drawing.Size(343, 138);
             this.mb_panel_3.TabIndex = 0;
             // 
             // MB_BiosMajorMinor
@@ -2247,7 +2247,7 @@
             this.mb_panel_2.Location = new System.Drawing.Point(10, 327);
             this.mb_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_2.Name = "mb_panel_2";
-            this.mb_panel_2.Size = new System.Drawing.Size(736, 316);
+            this.mb_panel_2.Size = new System.Drawing.Size(719, 316);
             this.mb_panel_2.TabIndex = 0;
             // 
             // MB_TPMStatus
@@ -2476,7 +2476,7 @@
             this.mb_panel_1.Location = new System.Drawing.Point(10, 9);
             this.mb_panel_1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
             this.mb_panel_1.Name = "mb_panel_1";
-            this.mb_panel_1.Size = new System.Drawing.Size(736, 316);
+            this.mb_panel_1.Size = new System.Drawing.Size(719, 316);
             this.mb_panel_1.TabIndex = 0;
             // 
             // MB_SystemSKU
@@ -2704,7 +2704,7 @@
             this.cpu_panel_2.Location = new System.Drawing.Point(10, 372);
             this.cpu_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.cpu_panel_2.Name = "cpu_panel_2";
-            this.cpu_panel_2.Size = new System.Drawing.Size(732, 320);
+            this.cpu_panel_2.Size = new System.Drawing.Size(715, 320);
             this.cpu_panel_2.TabIndex = 1;
             // 
             // CPU_VMMonitorExtension_V
@@ -2935,7 +2935,7 @@
             this.cpu_panel_1.Location = new System.Drawing.Point(10, 9);
             this.cpu_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.cpu_panel_1.Name = "cpu_panel_1";
-            this.cpu_panel_1.Size = new System.Drawing.Size(732, 361);
+            this.cpu_panel_1.Size = new System.Drawing.Size(715, 361);
             this.cpu_panel_1.TabIndex = 0;
             // 
             // CPU_L1
@@ -3200,7 +3200,7 @@
             this.ram_panel_2.Location = new System.Drawing.Point(10, 327);
             this.ram_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.ram_panel_2.Name = "ram_panel_2";
-            this.ram_panel_2.Size = new System.Drawing.Size(735, 542);
+            this.ram_panel_2.Size = new System.Drawing.Size(718, 542);
             this.ram_panel_2.TabIndex = 1;
             // 
             // RAM_SelectList
@@ -3566,7 +3566,7 @@
             this.ram_panel_1.Location = new System.Drawing.Point(10, 9);
             this.ram_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.ram_panel_1.Name = "ram_panel_1";
-            this.ram_panel_1.Size = new System.Drawing.Size(735, 316);
+            this.ram_panel_1.Size = new System.Drawing.Size(718, 316);
             this.ram_panel_1.TabIndex = 0;
             // 
             // RAM_UsageVirtualRam
@@ -3794,7 +3794,7 @@
             this.gpu_panel_2.Location = new System.Drawing.Point(10, 466);
             this.gpu_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.gpu_panel_2.Name = "gpu_panel_2";
-            this.gpu_panel_2.Size = new System.Drawing.Size(736, 317);
+            this.gpu_panel_2.Size = new System.Drawing.Size(719, 317);
             this.gpu_panel_2.TabIndex = 0;
             // 
             // GPU_ScreenRefreshRate
@@ -4031,7 +4031,7 @@
             this.gpu_panel_1.Location = new System.Drawing.Point(10, 9);
             this.gpu_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.gpu_panel_1.Name = "gpu_panel_1";
-            this.gpu_panel_1.Size = new System.Drawing.Size(736, 455);
+            this.gpu_panel_1.Size = new System.Drawing.Size(719, 455);
             this.gpu_panel_1.TabIndex = 0;
             // 
             // GPU_DeviceID
@@ -4351,7 +4351,7 @@
             this.disk_panel_2.Location = new System.Drawing.Point(10, 511);
             this.disk_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.disk_panel_2.Name = "disk_panel_2";
-            this.disk_panel_2.Size = new System.Drawing.Size(732, 546);
+            this.disk_panel_2.Size = new System.Drawing.Size(715, 546);
             this.disk_panel_2.TabIndex = 0;
             // 
             // DISK_Bootable_V
@@ -4709,7 +4709,7 @@
             this.disk_panel_1.Location = new System.Drawing.Point(10, 9);
             this.disk_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.disk_panel_1.Name = "disk_panel_1";
-            this.disk_panel_1.Size = new System.Drawing.Size(732, 500);
+            this.disk_panel_1.Size = new System.Drawing.Size(715, 500);
             this.disk_panel_1.TabIndex = 0;
             // 
             // DISK_Man_V
@@ -5050,7 +5050,7 @@
             this.network_panel_2.Location = new System.Drawing.Point(10, 513);
             this.network_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.network_panel_2.Name = "network_panel_2";
-            this.network_panel_2.Size = new System.Drawing.Size(736, 92);
+            this.network_panel_2.Size = new System.Drawing.Size(719, 92);
             this.network_panel_2.TabIndex = 0;
             // 
             // NET_IPv6Adress_V
@@ -5138,7 +5138,7 @@
             this.network_panel_1.Location = new System.Drawing.Point(10, 9);
             this.network_panel_1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
             this.network_panel_1.Name = "network_panel_1";
-            this.network_panel_1.Size = new System.Drawing.Size(736, 502);
+            this.network_panel_1.Size = new System.Drawing.Size(719, 502);
             this.network_panel_1.TabIndex = 0;
             // 
             // NET_DeviceID_V

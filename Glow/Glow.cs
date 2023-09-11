@@ -624,11 +624,23 @@ namespace Glow{
                             }
                             // GET WALLPAPER SIZE
                             FileInfo wallpaper_size = new FileInfo(get_wallpaper);
-                            double wallpaper_size_x64 = Convert.ToDouble(wallpaper_size.Length) / 1024;
+                            double wallpaper_size_x64 = Convert.ToDouble(wallpaper_size.Length); // in byte
                             if (wallpaper_size_x64 > 1024){
-                                OS_Wallpaper_V.Text = Path.GetFileName(get_wallpaper) + " - " + wp_resoulation + " - " + string.Format("{0:0.00} MB", wallpaper_size_x64 / 1024);
-                            }else if (wallpaper_size_x64 < 1024){
-                                OS_Wallpaper_V.Text = Path.GetFileName(get_wallpaper) + " - " + wp_resoulation + " - " + string.Format("{0:0} KB", wallpaper_size_x64);
+                               if ((wallpaper_size_x64  / 1024 ) > 1024){
+                                    if ((wallpaper_size_x64 / 1024 / 1024) > 1024){
+                                        // GB
+                                        OS_Wallpaper_V.Text = Path.GetFileName(get_wallpaper) + " - " + wp_resoulation + " - " + string.Format("{0:0.00} GB", wallpaper_size_x64 / 1024 / 1024 / 1024);
+                                    }else{
+                                        // MB
+                                        OS_Wallpaper_V.Text = Path.GetFileName(get_wallpaper) + " - " + wp_resoulation + " - " + string.Format("{0:0.00} MB", wallpaper_size_x64 / 1024 / 1024);
+                                    }
+                                }else{
+                                    // KB
+                                    OS_Wallpaper_V.Text = Path.GetFileName(get_wallpaper) + " - " + wp_resoulation + " - " + string.Format("{0:0.0} KB", wallpaper_size_x64 / 1024);
+                                }
+                            }else{
+                                // Byte
+                                OS_Wallpaper_V.Text = Path.GetFileName(get_wallpaper) + " - " + wp_resoulation + " - " + string.Format("{0:0.0} " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_c_byte").Trim())), wallpaper_size_x64);
                             }
                             MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_35").Trim())), wp_rotate));
                         }else{
@@ -656,10 +668,23 @@ namespace Glow{
                     foreach (ManagementObject query_os_rotate in search_os.Get()){
                         try{
                             // FREE VIRTUAL RAM
-                            double free_virtual_ram = Convert.ToDouble(query_os_rotate["FreeVirtualMemory"]) / 1024 / 1024;
-                            double total_virtual_memory = Convert.ToDouble(query_os_rotate["TotalVirtualMemorySize"]) / 1024 / 1024;
-                            RAM_EmptyVirtualRam_V.Text = String.Format("{0:0.00} GB", free_virtual_ram);
-                            RAM_UsageVirtualRam_V.Text = string.Format("{0:0.00} GB", total_virtual_memory - free_virtual_ram);
+                            double free_virtual_ram = Convert.ToDouble(query_os_rotate["FreeVirtualMemory"]); // in kb
+                            double total_virtual_memory = Convert.ToDouble(query_os_rotate["TotalVirtualMemorySize"]); // in kb
+                            if (free_virtual_ram > 1024){
+                                if ((free_virtual_ram / 1024) > 1024){
+                                    // GB
+                                    RAM_EmptyVirtualRam_V.Text = string.Format("{0:0.00} GB", free_virtual_ram / 1024 / 1024);
+                                    RAM_UsageVirtualRam_V.Text = string.Format("{0:0.00} GB", (total_virtual_memory / 1024 / 1024) - (free_virtual_ram / 1024 / 1024));
+                                }else{
+                                    // MB
+                                    RAM_EmptyVirtualRam_V.Text = string.Format("{0:0.00} MB", free_virtual_ram / 1024);
+                                    RAM_UsageVirtualRam_V.Text = string.Format("{0:0.00} MB", (total_virtual_memory / 1024) - (free_virtual_ram / 1024));
+                                }
+                            }else{
+                                // KB
+                                RAM_EmptyVirtualRam_V.Text = string.Format("{0:0.0} KB", free_virtual_ram);
+                                RAM_UsageVirtualRam_V.Text = string.Format("{0:0.0} KB", total_virtual_memory - free_virtual_ram);
+                            }
                             // GET LAST BOOT
                             string last_boot = Convert.ToString(query_os_rotate["LastBootUpTime"]);
                             // Year - Month - Day - Hour - Minute - Second
@@ -932,7 +957,7 @@ namespace Glow{
                     // CPU NORMAL SPEED
                     double cpu_speed = Convert.ToDouble(query_process_rotate["CurrentClockSpeed"]);
                     if (cpu_speed > 1024){
-                        CPU_NormalSpeed_V.Text = String.Format("{0:0.00} GHz", cpu_speed / 1000);
+                        CPU_NormalSpeed_V.Text = string.Format("{0:0.00} GHz", cpu_speed / 1000);
                     }else{
                         CPU_NormalSpeed_V.Text = cpu_speed.ToString() + " MHz";
                     }
@@ -941,7 +966,7 @@ namespace Glow{
                     // CPU DEFAULT SPEED
                     double cpu_max_speed = Convert.ToDouble(query_process_rotate["MaxClockSpeed"]);
                     if (cpu_max_speed > 1024){
-                        CPU_DefaultSpeed_V.Text = String.Format("{0:0.00} GHz", cpu_max_speed / 1000);
+                        CPU_DefaultSpeed_V.Text = string.Format("{0:0.00} GHz", cpu_max_speed / 1000);
                     }else{
                         CPU_DefaultSpeed_V.Text = cpu_max_speed.ToString() + " MHz";
                     }
@@ -1051,9 +1076,9 @@ namespace Glow{
                 double total_ram_isle = total_ram_x64_tick / (1024 * 1024);
                 if (total_ram_isle > 1024){
                     if ((total_ram_isle / 1024) > 1024){
-                        RAM_TotalRAM_V.Text = String.Format("{0:0.00} TB", total_ram_isle / 1024 / 1024);
+                        RAM_TotalRAM_V.Text = string.Format("{0:0.00} TB", total_ram_isle / 1024 / 1024);
                     }else{
-                        RAM_TotalRAM_V.Text = String.Format("{0:0.00} GB", total_ram_isle / 1024);
+                        RAM_TotalRAM_V.Text = string.Format("{0:0.00} GB", total_ram_isle / 1024);
                     }
                 }else{
                     RAM_TotalRAM_V.Text = total_ram_isle.ToString() + " MB";
@@ -1062,7 +1087,7 @@ namespace Glow{
             try{
                 foreach (ManagementObject query_os_rotate in search_os.Get()){
                     // TOTAL VIRTUAL RAM
-                    RAM_TotalVirtualRam_V.Text = String.Format("{0:0.00} GB", Convert.ToDouble(query_os_rotate["TotalVirtualMemorySize"]) / 1024 / 1024);
+                    RAM_TotalVirtualRam_V.Text = string.Format("{0:0.00} GB", Convert.ToDouble(query_os_rotate["TotalVirtualMemorySize"]) / 1024 / 1024);
                 }
             }catch (Exception){ }
             foreach (ManagementObject queryObj in search_pm.Get()){
@@ -1162,7 +1187,7 @@ namespace Glow{
                     if (ram_voltaj == "" || ram_voltaj == "0" || ram_voltaj == "0.0" || ram_voltaj == "0.00" || ram_voltaj == string.Empty){
                         ram_voltage_list.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Ram_Content", "ram_c_5").Trim())));
                     }else{
-                        ram_voltage_list.Add(String.Format("{0:0.00} " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Ram_Content", "ram_c_6").Trim())), Convert.ToInt32(ram_voltaj) / 1000.0));
+                        ram_voltage_list.Add(string.Format("{0:0.00} " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Ram_Content", "ram_c_6").Trim())), Convert.ToInt32(ram_voltaj) / 1000.0));
                     }
                     RAM_Volt_V.Text = ram_voltage_list[0];
                 }catch (Exception){ }
@@ -1293,18 +1318,18 @@ namespace Glow{
                     double usage_ram_percentage = (total_ram_x64 - usable_ram_x64) / total_ram_x64 * 100;
                     if (ram_process > 1024){
                         if ((ram_process / 1024) > 1024){
-                            RAM_UsageRAMCount_V.Text = String.Format("{0:0.00} TB - ", ram_process / 1024 / 1024) + String.Format("%{0:0.0}", usage_ram_percentage);
+                            RAM_UsageRAMCount_V.Text = string.Format("{0:0.00} TB - ", ram_process / 1024 / 1024) + string.Format("%{0:0.0}", usage_ram_percentage);
                         }else{
-                            RAM_UsageRAMCount_V.Text = String.Format("{0:0.00} GB - ", ram_process / 1024) + String.Format("%{0:0.0}", usage_ram_percentage);
+                            RAM_UsageRAMCount_V.Text = string.Format("{0:0.00} GB - ", ram_process / 1024) + string.Format("%{0:0.0}", usage_ram_percentage);
                         }
                     }else{
-                        RAM_UsageRAMCount_V.Text = ram_process.ToString() + " MB - " + String.Format("%{0:0.0}", usage_ram_percentage);
+                        RAM_UsageRAMCount_V.Text = ram_process.ToString() + " MB - " + string.Format("%{0:0.0}", usage_ram_percentage);
                     }
                     if (usable_ram_x64 > 1024){
                         if ((usable_ram_x64 / 1024) > 1024){
-                            RAM_EmptyRamCount_V.Text = String.Format("{0:0.00} TB", usable_ram_x64 / 1024 / 1024);
+                            RAM_EmptyRamCount_V.Text = string.Format("{0:0.00} TB", usable_ram_x64 / 1024 / 1024);
                         }else{
-                            RAM_EmptyRamCount_V.Text = String.Format("{0:0.00} GB", usable_ram_x64 / 1024);
+                            RAM_EmptyRamCount_V.Text = string.Format("{0:0.00} GB", usable_ram_x64 / 1024);
                         }
                     }else{
                         RAM_EmptyRamCount_V.Text = usable_ram_x64.ToString() + " MB";
@@ -1718,29 +1743,55 @@ namespace Glow{
                             }catch (Exception){ }
                             try{
                                 // DISK TOTAL SIZE
-                                var disk_total_size = Convert.ToDouble(logical_drive_info.Properties["Size"].Value) / 1024 / 1024; // in mb
+                                var disk_total_size = Convert.ToDouble(logical_drive_info.Properties["Size"].Value); // in byte
                                 if (disk_total_size > 1024){
                                     if ((disk_total_size / 1024) > 1024){
-                                        disk_total_space_list.Add(String.Format("{0:0.00} TB", disk_total_size / 1024 / 1024));
+                                        if ((disk_total_size / 1024 / 1024) > 1024){
+                                            if ((disk_total_size / 1024 / 1024 / 1024) > 1024){
+                                                // TB
+                                                disk_total_space_list.Add(string.Format("{0:0.00} TB", disk_total_size / 1024 / 1024 / 1024 / 1024));
+                                            }else{
+                                                // GB
+                                                disk_total_space_list.Add(string.Format("{0:0.00} GB", disk_total_size / 1024 / 1024 / 1024));
+                                            }
+                                        }else{
+                                            // MB
+                                            disk_total_space_list.Add(string.Format("{0:0.00} MB", disk_total_size / 1024 / 1024));
+                                        }
                                     }else{
-                                        disk_total_space_list.Add(String.Format("{0:0.00} GB", disk_total_size / 1024));
+                                        // KB
+                                        disk_total_space_list.Add(string.Format("{0:0.0} KB", disk_total_size / 1024));
                                     }
                                 }else{
-                                    disk_total_space_list.Add(String.Format("{0:0.0} MB", disk_total_size));
+                                    // Byte
+                                    disk_total_space_list.Add(string.Format("{0:0.0} " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_byte").Trim())), disk_total_size));
                                 }
                                 DISK_Size_V.Text = disk_total_space_list[0];
                             }catch (Exception){ }
                             try{
                                 // DISK FREE SPACE
-                                var disk_free_space = Convert.ToDouble(logical_drive_info.Properties["FreeSpace"].Value) / 1024 / 1024; // in mb
+                                var disk_free_space = Convert.ToDouble(logical_drive_info.Properties["FreeSpace"].Value); // in byte
                                 if (disk_free_space > 1024){
                                     if ((disk_free_space / 1024) > 1024){
-                                        disk_free_space_list.Add(String.Format("{0:0.00} TB", disk_free_space / 1024 / 1024));
+                                        if ((disk_free_space / 1024 / 1024) > 1024){
+                                            if ((disk_free_space / 1024 / 1024 / 1024) > 1024){
+                                                // TB
+                                                disk_free_space_list.Add(string.Format("{0:0.00} TB", disk_free_space / 1024 / 1024 / 1024 / 1024));
+                                            }else{
+                                                // GB
+                                                disk_free_space_list.Add(string.Format("{0:0.00} GB", disk_free_space / 1024 / 1024 / 1024));
+                                            }
+                                        }else{
+                                            // MB
+                                            disk_free_space_list.Add(string.Format("{0:0.00} MB", disk_free_space / 1024 / 1024));
+                                        }
                                     }else{
-                                        disk_free_space_list.Add(String.Format("{0:0.00} GB", disk_free_space / 1024));
+                                        // KB
+                                        disk_free_space_list.Add(string.Format("{0:0.0} KB", disk_free_space / 1024));
                                     }
                                 }else{
-                                    disk_free_space_list.Add(String.Format("{0:0.0} MB", disk_free_space));
+                                    // Byte
+                                    disk_free_space_list.Add(string.Format("{0:0.0} " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("StorageContent", "se_c_byte").Trim())), disk_free_space));
                                 }
                                 DISK_FreeSpace_V.Text = disk_free_space_list[0];
                             }catch (Exception){ }
@@ -2160,7 +2211,7 @@ namespace Glow{
                     }else{
                         int net_speed_cal = Convert.ToInt32(local_con_speed) / 1000 / 1000;
                         double net_speed_download_cal = Convert.ToDouble(net_speed_cal) / 8;
-                        network_connection_speed_list.Add(net_speed_cal.ToString() + " Mbps - (" + String.Format("{0:0.0} MB/s)", net_speed_download_cal));
+                        network_connection_speed_list.Add(net_speed_cal.ToString() + " Mbps - (" + string.Format("{0:0.0} MB/s)", net_speed_download_cal));
                     }
                     NET_LocalConSpeed_V.Text = network_connection_speed_list[0];
                 }catch (Exception){ }
@@ -2533,7 +2584,7 @@ namespace Glow{
                         try{
                             // BATTERY VOLTAGE
                             double battery_voltage = Convert.ToDouble(query_battery_rotate["DesignVoltage"]) / 1000.0;
-                            BATTERY_Voltage_V.Text = String.Format("{0:0.0} Volt", battery_voltage);
+                            BATTERY_Voltage_V.Text = string.Format("{0:0.0} Volt", battery_voltage);
                         }catch (Exception){ }
                     }
                     BATTERY_RotateBtn.Text = " " + " " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("LeftMenu", "left_m_10").Trim())) + " - " + battery_status;
@@ -2778,112 +2829,136 @@ namespace Glow{
             }
         }
         private void OSRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = OS;
-            menu_btns = 1;
-            menu_rp = 1;
-            header_image_reloader(menu_btns);
-            if (OS_RotateBtn.BackColor != btn_colors[1] && OS_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_1").Trim()));
+            if (menu_btns != 1){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = OS;
+                menu_btns = 1;
+                menu_rp = 1;
+                header_image_reloader(menu_btns);
+                if (OS_RotateBtn.BackColor != btn_colors[1] && OS_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_1").Trim()));
+            }
         }
         private void MBRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = MB;
-            menu_btns = 2;
-            menu_rp = 2;
-            header_image_reloader(menu_btns);
-            if (MB_RotateBtn.BackColor != btn_colors[1] && MB_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_2").Trim()));
+            if (menu_btns != 2){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = MB;
+                menu_btns = 2;
+                menu_rp = 2;
+                header_image_reloader(menu_btns);
+                if (MB_RotateBtn.BackColor != btn_colors[1] && MB_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_2").Trim()));
+            }
         }
         private void CPURotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = CPU;
-            menu_btns = 3;
-            menu_rp = 3;
-            header_image_reloader(menu_btns);
-            if (CPU_RotateBtn.BackColor != btn_colors[1] && CPU_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_3").Trim()));
+            if (menu_btns != 3){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = CPU;
+                menu_btns = 3;
+                menu_rp = 3;
+                header_image_reloader(menu_btns);
+                if (CPU_RotateBtn.BackColor != btn_colors[1] && CPU_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_3").Trim()));
+            }
         }
         private void RAMRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = RAM;
-            menu_btns = 4;
-            menu_rp = 4;
-            header_image_reloader(menu_btns);
-            if (RAM_RotateBtn.BackColor != btn_colors[1] && RAM_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_4").Trim()));
+            if (menu_btns != 4){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = RAM;
+                menu_btns = 4;
+                menu_rp = 4;
+                header_image_reloader(menu_btns);
+                if (RAM_RotateBtn.BackColor != btn_colors[1] && RAM_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_4").Trim()));
+            }
         }
         private void GPURotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = GPU;
-            menu_btns = 5;
-            menu_rp = 5;
-            header_image_reloader(menu_btns);
-            if (GPU_RotateBtn.BackColor != btn_colors[1] && GPU_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_5").Trim()));
+            if (menu_btns != 5){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = GPU;
+                menu_btns = 5;
+                menu_rp = 5;
+                header_image_reloader(menu_btns);
+                if (GPU_RotateBtn.BackColor != btn_colors[1] && GPU_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_5").Trim()));
+            }
         }
         private void DISKRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = DISK;
-            menu_btns = 6;
-            menu_rp = 6;
-            header_image_reloader(menu_btns);
-            if (DISK_RotateBtn.BackColor != btn_colors[1] && DISK_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_6").Trim()));
+            if (menu_btns != 6){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = DISK;
+                menu_btns = 6;
+                menu_rp = 6;
+                header_image_reloader(menu_btns);
+                if (DISK_RotateBtn.BackColor != btn_colors[1] && DISK_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_6").Trim()));
+            }
         }
         private void NETWORKRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = NETWORK;
-            menu_btns = 7;
-            menu_rp = 7;
-            header_image_reloader(menu_btns);
-            if (NET_RotateBtn.BackColor != btn_colors[1] && NET_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_7").Trim()));
+            if (menu_btns != 7){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = NETWORK;
+                menu_btns = 7;
+                menu_rp = 7;
+                header_image_reloader(menu_btns);
+                if (NET_RotateBtn.BackColor != btn_colors[1] && NET_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_7").Trim()));
+            }
         }
         private void USB_RotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = USB;
-            menu_btns = 8;
-            menu_rp = 8;
-            header_image_reloader(menu_btns);
-            if (USB_RotateBtn.BackColor != btn_colors[1] && USB_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_8").Trim()));
+            if (menu_btns != 8){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = USB;
+                menu_btns = 8;
+                menu_rp = 8;
+                header_image_reloader(menu_btns);
+                if (USB_RotateBtn.BackColor != btn_colors[1] && USB_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_8").Trim()));
+            }
         }
         private void SOUND_RotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = SOUND;
-            menu_btns = 9;
-            menu_rp = 9;
-            header_image_reloader(menu_btns);
-            if (SOUND_RotateBtn.BackColor != btn_colors[1] && SOUND_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_9").Trim()));
+            if (menu_btns != 9){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = SOUND;
+                menu_btns = 9;
+                menu_rp = 9;
+                header_image_reloader(menu_btns);
+                if (SOUND_RotateBtn.BackColor != btn_colors[1] && SOUND_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_9").Trim()));
+            }
         }
         private void PILRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = BATTERY;
-            menu_btns = 10;
-            menu_rp = 10;
-            header_image_reloader(menu_btns);
-            if (BATTERY_RotateBtn.BackColor != btn_colors[1] && BATTERY_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_10").Trim()));
+            if (menu_btns != 10){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = BATTERY;
+                menu_btns = 10;
+                menu_rp = 10;
+                header_image_reloader(menu_btns);
+                if (BATTERY_RotateBtn.BackColor != btn_colors[1] && BATTERY_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_10").Trim()));
+            }
         }
         private void OSDRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = OSD;
-            menu_btns = 11;
-            menu_rp = 11;
-            header_image_reloader(menu_btns);
-            if (OSD_RotateBtn.BackColor != btn_colors[1] && OSD_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_11").Trim()));
+            if (menu_btns != 11){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = OSD;
+                menu_btns = 11;
+                menu_rp = 11;
+                header_image_reloader(menu_btns);
+                if (OSD_RotateBtn.BackColor != btn_colors[1] && OSD_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_11").Trim()));
+            }
         }
         private void ServicesRotateBtn_Click(object sender, EventArgs e){
-            GlowGetLangs g_lang = new GlowGetLangs(lang_path);
-            MainContent.SelectedTab = GSERVICE;
-            menu_btns = 12;
-            menu_rp = 12;
-            header_image_reloader(menu_btns);
-            if (SERVICES_RotateBtn.BackColor != btn_colors[1] && SERVICES_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
-            HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_12").Trim()));
+            if (menu_btns != 12){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MainContent.SelectedTab = GSERVICE;
+                menu_btns = 12;
+                menu_rp = 12;
+                header_image_reloader(menu_btns);
+                if (SERVICES_RotateBtn.BackColor != btn_colors[1] && SERVICES_RotateBtn.BackColor != btn_colors[3]){ active_page(sender); }
+                HeaderText.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_12").Trim()));
+            }
         }
         // LANGUAGES SETTINGS
         // ======================================================================================================
