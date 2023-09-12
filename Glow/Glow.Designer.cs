@@ -439,6 +439,9 @@
             this.HeaderImage = new System.Windows.Forms.PictureBox();
             this.HeaderText = new System.Windows.Forms.Label();
             this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.hidingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hidingModeOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hidingModeOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LeftMenuPanel.SuspendLayout();
             this.HeaderMenu.SuspendLayout();
             this.MainContent.SuspendLayout();
@@ -858,7 +861,8 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.themeToolStripMenuItem,
             this.languageToolStripMenuItem,
-            this.initialViewToolStripMenuItem});
+            this.initialViewToolStripMenuItem,
+            this.hidingModeToolStripMenuItem});
             this.settingsToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
@@ -871,7 +875,7 @@
             this.lightThemeToolStripMenuItem,
             this.darkThemeToolStripMenuItem});
             this.themeToolStripMenuItem.Name = "themeToolStripMenuItem";
-            this.themeToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.themeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.themeToolStripMenuItem.Text = "Tema";
             // 
             // lightThemeToolStripMenuItem
@@ -901,7 +905,7 @@
             this.englishToolStripMenuItem,
             this.turkishToolStripMenuItem});
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.languageToolStripMenuItem.Text = "Dil";
             // 
             // englishToolStripMenuItem
@@ -931,7 +935,7 @@
             this.windowedToolStripMenuItem,
             this.fullScreenToolStripMenuItem});
             this.initialViewToolStripMenuItem.Name = "initialViewToolStripMenuItem";
-            this.initialViewToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+            this.initialViewToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.initialViewToolStripMenuItem.Text = "Initial View";
             // 
             // windowedToolStripMenuItem
@@ -939,7 +943,7 @@
             this.windowedToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.windowedToolStripMenuItem.Name = "windowedToolStripMenuItem";
             this.windowedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.windowedToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.windowedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.windowedToolStripMenuItem.Text = "Windowed";
             this.windowedToolStripMenuItem.Click += new System.EventHandler(this.windowedToolStripMenuItem_Click);
             // 
@@ -948,7 +952,7 @@
             this.fullScreenToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.fullScreenToolStripMenuItem.Name = "fullScreenToolStripMenuItem";
             this.fullScreenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.fullScreenToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.fullScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fullScreenToolStripMenuItem.Text = "Full Screen";
             this.fullScreenToolStripMenuItem.Click += new System.EventHandler(this.fullScreenToolStripMenuItem_Click);
             // 
@@ -967,8 +971,8 @@
             this.websiteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.websiteToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.websiteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.websiteToolStripMenuItem.Text = "Website";
             this.websiteToolStripMenuItem.Click += new System.EventHandler(this.websiteToolStripMenuItem_Click);
             // 
@@ -977,8 +981,8 @@
             this.gitHubToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.gitHubToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
-            this.gitHubToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.gitHubToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
+            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.gitHubToolStripMenuItem.Text = "GitHub";
             this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
             // 
@@ -1042,7 +1046,7 @@
             this.os_panel_5.Location = new System.Drawing.Point(10, 1281);
             this.os_panel_5.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_5.Name = "os_panel_5";
-            this.os_panel_5.Size = new System.Drawing.Size(713, 275);
+            this.os_panel_5.Size = new System.Drawing.Size(696, 275);
             this.os_panel_5.TabIndex = 0;
             // 
             // OS_AntiSpywareProgram
@@ -1255,7 +1259,7 @@
             this.os_panel_4.Location = new System.Drawing.Point(10, 963);
             this.os_panel_4.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_4.Name = "os_panel_4";
-            this.os_panel_4.Size = new System.Drawing.Size(713, 316);
+            this.os_panel_4.Size = new System.Drawing.Size(696, 316);
             this.os_panel_4.TabIndex = 0;
             // 
             // OS_SystemWorkTime_V
@@ -1470,7 +1474,7 @@
             this.os_panel_3.Location = new System.Drawing.Point(10, 645);
             this.os_panel_3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_3.Name = "os_panel_3";
-            this.os_panel_3.Size = new System.Drawing.Size(713, 316);
+            this.os_panel_3.Size = new System.Drawing.Size(696, 316);
             this.os_panel_3.TabIndex = 0;
             // 
             // OS_TimeZone
@@ -1700,7 +1704,7 @@
             this.os_panel_2.Location = new System.Drawing.Point(10, 327);
             this.os_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_2.Name = "os_panel_2";
-            this.os_panel_2.Size = new System.Drawing.Size(713, 316);
+            this.os_panel_2.Size = new System.Drawing.Size(696, 316);
             this.os_panel_2.TabIndex = 0;
             // 
             // OS_SystemBuild
@@ -1914,7 +1918,7 @@
             this.os_panel_1.Location = new System.Drawing.Point(10, 9);
             this.os_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.os_panel_1.Name = "os_panel_1";
-            this.os_panel_1.Size = new System.Drawing.Size(713, 316);
+            this.os_panel_1.Size = new System.Drawing.Size(696, 316);
             this.os_panel_1.TabIndex = 0;
             // 
             // OS_SystemUser
@@ -2140,7 +2144,7 @@
             this.mb_panel_3.Location = new System.Drawing.Point(10, 645);
             this.mb_panel_3.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_3.Name = "mb_panel_3";
-            this.mb_panel_3.Size = new System.Drawing.Size(343, 138);
+            this.mb_panel_3.Size = new System.Drawing.Size(326, 138);
             this.mb_panel_3.TabIndex = 0;
             // 
             // MB_BiosMajorMinor
@@ -2247,7 +2251,7 @@
             this.mb_panel_2.Location = new System.Drawing.Point(10, 327);
             this.mb_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_2.Name = "mb_panel_2";
-            this.mb_panel_2.Size = new System.Drawing.Size(719, 316);
+            this.mb_panel_2.Size = new System.Drawing.Size(702, 316);
             this.mb_panel_2.TabIndex = 0;
             // 
             // MB_TPMStatus
@@ -2476,7 +2480,7 @@
             this.mb_panel_1.Location = new System.Drawing.Point(10, 9);
             this.mb_panel_1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
             this.mb_panel_1.Name = "mb_panel_1";
-            this.mb_panel_1.Size = new System.Drawing.Size(719, 316);
+            this.mb_panel_1.Size = new System.Drawing.Size(702, 316);
             this.mb_panel_1.TabIndex = 0;
             // 
             // MB_SystemSKU
@@ -2704,7 +2708,7 @@
             this.cpu_panel_2.Location = new System.Drawing.Point(10, 372);
             this.cpu_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.cpu_panel_2.Name = "cpu_panel_2";
-            this.cpu_panel_2.Size = new System.Drawing.Size(715, 320);
+            this.cpu_panel_2.Size = new System.Drawing.Size(698, 320);
             this.cpu_panel_2.TabIndex = 1;
             // 
             // CPU_VMMonitorExtension_V
@@ -2935,7 +2939,7 @@
             this.cpu_panel_1.Location = new System.Drawing.Point(10, 9);
             this.cpu_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.cpu_panel_1.Name = "cpu_panel_1";
-            this.cpu_panel_1.Size = new System.Drawing.Size(715, 361);
+            this.cpu_panel_1.Size = new System.Drawing.Size(698, 361);
             this.cpu_panel_1.TabIndex = 0;
             // 
             // CPU_L1
@@ -3200,7 +3204,7 @@
             this.ram_panel_2.Location = new System.Drawing.Point(10, 327);
             this.ram_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.ram_panel_2.Name = "ram_panel_2";
-            this.ram_panel_2.Size = new System.Drawing.Size(718, 542);
+            this.ram_panel_2.Size = new System.Drawing.Size(701, 542);
             this.ram_panel_2.TabIndex = 1;
             // 
             // RAM_SelectList
@@ -3566,7 +3570,7 @@
             this.ram_panel_1.Location = new System.Drawing.Point(10, 9);
             this.ram_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.ram_panel_1.Name = "ram_panel_1";
-            this.ram_panel_1.Size = new System.Drawing.Size(718, 316);
+            this.ram_panel_1.Size = new System.Drawing.Size(701, 316);
             this.ram_panel_1.TabIndex = 0;
             // 
             // RAM_UsageVirtualRam
@@ -3794,7 +3798,7 @@
             this.gpu_panel_2.Location = new System.Drawing.Point(10, 466);
             this.gpu_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.gpu_panel_2.Name = "gpu_panel_2";
-            this.gpu_panel_2.Size = new System.Drawing.Size(719, 317);
+            this.gpu_panel_2.Size = new System.Drawing.Size(702, 317);
             this.gpu_panel_2.TabIndex = 0;
             // 
             // GPU_ScreenRefreshRate
@@ -4031,7 +4035,7 @@
             this.gpu_panel_1.Location = new System.Drawing.Point(10, 9);
             this.gpu_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.gpu_panel_1.Name = "gpu_panel_1";
-            this.gpu_panel_1.Size = new System.Drawing.Size(719, 455);
+            this.gpu_panel_1.Size = new System.Drawing.Size(702, 455);
             this.gpu_panel_1.TabIndex = 0;
             // 
             // GPU_DeviceID
@@ -4351,7 +4355,7 @@
             this.disk_panel_2.Location = new System.Drawing.Point(10, 511);
             this.disk_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.disk_panel_2.Name = "disk_panel_2";
-            this.disk_panel_2.Size = new System.Drawing.Size(715, 546);
+            this.disk_panel_2.Size = new System.Drawing.Size(698, 546);
             this.disk_panel_2.TabIndex = 0;
             // 
             // DISK_Bootable_V
@@ -4709,7 +4713,7 @@
             this.disk_panel_1.Location = new System.Drawing.Point(10, 9);
             this.disk_panel_1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 1);
             this.disk_panel_1.Name = "disk_panel_1";
-            this.disk_panel_1.Size = new System.Drawing.Size(715, 500);
+            this.disk_panel_1.Size = new System.Drawing.Size(698, 500);
             this.disk_panel_1.TabIndex = 0;
             // 
             // DISK_Man_V
@@ -5050,7 +5054,7 @@
             this.network_panel_2.Location = new System.Drawing.Point(10, 513);
             this.network_panel_2.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.network_panel_2.Name = "network_panel_2";
-            this.network_panel_2.Size = new System.Drawing.Size(719, 92);
+            this.network_panel_2.Size = new System.Drawing.Size(702, 92);
             this.network_panel_2.TabIndex = 0;
             // 
             // NET_IPv6Adress_V
@@ -5138,7 +5142,7 @@
             this.network_panel_1.Location = new System.Drawing.Point(10, 9);
             this.network_panel_1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
             this.network_panel_1.Name = "network_panel_1";
-            this.network_panel_1.Size = new System.Drawing.Size(719, 502);
+            this.network_panel_1.Size = new System.Drawing.Size(702, 502);
             this.network_panel_1.TabIndex = 0;
             // 
             // NET_DeviceID_V
@@ -6361,6 +6365,34 @@
             this.MainToolTip.OwnerDraw = true;
             this.MainToolTip.Draw += new System.Windows.Forms.DrawToolTipEventHandler(this.MainToolTip_Draw);
             // 
+            // hidingModeToolStripMenuItem
+            // 
+            this.hidingModeToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.hidingModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hidingModeOnToolStripMenuItem,
+            this.hidingModeOffToolStripMenuItem});
+            this.hidingModeToolStripMenuItem.Name = "hidingModeToolStripMenuItem";
+            this.hidingModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hidingModeToolStripMenuItem.Text = "Hiding Mode";
+            // 
+            // hidingModeOnToolStripMenuItem
+            // 
+            this.hidingModeOnToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.hidingModeOnToolStripMenuItem.Name = "hidingModeOnToolStripMenuItem";
+            this.hidingModeOnToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.hidingModeOnToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.hidingModeOnToolStripMenuItem.Text = "Hiding Mode On";
+            this.hidingModeOnToolStripMenuItem.Click += new System.EventHandler(this.hidingModeOnToolStripMenuItem_Click);
+            // 
+            // hidingModeOffToolStripMenuItem
+            // 
+            this.hidingModeOffToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            this.hidingModeOffToolStripMenuItem.Name = "hidingModeOffToolStripMenuItem";
+            this.hidingModeOffToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10;
+            this.hidingModeOffToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.hidingModeOffToolStripMenuItem.Text = "Hiding Mode Off";
+            this.hidingModeOffToolStripMenuItem.Click += new System.EventHandler(this.hidingModeOffToolStripMenuItem_Click);
+            // 
             // Glow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -6863,6 +6895,9 @@
         internal System.Windows.Forms.Label DISK_Boot;
         internal System.Windows.Forms.Label DISK_Health_V;
         internal System.Windows.Forms.Label DISK_Health;
+        private System.Windows.Forms.ToolStripMenuItem hidingModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hidingModeOnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hidingModeOffToolStripMenuItem;
     }
 }
 
