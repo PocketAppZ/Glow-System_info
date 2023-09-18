@@ -7,9 +7,9 @@ namespace Glow{
     internal class GlowModules{
         // ======================================================================================================
         // SAVE PATHS
-        public static string glow_lf = @"langs";                                // Main Path
-        public static string glow_lang_en = glow_lf + @"\English.ini";          // English          | en
-        public static string glow_lang_tr = glow_lf + @"\Turkish.ini";          // Turkish          | tr
+        public static string glow_lf = @"g_langs";                              // Main Path
+        public static string glow_lang_en = glow_lf + @"\English.ini";          // English  | en
+        public static string glow_lang_tr = glow_lf + @"\Turkish.ini";          // Turkish  | tr
         // ======================================================================================================
         // GLOW SETTINGS SAVE CLASS
         public class GlowGetLangs{
@@ -89,11 +89,6 @@ namespace Glow{
             public int dmPanningWidth;
             public int dmPanningHeight;
         }
-        // ======================================================================================================
-        // BIOS FIRMWARE TYPE
-        public const int ERROR_INVALID_FUNCTION = 1;
-        [DllImport("kernel32.dll", EntryPoint = "GetFirmwareEnvironmentVariableA", SetLastError = true, CharSet = CharSet.Unicode, ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
-        public static extern int GetBIOSType(string lpName, string lpGUID, IntPtr pBuffer, uint size);
         // TITLE BAR SETTINGS DWM API
         // ======================================================================================================
         [DllImport("DwmApi")]

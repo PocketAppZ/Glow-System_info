@@ -130,9 +130,9 @@ namespace Glow{
                         }
                     }else{
                         if (ui_lang == "tr"){
-                            MessageBox.Show($"Langs klasörü bulunamadı.\n{Application.ProductName} kapatılıyor.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"G_langs klasörü bulunamadı.\n{Application.ProductName} kapatılıyor.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }else{
-                            MessageBox.Show($"Langs folder not found.\nThe {Application.ProductName} is closing.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"G_langs folder not found.\nThe {Application.ProductName} is closing.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         glow_exit();
                     }
@@ -174,7 +174,7 @@ namespace Glow{
                 SERVICE_Column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             // ALL DGV AND PANEL WIDTH
-            int c1 = 120, c2 = 215, c3 = 90, c4 = 80, c5 = 80;
+            int c1 = 120, c2 = 195, c3 = 90, c4 = 65, c5 = 95;
             // INSTALLED DRIVERS
             OSD_DataMainTable.Columns[0].Width = c1;
             OSD_DataMainTable.Columns[1].Width = c2;
@@ -189,36 +189,38 @@ namespace Glow{
             SERVICE_DataMainTable.Columns[3].Width = c4;
             SERVICE_DataMainTable.Columns[4].Width = c5;
             SERVICE_DataMainTable.ClearSelection();
-            // PANEL WIDTH SETTINGS
-            int global_width_1 = 761, global_width_2 = 778, global_width_3 = 777;
-            // GW 1
-            os_panel_1.Width = global_width_1;
-            os_panel_2.Width = global_width_1;
-            os_panel_3.Width = global_width_1;
-            os_panel_4.Width = global_width_1;
-            os_panel_5.Width = global_width_1;
-            // GW 2
-            mb_panel_1.Width = global_width_2;
-            mb_panel_2.Width = global_width_2;
-            mb_panel_3.Width = global_width_2;
-            cpu_panel_1.Width = global_width_2;
-            cpu_panel_2.Width = global_width_2;
-            ram_panel_1.Width = global_width_2;
-            ram_panel_2.Width = global_width_2;
-            gpu_panel_1.Width = global_width_2;
-            gpu_panel_2.Width = global_width_2;
-            disk_panel_1.Width = global_width_2;
-            disk_panel_2.Width = global_width_2;
-            // GW 3
-            network_panel_1.Width = global_width_2;
-            network_panel_2.Width = global_width_2;
-            usb_panel_1.Width = global_width_3;
-            sound_panel_1.Width = global_width_3;
-            battery_panel_1.Width = global_width_3;
-            osd_panel_1.Width = global_width_3;
-            service_panel_1.Width = global_width_3;
-            // DGV DOUBLE BUFFER
+            // OSD AND SERVICE CLEAR BTN DPI HEIGHT
+            OSD_TextBoxClearBtn.Height = OSD_TextBox.Height;
+            SERVICE_TextBoxClearBtn.Height = SERVICE_TextBox.Height;
+            // TLP HEIGHT SETTINGS
+            //OS_TLP.Height = 1554;
+            //MB_TLP.Height = 780;
+            //CPU_TLP.Height = 692;
+            //RAM_TLP.Height = 869;
+            //GPU_TLP.Height = 782;
+            //DISK_TLP.Height = 1057;
+            //NET_TLP.Height = 600;
+            //USB_TLP.Height = 253;
+            //SOUND_TLP.Height = 300;
+            //BATTERY_TLP.Height = 250;
+            //OSD_TLP.Height = 547;
+            //SERVICES_TLP.Height = 547;
+            // TAB CONTROL DOUBLE BUFFERS
             typeof(TabControl).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, MainContent, new object[]{ true });
+            // TLP DOUBLE BUFFER
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, OS_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, MB_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, CPU_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, RAM_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, GPU_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, DISK_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, NET_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, USB_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, SOUND_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, BATTERY_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, OSD_TLP, new object[]{ true });
+            typeof(TableLayoutPanel).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, SERVICE_TLP, new object[]{ true });
+            // DGV DOUBLE BUFFER
             typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, OSD_DataMainTable, new object[]{ true });
             typeof(DataGridView).InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, SERVICE_DataMainTable, new object[]{ true });
             // THEME - LANG - VIEW MODE PRELOADER
@@ -927,17 +929,6 @@ namespace Glow{
                 foreach (ManagementObject query_md_rotate in search_md.Get()){
                     // PRIMARY BUS TYPE
                     MB_PrimaryBusType_V.Text = Convert.ToString(query_md_rotate["PrimaryBusType"]);
-                }
-            }catch (Exception){ }
-            try{
-                // BIOS FIRMWARE TYPE
-                GetBIOSType("", "{00000000-0000-0000-0000-000000000000}", IntPtr.Zero, 0);
-                if (Marshal.GetLastWin32Error() == ERROR_INVALID_FUNCTION){
-                    // Legacy
-                    MB_BiosMode_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_2").Trim())) + " (Legacy)";
-                }else{
-                    // UEFI
-                    MB_BiosMode_V.Text = "UEFI";
                 }
             }catch (Exception){ }
             try{
@@ -2153,6 +2144,35 @@ namespace Glow{
                                 }
                                 DISK_DriveCompressed_V.Text = disk_drive_compressed_list[0];
                             }catch (Exception){ }
+                            try{
+                                // MB BIOS TYPE
+                                var disk_index = Convert.ToString(drive_info.Properties["Index"].Value).Trim();
+                                ManagementObjectSearcher search_bios_type = new ManagementObjectSearcher("root\\Microsoft\\Windows\\Storage", $"SELECT * FROM MSFT_Disk WHERE Number={disk_index}");
+                                ManagementObjectSearcher search_windows_disk = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_OperatingSystem");
+                                foreach (ManagementObject sbt in search_bios_type.Get()){
+                                    foreach (ManagementObject swd in search_windows_disk.Get()){
+                                        //Console.WriteLine(sbt["Model"].ToString());
+                                        var detect_windows_disk = swd["SystemDrive"];
+                                        var disk_volume_id = Convert.ToString(logical_drive_info.Properties["Name"].Value).Trim();
+                                        if (disk_volume_id != "" || disk_volume_id != string.Empty){
+                                            if (detect_windows_disk.ToString().Trim() == disk_volume_id.ToString().Trim()){
+                                                //Console.WriteLine("||| " + sbt["Model"].ToString());
+                                                var disk_style = Convert.ToInt32(sbt["PartitionStyle"]);
+                                                if (disk_style == 1){
+                                                    // MBR
+                                                    MB_BiosMode_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_2").Trim())) + " (Legacy)";
+                                                }else if (disk_style == 2){
+                                                    // GPT
+                                                    MB_BiosMode_V.Text = "UEFI";
+                                                }else{
+                                                    // NULL
+                                                    MB_BiosMode_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_2").Trim())) + " (Legacy)";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }catch (Exception){ }
                         }
                     }
                 }
@@ -2648,18 +2668,22 @@ namespace Glow{
             BATTERY_Model_V.Visible = false;
             BATTERY_Name.Visible = false;
             BATTERY_Name_V.Visible = false;
+            BATTERY_Voltage.Visible = false;
+            BATTERY_Voltage_V.Visible = false;
             BATTERY_Type.Visible = false;
             BATTERY_Type_V.Visible = false;
-            battery_panel_1.Height = 43;
+            //battery_panel_1.Height = 55;
         }
         private void battery_visible_on(){
             BATTERY_Model.Visible = true;
             BATTERY_Model_V.Visible = true;
             BATTERY_Name.Visible = true;
             BATTERY_Name_V.Visible = true;
+            BATTERY_Voltage.Visible = true;
+            BATTERY_Voltage_V.Visible = true;
             BATTERY_Type.Visible = true;
             BATTERY_Type_V.Visible = true;
-            battery_panel_1.Height = 225;
+            //battery_panel_1.Height = 225;
         }
         private void laptop_bg_process(){
             GlowGetLangs g_lang = new GlowGetLangs(lang_path);
@@ -4354,7 +4378,7 @@ namespace Glow{
                 int ram_slot = RAM_SelectList.Items.Count;
                 for (int rs = 1; rs <= ram_slot; rs++){
                     RAM_SelectList.SelectedIndex = rs - 1;
-                    PrintEngineList.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Memory", "my_7").Trim())) + " #" + rs + Environment.NewLine);
+                    PrintEngineList.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Memory", "my_8").Trim())) + " #" + rs + Environment.NewLine);
                     PrintEngineList.Add(RAM_Amount.Text + " " + RAM_Amount_V.Text);
                     PrintEngineList.Add(RAM_Type.Text + " " + RAM_Type_V.Text);
                     PrintEngineList.Add(RAM_Frequency.Text + " " + RAM_Frequency_V.Text);
@@ -4719,7 +4743,7 @@ namespace Glow{
                 int ram_slot = RAM_SelectList.Items.Count;
                 for (int rs = 1; rs <= ram_slot; rs++){
                     RAM_SelectList.SelectedIndex = rs - 1;
-                    PrintEngineList.Add($"\t\t\t\t<h4><span>{Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Memory", "my_7").Trim())) + "</span><span>#" + rs}</span></h4>");
+                    PrintEngineList.Add($"\t\t\t\t<h4><span>{Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Memory", "my_8").Trim())) + "</span><span>#" + rs}</span></h4>");
                     PrintEngineList.Add("\t\t\t<ul>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{RAM_Amount.Text}</span><span>{RAM_Amount_V.Text}</span></li>");
                     PrintEngineList.Add($"\t\t\t\t<li><span>{RAM_Type.Text}</span><span>{RAM_Type_V.Text}</span></li>");
