@@ -323,6 +323,26 @@ namespace Glow.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
         /// </summary>
+        internal static System.Drawing.Bitmap top_cache_clean_dark {
+            get {
+                object obj = ResourceManager.GetObject("top_cache_clean_dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_cache_clean_light {
+            get {
+                object obj = ResourceManager.GetObject("top_cache_clean_light", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
         internal static System.Drawing.Bitmap top_export_dark {
             get {
                 object obj = ResourceManager.GetObject("top_export_dark", resourceCulture);
@@ -483,6 +503,26 @@ namespace Glow.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
         /// </summary>
+        internal static System.Drawing.Bitmap top_sfc_and_dism_dark {
+            get {
+                object obj = ResourceManager.GetObject("top_sfc_and_dism_dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_sfc_and_dism_light {
+            get {
+                object obj = ResourceManager.GetObject("top_sfc_and_dism_light", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
         internal static System.Drawing.Bitmap top_theme_dark {
             get {
                 object obj = ResourceManager.GetObject("top_theme_dark", resourceCulture);
@@ -496,6 +536,26 @@ namespace Glow.Properties {
         internal static System.Drawing.Bitmap top_theme_light {
             get {
                 object obj = ResourceManager.GetObject("top_theme_light", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_tools_dark {
+            get {
+                object obj = ResourceManager.GetObject("top_tools_dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
+        internal static System.Drawing.Bitmap top_tools_light {
+            get {
+                object obj = ResourceManager.GetObject("top_tools_light", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

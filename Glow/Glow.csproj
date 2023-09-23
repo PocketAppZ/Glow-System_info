@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.84.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.85.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -176,10 +176,28 @@
       <DependentUpon>Glow.cs</DependentUpon>
     </Compile>
     <Compile Include="GlowModules.cs" />
+    <Compile Include="glow_tools\GlowCacheCleanupTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="glow_tools\GlowCacheCleanupTool.Designer.cs">
+      <DependentUpon>GlowCacheCleanupTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="glow_tools\GlowSFCandDISMAutoTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="glow_tools\GlowSFCandDISMAutoTool.Designer.cs">
+      <DependentUpon>GlowSFCandDISMAutoTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Glow.resx">
       <DependentUpon>Glow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="glow_tools\GlowCacheCleanupTool.resx">
+      <DependentUpon>GlowCacheCleanupTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="glow_tools\GlowSFCandDISMAutoTool.resx">
+      <DependentUpon>GlowSFCandDISMAutoTool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -267,6 +285,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GlowFavicon.ico" />
+    <None Include="glow_images\glow_interface\top_menu\dark_theme\top_tools_dark.png" />
+    <None Include="glow_images\glow_interface\top_menu\dark_theme\top_sfc_and_dism_dark.png" />
+    <None Include="glow_images\glow_interface\top_menu\dark_theme\top_cache_clean_dark.png" />
+    <None Include="glow_images\glow_interface\top_menu\light_theme\top_tools_light.png" />
+    <None Include="glow_images\glow_interface\top_menu\light_theme\top_sfc_and_dism_light.png" />
+    <None Include="glow_images\glow_interface\top_menu\light_theme\top_cache_clean_light.png" />
     <None Include="glow_images\glow_interface\top_menu\light_theme\top_hiding_light.png" />
     <None Include="glow_images\glow_interface\top_menu\dark_theme\top_hiding_dark.png" />
   </ItemGroup>

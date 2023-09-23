@@ -16,15 +16,20 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.VisualBasic.Devices;
 using System.Runtime.InteropServices;
+// GLOW MODULES
+using Glow.glow_tools;
 using static Glow.GlowModules;
 
 namespace Glow{
     public partial class Glow : Form{
         public Glow(){ InitializeComponent(); CheckForIllegalCrossThreadCalls = false; }
+        // GLOBAL VARIABLES
+        public static string lang, lang_path;
+        public  static int theme;
         // ======================================================================================================
         // VARIABLES
-        int theme, menu_btns = 1, menu_rp = 1, initial_status, hiding_status, hiding_mode_wrapper;
-        string lang, lang_path, wp_rotate, wp_resoulation, preloader_os;
+        int menu_btns = 1, menu_rp = 1, initial_status, hiding_status, hiding_mode_wrapper;
+        string wp_rotate, wp_resoulation, preloader_os;
         bool loop_status = true, pe_loop_status = true, os_support_check_status;
         readonly string website_link = "https://roines45.github.io", github_link = "https://github.com/roines45", glow_last_support_version_link = "https://github.com/roines45/glow/releases/tag/v1.79";
         // ======================================================================================================
@@ -344,6 +349,9 @@ namespace Glow{
             // OS ASYNC BG TASK
             Task task_os_bg = new Task(os_bg_process);
             task_os_bg.Start();
+            // CPU ASYNC BG TASK
+            Task task_cpu_bg = new Task(processor_bg_process);
+            task_cpu_bg.Start();
             // RAM ASYNC STARTER
             Task task_ram_bg = new Task(ram_bg_process);
             task_ram_bg.Start();
@@ -518,6 +526,15 @@ namespace Glow{
                     OS_LastBootTime_V.Text = last_bt_process;
                 }catch (Exception){ }
                 try{
+                    // OS SHUTDOWN TIME
+                    string sd_time_path = @"System\CurrentControlSet\Control\Windows";
+                    RegistryKey sd_time_key = Registry.LocalMachine.OpenSubKey(sd_time_path);
+                    byte[] sd_time_val = (byte[])sd_time_key.GetValue("ShutdownTime");
+                    long sd_time_as_long = BitConverter.ToInt64(sd_time_val, 0);
+                    DateTime shut_down_time = DateTime.FromFileTime(sd_time_as_long);
+                    OS_SystemLastShutDown_V.Text = shut_down_time.ToString("dd:MM:yyyy - HH:mm:ss");
+                }catch (Exception){ }
+                try{
                     // PORTABLE OS STATUS
                     bool system_portable_status = Convert.ToBoolean(query_os_rotate["PortableOperatingSystem"]);
                     if (system_portable_status == true){
@@ -644,6 +661,24 @@ namespace Glow{
                 }
             }catch (Exception){ }
             try{
+                // OS BLUESCREEN CHECK
+                string minidump_path = @"C:\Windows\Minidump";
+                if (Directory.Exists(minidump_path)){
+                    int minidump_count = Directory.GetFiles(minidump_path, "*.dmp", SearchOption.AllDirectories).Length;
+                    if (minidump_count > 0){
+                        OS_Minidump_V.Text = string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_md_t").Trim())), minidump_count);
+                        OS_MinidumpOpen.Visible = true;
+                        MainToolTip.SetToolTip(OS_MinidumpOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_md_o").Trim())), minidump_path));
+                    }else{
+                        OS_Minidump_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_md_f").Trim()));
+                        OS_MinidumpOpen.Visible = false;
+                    }
+                }else{
+                    OS_Minidump_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_md_f").Trim()));
+                    OS_MinidumpOpen.Visible = false;
+                }
+            }catch (Exception){ }
+            try{
                 // GET WALLPAPER
                 foreach (ManagementObject query_desktop_rotate in search_desktop.Get()){
                     string get_wallpaper = Convert.ToString(query_desktop_rotate["Wallpaper"]);
@@ -694,9 +729,9 @@ namespace Glow{
                             }
                             // HOVER HIDING WRAPPER
                             if (hiding_mode_wrapper != 1){
-                                MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_35").Trim())), wp_rotate));
+                                MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_37").Trim())), wp_rotate));
                             }else{
-                                MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_35").Trim())), new string('*', wp_rotate.Length) + Path.GetExtension(wp_rotate)));
+                                MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_37").Trim())), new string('*', wp_rotate.Length) + Path.GetExtension(wp_rotate)));
                             }
                         }else{
                             OS_Wallpaper_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_c_8").Trim()));
@@ -821,8 +856,19 @@ namespace Glow{
                 }while (loop_status == true);
             }catch (Exception){ }
         }
+        private void OS_MinidumpOpen_Click(object sender, EventArgs e){
+            try{
+                // OPEN MINIDUMP FOLDER
+                string minidump_path = @"C:\Windows\Minidump";
+                Process.Start(minidump_path);
+            }catch (Exception){
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                MessageBox.Show(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Os_Content", "os_md_e").Trim())), Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private void GoWallpaperRotate_Click(object sender, EventArgs e){
             try{
+                // OPEN WALLPAPER
                 string wallpaper_start_path = string.Format("/select, \"{0}\"", wp_rotate.Trim().Replace("/", @"\"));
                 ProcessStartInfo psi = new ProcessStartInfo("explorer.exe", wallpaper_start_path);
                 Process.Start(psi);
@@ -927,8 +973,24 @@ namespace Glow{
             }
             try{
                 foreach (ManagementObject query_md_rotate in search_md.Get()){
-                    // PRIMARY BUS TYPE
-                    MB_PrimaryBusType_V.Text = Convert.ToString(query_md_rotate["PrimaryBusType"]);
+                    try{
+                        // PRIMARY BUS TYPE
+                        string mb_primary_bus_type = Convert.ToString(query_md_rotate["PrimaryBusType"]).Trim();
+                        if (mb_primary_bus_type != "" || mb_primary_bus_type != string.Empty){
+                            MB_PrimaryBusType_V.Text = mb_primary_bus_type;
+                        }else{
+                            MB_PrimaryBusType_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_1").Trim()));
+                        }
+                    }catch (Exception){ }
+                    try{
+                        // SECONDARY BUS TYPE
+                        string mb_secondary_bus_type = Convert.ToString(query_md_rotate["SecondaryBusType"]).Trim();
+                        if (mb_secondary_bus_type != "" || mb_secondary_bus_type != string.Empty){
+                            MB_SecondaryBusType_V.Text = mb_secondary_bus_type;
+                        }else{
+                            MB_SecondaryBusType_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_1").Trim()));
+                        }
+                    }catch (Exception){ }
                 }
             }catch (Exception){ }
             try{
@@ -940,8 +1002,9 @@ namespace Glow{
                     MB_SecureBoot_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_4").Trim()));
                 }
             }catch (Exception){ }
-            try{
-                foreach (ManagementObject query_tpm in search_tpm.Get()){
+            foreach (ManagementObject query_tpm in search_tpm.Get()){
+                try{
+                    // TPM VERSION
                     bool tpm_status = Convert.ToBoolean(query_tpm["IsActivated_InitialValue"]);
                     string tpm_version = Convert.ToString(query_tpm["SpecVersion"]);
                     char[] split_char = { ',' };
@@ -951,11 +1014,88 @@ namespace Glow{
                     }else{
                         MB_TPMStatus_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
                     }
-                }
-                if (MB_TPMStatus_V.Text == "N/A" || MB_TPMStatus_V.Text == string.Empty){
-                    MB_TPMStatus_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
-                }
-            }catch (Exception){ }
+                }catch (Exception){ }
+                try{
+                    // TPM PHYSICAL VERSION
+                    string tpm_phy_version = Convert.ToString(query_tpm["PhysicalPresenceVersionInfo"]).Trim();
+                    if (tpm_phy_version != "" || tpm_phy_version != string.Empty){
+                        MB_TPMPhysicalVersion_V.Text = tpm_phy_version;
+                    }else{
+                        MB_TPMPhysicalVersion_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+                    }
+                }catch (Exception){ }
+                try{
+                    // TPM MANUFACTURER ID TXT
+                    string tpm_man_id_txt = Convert.ToString(query_tpm["ManufacturerIdTxt"]).Trim();
+                    if (tpm_man_id_txt != "" || tpm_man_id_txt != string.Empty){
+                        MB_TPMMan_V.Text = tpm_man_id_txt;
+                    }else{
+                        MB_TPMMan_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+                    }
+                }catch (Exception){ }
+                try{
+                    // TPM MANUFACTURER ID
+                    string tpm_man_id = Convert.ToString(query_tpm["ManufacturerId"]).Trim();
+                    if (tpm_man_id != "" || tpm_man_id != string.Empty){
+                        if (hiding_mode_wrapper != 1){
+                            MB_TPMManID_V.Text = tpm_man_id;
+                        }else{
+                            MB_TPMManID_V.Text = new string('*', tpm_man_id.Length) + $" ({Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderHidingMode", "hiding_mode_on").Trim()))})";
+                        }
+                    }else{
+                        MB_TPMManID_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+                    }
+                }catch (Exception){ }
+                try{
+                    // TPM MANUFACTURER VERSION
+                    string tpm_man_version = Convert.ToString(query_tpm["ManufacturerVersion"]).Trim();
+                    if (tpm_man_version != "" || tpm_man_version != string.Empty){
+                        MB_TPMManVersion_V.Text = tpm_man_version;
+                    }else{
+                        MB_TPMManVersion_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+                    }
+                }catch (Exception){ }
+                try{
+                    // TPM MANUFACTURER VERSION FULL
+                    string tpm_man_version_full = Convert.ToString(query_tpm["ManufacturerVersionFull20"]).Trim();
+                    if (tpm_man_version_full != "" || tpm_man_version_full != string.Empty){
+                        MB_TPMManFullVersion_V.Text = tpm_man_version_full;
+                    }else{
+                        MB_TPMManFullVersion_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+                    }
+                }catch (Exception){ }
+                try{
+                    // TPM MANUFACTURER INFO
+                    string tpm_man_version_info = Convert.ToString(query_tpm["ManufacturerVersionInfo"]).Trim();
+                    if (tpm_man_version_info != "" || tpm_man_version_info != string.Empty){
+                        MB_TPMManPublisher_V.Text = tpm_man_version_info;
+                    }else{
+                        MB_TPMManPublisher_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+                    }
+                }catch (Exception){ }
+            }
+            // TPM MODE CHECK WRAPPER
+            if (MB_TPMStatus_V.Text == "N/A" || MB_TPMStatus_V.Text == string.Empty){
+                MB_TPMStatus_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
+            if (MB_TPMPhysicalVersion_V.Text == "N/A" || MB_TPMPhysicalVersion_V.Text == string.Empty){
+                MB_TPMPhysicalVersion_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
+            if (MB_TPMMan_V.Text == "N/A" || MB_TPMMan_V.Text == string.Empty){
+                MB_TPMMan_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
+            if (MB_TPMManID_V.Text == "N/A" || MB_TPMManID_V.Text == string.Empty){
+                MB_TPMManID_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
+            if (MB_TPMManVersion_V.Text == "N/A" || MB_TPMManVersion_V.Text == string.Empty){
+                MB_TPMManVersion_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
+            if (MB_TPMManFullVersion_V.Text == "N/A" || MB_TPMManFullVersion_V.Text == string.Empty){
+                MB_TPMManFullVersion_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
+            if (MB_TPMManPublisher_V.Text == "N/A" || MB_TPMManPublisher_V.Text == string.Empty){
+                MB_TPMManPublisher_V.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Mb_Content", "mb_c_6").Trim()));
+            }
             // MB PROCESS END ENABLED
             MB_RotateBtn.Enabled = true;
             mb_status = 1;
@@ -1111,6 +1251,20 @@ namespace Glow{
             // CPU PROCESS END ENABLED
             CPU_RotateBtn.Enabled = true;
             cpu_status = 1;
+        }
+        private void processor_bg_process(){
+            try{
+                ManagementObjectSearcher search_process =  new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_OperatingSystem");
+                do{
+                    if (loop_status == false){ break; }
+                    // CODE
+                    foreach (ManagementObject query_process in search_process.Get()){
+                        var process_count = Convert.ToInt32(query_process["NumberOfProcesses"]);
+                        CPU_Process_V.Text = process_count.ToString();
+                    }
+                    Thread.Sleep(1000 - DateTime.Now.Millisecond);
+                }while (loop_status == true);
+            }catch (Exception){ }
         }
         // RAM
         // ======================================================================================================
@@ -1348,8 +1502,8 @@ namespace Glow{
                 int ram_amount = ram_slot_list.Count;
                 for (int rs = 1; rs <= ram_amount; rs++){
                     RAM_SelectList.Items.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Ram_Content", "ram_c_14").Trim())) + " #" + rs);
-                    RAM_SelectList.SelectedIndex = 0;
                 }
+                RAM_SelectList.SelectedIndex = 0;
             }catch (Exception){ }
             // RAM PROCESS END ENABLED
             RAM_RotateBtn.Enabled = true;
@@ -1431,7 +1585,6 @@ namespace Glow{
                     string gpu_name = Convert.ToString(query_vc_rotate["Name"]);
                     if (gpu_name != "" && gpu_name != string.Empty){
                         GPU_Select.Items.Add(gpu_name);
-                        GPU_Select.SelectedIndex = 0;
                     }
                 }catch (Exception){ }
                 try{
@@ -1629,8 +1782,8 @@ namespace Glow{
                 int monitor_amount = gpu_monitor_select_list.Count;
                 for (int ma = 1; ma <= monitor_amount; ma++){
                     GPU_MonitorSelectList.Items.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Gpu_Content", "gpu_c_33").Trim())) + " #" + ma);
-                    GPU_MonitorSelectList.SelectedIndex = 0;
                 }
+                GPU_MonitorSelectList.SelectedIndex = 0;
             }catch (Exception){ }
             // GPU SELECT
             try { GPU_Select.SelectedIndex = 0; }catch(Exception){ }
@@ -2230,7 +2383,6 @@ namespace Glow{
                 try{
                     // NET NAME
                     NET_ListNetwork.Items.Add(Convert.ToString(query_na_rotate["Name"]));
-                    NET_ListNetwork.SelectedIndex = 0;
                 }catch (Exception){ }
                 try{
                     // MAC ADRESS
@@ -2397,7 +2549,6 @@ namespace Glow{
                     }else{
                         USB_Select.Items.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Usb_Content", "usb_c_1").Trim())));
                     }
-                    USB_Select.SelectedIndex = 0;
                 }catch (Exception){ }
                 // USB NAME
                 try{
@@ -2481,6 +2632,7 @@ namespace Glow{
                     USB_DeviceStatus_V.Text = usb_device_status_list[0];
                 }catch (Exception){ }
             }
+            try{ USB_Select.SelectedIndex = 0; }catch (Exception){ }
             // USB PROCESS END ENABLED
             USB_RotateBtn.Enabled = true;
             usb_status = 1;
@@ -2513,7 +2665,6 @@ namespace Glow{
                     }else{
                         SOUND_Select.Items.Add(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Sound_Content", "sound_c_2").Trim())));
                     }
-                    SOUND_Select.SelectedIndex = 0;
                 }catch (Exception){ }
                 // SOUND DEVICE NAME
                 try{
@@ -2607,6 +2758,7 @@ namespace Glow{
                     SOUND_DeviceStatus_V.Text = sound_device_status_list[0];
                 }catch (Exception){ }
             }
+            try{ SOUND_Select.SelectedIndex = 0; }catch (Exception){ }
             // SOUND PROCESS END ENABLED
             SOUND_RotateBtn.Enabled = true;
             sound_status = 1;
@@ -2672,7 +2824,7 @@ namespace Glow{
             BATTERY_Voltage_V.Visible = false;
             BATTERY_Type.Visible = false;
             BATTERY_Type_V.Visible = false;
-            //battery_panel_1.Height = 55;
+            BATTERY_ReportBtn.Visible = false;
         }
         private void battery_visible_on(){
             BATTERY_Model.Visible = true;
@@ -2683,7 +2835,7 @@ namespace Glow{
             BATTERY_Voltage_V.Visible = true;
             BATTERY_Type.Visible = true;
             BATTERY_Type_V.Visible = true;
-            //battery_panel_1.Height = 225;
+            BATTERY_ReportBtn.Visible = true;
         }
         private void laptop_bg_process(){
             GlowGetLangs g_lang = new GlowGetLangs(lang_path);
@@ -2714,6 +2866,32 @@ namespace Glow{
                     }
                     Thread.Sleep(1000 - DateTime.Now.Millisecond);
                 }while (loop_status == true);
+            }catch (Exception){ }
+        }
+        string battery_report_path = Application.StartupPath + @"\battery-report.html";
+        private void BATTERY_ReportBtn_Click(object sender, EventArgs e){
+            try{
+                GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                if (File.Exists(battery_report_path)){
+                    File.Delete(battery_report_path);
+                }
+                Process.Start("cmd.exe", "/k " + $"title {string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Battery", "by_title").Trim())), Application.ProductName + " -")} & powercfg /batteryreport & exit");
+                Task battery_report_process_start = new Task(battery_report_check_process);
+                battery_report_process_start.Start();
+            }catch (Exception){ }
+        }
+        private void battery_report_check_process(){
+            try{
+                while (true){
+                    if (File.Exists(battery_report_path)){
+                        GlowGetLangs g_lang = new GlowGetLangs(lang_path);
+                        DialogResult br_message = MessageBox.Show(string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Battery", "by_rn").Trim())), battery_report_path, "\n\n"), Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (br_message == DialogResult.Yes){
+                            Process.Start(battery_report_path);
+                        }
+                        break;
+                    }
+                }
             }catch (Exception){ }
         }
         // OSD
@@ -3173,10 +3351,14 @@ namespace Glow{
                 hidingModeToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_6").Trim()));
                 hidingModeOnToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderHidingMode", "hiding_m_1").Trim()));
                 hidingModeOffToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderHidingMode", "hiding_m_2").Trim()));
+                // TOOLS
+                toolsToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_7").Trim()));
+                sFCandDISMAutoToolToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderTools", "ht_1").Trim()));
+                cacheCleaningToolToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderTools", "ht_2").Trim()));
                 // HELP
-                helpToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_7").Trim()));
-                websiteToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_8").Trim()));
-                gitHubToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_9").Trim()));
+                helpToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_8").Trim()));
+                websiteToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_9").Trim()));
+                gitHubToolStripMenuItem.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("HeaderMenu", "header_m_10").Trim()));
                 // MENU
                 OS_RotateBtn.Text = " " + " " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("LeftMenu", "left_m_1").Trim()));
                 MB_RotateBtn.Text = " " + " " + Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("LeftMenu", "left_m_2").Trim()));
@@ -3214,18 +3396,20 @@ namespace Glow{
                 OS_Install.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_21").Trim()));
                 OS_SystemWorkTime.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_22").Trim()));
                 OS_LastBootTime.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_23").Trim()));
-                OS_PortableOS.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_24").Trim()));
-                OS_MouseWheelStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_25").Trim()));
-                OS_ScrollLockStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_26").Trim()));
-                OS_NumLockStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_27").Trim()));
-                OS_CapsLockStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_28").Trim()));
-                OS_BootPartition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_29").Trim()));
-                OS_SystemPartition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_30").Trim()));
-                OS_AVProgram.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_31").Trim()));
-                OS_FirewallProgram.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_32").Trim()));
-                OS_AntiSpywareProgram.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_33").Trim()));
-                OS_Wallpaper.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_34").Trim()));
-                MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_35").Trim())), wp_rotate));
+                OS_SystemLastShutDown.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_24").Trim()));
+                OS_PortableOS.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_25").Trim()));
+                OS_MouseWheelStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_26").Trim()));
+                OS_ScrollLockStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_27").Trim()));
+                OS_NumLockStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_28").Trim()));
+                OS_CapsLockStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_29").Trim()));
+                OS_BootPartition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_30").Trim()));
+                OS_SystemPartition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_31").Trim()));
+                OS_AVProgram.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_32").Trim()));
+                OS_FirewallProgram.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_33").Trim()));
+                OS_AntiSpywareProgram.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_34").Trim()));
+                OS_Minidump.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_35").Trim()));
+                OS_Wallpaper.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_36").Trim()));
+                MainToolTip.SetToolTip(OS_WallpaperOpen, string.Format(Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("OperatingSystem", "os_37").Trim())), wp_rotate));
                 // MB
                 MB_MotherBoardName.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_1").Trim()));
                 MB_MotherBoardMan.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_2").Trim()));
@@ -3240,10 +3424,17 @@ namespace Glow{
                 MB_BiosMode.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_11").Trim()));
                 MB_SecureBoot.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_12").Trim()));
                 MB_TPMStatus.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_13").Trim()));
-                MB_Model.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_14").Trim()));
-                MB_PrimaryBusType.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_15").Trim()));
-                MB_BiosMajorMinor.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_16").Trim()));
-                MB_SMBiosMajorMinor.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_17").Trim()));
+                MB_TPMPhysicalVersion.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_14").Trim()));
+                MB_TPMMan.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_15").Trim()));
+                MB_TPMManID.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_16").Trim()));
+                MB_TPMManVersion.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_17").Trim()));
+                MB_TPMManFullVersion.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_18").Trim()));
+                MB_TPMManPublisher.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_19").Trim()));
+                MB_Model.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_20").Trim()));
+                MB_PrimaryBusType.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_21").Trim()));
+                MB_SecondaryBusType.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_22").Trim()));
+                MB_BiosMajorMinor.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_23").Trim()));
+                MB_SMBiosMajorMinor.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Motherboard", "mb_24").Trim()));
                 // CPU
                 CPU_Name.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_1").Trim()));
                 CPU_Manufacturer.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_2").Trim()));
@@ -3255,11 +3446,12 @@ namespace Glow{
                 CPU_L3.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_8").Trim()));
                 CPU_CoreCount.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_9").Trim()));
                 CPU_LogicalCore.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_10").Trim()));
-                CPU_SocketDefinition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_11").Trim()));
-                CPU_Family.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_12").Trim()));
-                CPU_Virtualization.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_13").Trim()));
-                CPU_VMMonitorExtension.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_14").Trim()));
-                CPU_SerialName.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_15").Trim()));
+                CPU_Process.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_11").Trim()));
+                CPU_SocketDefinition.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_12").Trim()));
+                CPU_Family.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_13").Trim()));
+                CPU_Virtualization.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_14").Trim()));
+                CPU_VMMonitorExtension.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_15").Trim()));
+                CPU_SerialName.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Processor", "pr_16").Trim()));
                 // RAM
                 RAM_TotalRAM.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Memory", "my_1").Trim()));
                 RAM_UsageRAMCount.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Memory", "my_2").Trim()));
@@ -3355,6 +3547,7 @@ namespace Glow{
                 BATTERY_Name.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Battery", "by_3").Trim()));
                 BATTERY_Voltage.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Battery", "by_4").Trim()));
                 BATTERY_Type.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Battery", "by_5").Trim()));
+                BATTERY_ReportBtn.Text = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Battery", "by_button").Trim()));
                 // OSD
                 OSD_DataMainTable.Columns[0].HeaderText = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Osd", "osd_1").Trim()));
                 OSD_DataMainTable.Columns[1].HeaderText = Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Osd", "osd_2").Trim()));
@@ -3464,10 +3657,14 @@ namespace Glow{
                 languageToolStripMenuItem.Image = Properties.Resources.top_language_light;
                 initialViewToolStripMenuItem.Image = Properties.Resources.top_launch_light;
                 hidingModeToolStripMenuItem.Image = Properties.Resources.top_hiding_light;
+                toolsToolStripMenuItem.Image = Properties.Resources.top_tools_light;
+                sFCandDISMAutoToolToolStripMenuItem.Image = Properties.Resources.top_sfc_and_dism_light;
+                cacheCleaningToolToolStripMenuItem.Image = Properties.Resources.top_cache_clean_light;
                 helpToolStripMenuItem.Image = Properties.Resources.top_help_light;
                 websiteToolStripMenuItem.Image = Properties.Resources.top_website_light;
                 gitHubToolStripMenuItem.Image = Properties.Resources.top_github_light;
                 // MIDDLE CONTENT LOGO CHANGE
+                OS_MinidumpOpen.BackgroundImage = Properties.Resources.middle_ow_light;
                 OS_WallpaperOpen.BackgroundImage = Properties.Resources.middle_ow_light;
                 // SAVE THEME
                 try{
@@ -3529,10 +3726,14 @@ namespace Glow{
                 languageToolStripMenuItem.Image = Properties.Resources.top_language_dark;
                 initialViewToolStripMenuItem.Image = Properties.Resources.top_launch_dark;
                 hidingModeToolStripMenuItem.Image = Properties.Resources.top_hiding_dark;
+                toolsToolStripMenuItem.Image = Properties.Resources.top_tools_dark;
+                sFCandDISMAutoToolToolStripMenuItem.Image = Properties.Resources.top_sfc_and_dism_dark;
+                cacheCleaningToolToolStripMenuItem.Image = Properties.Resources.top_cache_clean_dark;
                 helpToolStripMenuItem.Image = Properties.Resources.top_help_dark;
                 websiteToolStripMenuItem.Image = Properties.Resources.top_website_dark;
                 gitHubToolStripMenuItem.Image = Properties.Resources.top_github_dark;
                 // MIDDLE CONTENT LOGO CHANGE
+                OS_MinidumpOpen.BackgroundImage = Properties.Resources.middle_ow_dark;
                 OS_WallpaperOpen.BackgroundImage = Properties.Resources.middle_ow_dark;
                 // SAVE THEME
                 try{
@@ -3594,6 +3795,13 @@ namespace Glow{
                 hidingModeOnToolStripMenuItem.ForeColor = ui_colors[0];
                 hidingModeOffToolStripMenuItem.BackColor = ui_colors[1];
                 hidingModeOffToolStripMenuItem.ForeColor = ui_colors[0];
+                // TOOLS
+                toolsToolStripMenuItem.BackColor = ui_colors[1];
+                toolsToolStripMenuItem.ForeColor = ui_colors[0];
+                sFCandDISMAutoToolToolStripMenuItem.BackColor = ui_colors[1];
+                sFCandDISMAutoToolToolStripMenuItem.ForeColor = ui_colors[0];
+                cacheCleaningToolToolStripMenuItem.BackColor = ui_colors[1];
+                cacheCleaningToolToolStripMenuItem.ForeColor = ui_colors[0];
                 // HELP
                 helpToolStripMenuItem.BackColor = ui_colors[1];
                 helpToolStripMenuItem.ForeColor = ui_colors[0];
@@ -3687,6 +3895,7 @@ namespace Glow{
                 os_panel_3.BackColor = ui_colors[6];
                 os_panel_4.BackColor = ui_colors[6];
                 os_panel_5.BackColor = ui_colors[6];
+                os_panel_6.BackColor = ui_colors[6];
                 os_bottom_label.ForeColor = ui_colors[9];
                 OS_SystemUser.ForeColor = ui_colors[7];
                 OS_SystemUser_V.ForeColor = ui_colors[8];
@@ -3734,6 +3943,8 @@ namespace Glow{
                 OS_SystemWorkTime_V.ForeColor = ui_colors[8];
                 OS_LastBootTime.ForeColor = ui_colors[7];
                 OS_LastBootTime_V.ForeColor = ui_colors[8];
+                OS_SystemLastShutDown.ForeColor = ui_colors[7];
+                OS_SystemLastShutDown_V.ForeColor = ui_colors[8];
                 OS_PortableOS.ForeColor = ui_colors[7];
                 OS_PortableOS_V.ForeColor = ui_colors[8];
                 OS_MouseWheelStatus.ForeColor = ui_colors[7];
@@ -3754,12 +3965,15 @@ namespace Glow{
                 OS_FirewallProgram_V.ForeColor = ui_colors[8];
                 OS_AntiSpywareProgram.ForeColor = ui_colors[7];
                 OS_AntiSpywareProgram_V.ForeColor = ui_colors[8];
+                OS_Minidump.ForeColor = ui_colors[7];
+                OS_Minidump_V.ForeColor = ui_colors[8];
                 OS_Wallpaper.ForeColor = ui_colors[7];
                 OS_Wallpaper_V.ForeColor = ui_colors[8];
                 // MB
                 mb_panel_1.BackColor = ui_colors[6];
                 mb_panel_2.BackColor = ui_colors[6];
                 mb_panel_3.BackColor = ui_colors[6];
+                mb_panel_4.BackColor = ui_colors[6];
                 mb_bottom_1.ForeColor = ui_colors[9];
                 MB_MotherBoardName.ForeColor = ui_colors[7];
                 MB_MotherBoardName_V.ForeColor = ui_colors[8];
@@ -3787,10 +4001,24 @@ namespace Glow{
                 MB_SecureBoot_V.ForeColor = ui_colors[8];
                 MB_TPMStatus.ForeColor = ui_colors[7];
                 MB_TPMStatus_V.ForeColor = ui_colors[8];
+                MB_TPMPhysicalVersion.ForeColor = ui_colors[7];
+                MB_TPMPhysicalVersion_V.ForeColor = ui_colors[8];
+                MB_TPMMan.ForeColor = ui_colors[7];
+                MB_TPMMan_V.ForeColor = ui_colors[8];
+                MB_TPMManID.ForeColor = ui_colors[7];
+                MB_TPMManID_V.ForeColor = ui_colors[8];
+                MB_TPMManVersion.ForeColor = ui_colors[7];
+                MB_TPMManVersion_V.ForeColor = ui_colors[8];
+                MB_TPMManFullVersion.ForeColor = ui_colors[7];
+                MB_TPMManFullVersion_V.ForeColor = ui_colors[8];
+                MB_TPMManPublisher.ForeColor = ui_colors[7];
+                MB_TPMManPublisher_V.ForeColor = ui_colors[8];
                 MB_Model.ForeColor = ui_colors[7];
                 MB_Model_V.ForeColor = ui_colors[8];
                 MB_PrimaryBusType.ForeColor = ui_colors[7];
                 MB_PrimaryBusType_V.ForeColor = ui_colors[8];
+                MB_SecondaryBusType.ForeColor = ui_colors[7];
+                MB_SecondaryBusType_V.ForeColor = ui_colors[8];
                 MB_BiosMajorMinor.ForeColor = ui_colors[7];
                 MB_BiosMajorMinor_V.ForeColor = ui_colors[8];
                 MB_SMBiosMajorMinor.ForeColor = ui_colors[7];
@@ -3819,6 +4047,8 @@ namespace Glow{
                 CPU_CoreCount_V.ForeColor = ui_colors[8];
                 CPU_LogicalCore.ForeColor = ui_colors[7];
                 CPU_LogicalCore_V.ForeColor = ui_colors[8];
+                CPU_Process.ForeColor = ui_colors[7];
+                CPU_Process_V.ForeColor = ui_colors[8];
                 CPU_SocketDefinition.ForeColor = ui_colors[7];
                 CPU_SocketDefinition_V.ForeColor = ui_colors[8];
                 CPU_Family.ForeColor = ui_colors[7];
@@ -4034,6 +4264,8 @@ namespace Glow{
                 BATTERY_Voltage_V.ForeColor = ui_colors[8];
                 BATTERY_Type.ForeColor = ui_colors[7];
                 BATTERY_Type_V.ForeColor = ui_colors[8];
+                BATTERY_ReportBtn.ForeColor = ui_colors[19];
+                BATTERY_ReportBtn.BackColor = ui_colors[8];
                 // INSTALLED DRIVERS
                 osd_panel_1.BackColor = ui_colors[6];
                 OSD_TextBox.BackColor = ui_colors[11];
@@ -4318,6 +4550,7 @@ namespace Glow{
             PrintEngineList.Add(OS_Install.Text + " " + OS_Install_V.Text);
             PrintEngineList.Add(OS_SystemWorkTime.Text + " " + OS_SystemWorkTime_V.Text);
             PrintEngineList.Add(OS_LastBootTime.Text + " " + OS_LastBootTime_V.Text);
+            PrintEngineList.Add(OS_SystemLastShutDown.Text + " " + OS_SystemLastShutDown_V.Text);
             PrintEngineList.Add(OS_PortableOS.Text + " " + OS_PortableOS_V.Text);
             PrintEngineList.Add(OS_MouseWheelStatus.Text + " " + OS_MouseWheelStatus_V.Text);
             PrintEngineList.Add(OS_ScrollLockStatus.Text + " " + OS_ScrollLockStatus_V.Text);
@@ -4328,6 +4561,7 @@ namespace Glow{
             PrintEngineList.Add(OS_AVProgram.Text + " " + OS_AVProgram_V.Text);
             PrintEngineList.Add(OS_FirewallProgram.Text + " " + OS_FirewallProgram_V.Text);
             PrintEngineList.Add(OS_AntiSpywareProgram.Text + " " + OS_AntiSpywareProgram_V.Text);
+            PrintEngineList.Add(OS_Minidump.Text + " " + OS_Minidump_V.Text);
             PrintEngineList.Add(OS_Wallpaper.Text + " " + OS_Wallpaper_V.Text + Environment.NewLine + Environment.NewLine + new string('-', 60) + Environment.NewLine);
             // MOTHERBOARD
             PrintEngineList.Add($"<{new string('-', 7)} {Encoding.UTF8.GetString(Encoding.Default.GetBytes(g_lang.GlowReadLangs("Header", "header_2").Trim()))} {new string('-', 7)}>" + Environment.NewLine);
@@ -4344,8 +4578,15 @@ namespace Glow{
             PrintEngineList.Add(MB_BiosMode.Text + " " + MB_BiosMode_V.Text);
             PrintEngineList.Add(MB_SecureBoot.Text + " " + MB_SecureBoot_V.Text);
             PrintEngineList.Add(MB_TPMStatus.Text + " " + MB_TPMStatus_V.Text);
+            PrintEngineList.Add(MB_TPMPhysicalVersion.Text + " " + MB_TPMPhysicalVersion_V.Text);
+            PrintEngineList.Add(MB_TPMMan.Text + " " + MB_TPMMan_V.Text);
+            PrintEngineList.Add(MB_TPMManID.Text + " " + MB_TPMManID_V.Text);
+            PrintEngineList.Add(MB_TPMManVersion.Text + " " + MB_TPMManVersion_V.Text);
+            PrintEngineList.Add(MB_TPMManFullVersion.Text + " " + MB_TPMManFullVersion_V.Text);
+            PrintEngineList.Add(MB_TPMManPublisher.Text + " " + MB_TPMManPublisher_V.Text);
             PrintEngineList.Add(MB_Model.Text + " " + MB_Model_V.Text);
             PrintEngineList.Add(MB_PrimaryBusType.Text + " " + MB_PrimaryBusType_V.Text);
+            PrintEngineList.Add(MB_SecondaryBusType.Text + " " + MB_SecondaryBusType_V.Text);
             PrintEngineList.Add(MB_BiosMajorMinor.Text + " " + MB_BiosMajorMinor_V.Text);
             PrintEngineList.Add(MB_SMBiosMajorMinor.Text + " " + MB_SMBiosMajorMinor_V.Text + Environment.NewLine + Environment.NewLine + new string('-', 60) + Environment.NewLine);
             // CPU
@@ -4360,6 +4601,7 @@ namespace Glow{
             PrintEngineList.Add(CPU_L3.Text + " " + CPU_L3_V.Text);
             PrintEngineList.Add(CPU_CoreCount.Text + " " + CPU_CoreCount_V.Text);
             PrintEngineList.Add(CPU_LogicalCore.Text + " " + CPU_LogicalCore_V.Text);
+            PrintEngineList.Add(CPU_Process.Text + " " + CPU_Process_V.Text);
             PrintEngineList.Add(CPU_SocketDefinition.Text + " " + CPU_SocketDefinition_V.Text);
             PrintEngineList.Add(CPU_Family.Text + " " + CPU_Family_V.Text);
             PrintEngineList.Add(CPU_Virtualization.Text + " " + CPU_Virtualization_V.Text);
@@ -4605,12 +4847,10 @@ namespace Glow{
             if (theme == 1){ PrintEngineList.Add("\t\t:root { color-scheme: light; }"); }
             else if (theme == 2){ PrintEngineList.Add("\t\t:root { color-scheme: dark; }"); }
             PrintEngineList.Add("\t\ta:visited{ color: rgb(55, 162, 255); }");
-
             PrintEngineList.Add("\t\t.ts_scroll_top{ position: fixed; bottom: -100px; right: 20px; width: auto; height: auto; justify-content: center; align-items: center; display: flex; font-size: 46px; border-radius: 50%; cursor: pointer; color: " + html_uifc + "; z-index: 999; transition: 0.2s; }");
             PrintEngineList.Add("\t\t.ts_scroll_top:hover{ color: rgb(55, 162, 255); }");
             PrintEngineList.Add("\t\t.ts_scroll_top.active{ bottom: 20px; }");
             PrintEngineList.Add("\t\t@media (max-width: 700px){ .ts_scroll_top{ font-size: 28px; bottom: -100px; right: 10px; } .ts_scroll_top.active{ bottom: 10px; } }");
-            
             PrintEngineList.Add("\t\tbody{ background-color: " + html_bbgc + "; padding: 5px 0; justify-content: center; align-items: center; display: flex; }");
             PrintEngineList.Add("\t\t#main_container{ width: 100%; height: auto; justify-content: center; align-items: center; display: flex; flex-direction: column; }");
             PrintEngineList.Add("\t\t#main_container > h2{ margin: 25px 0; color: " + html_uifc + "; }");
@@ -4632,6 +4872,7 @@ namespace Glow{
             PrintEngineList.Add("\t\t@media (max-width: 735px){ #main_container > .middle_box{ width: 480px; padding: 10px; } #main_container > .middle_box > h3{ text-align: center; } }");
             PrintEngineList.Add("\t\t@media (max-width: 495px){ #main_container > .middle_box{ width: 360px; } #main_container > .middle_box > ul{ margin: 15px 0 0 25px; } #main_container > .middle_box > h4{ margin: 13px 0 0 6px; } button{ padding: 5px 10px; bottom: 5px; right: 5px; } }");
             PrintEngineList.Add("\t</style>");
+            PrintEngineList.Add("\t<link rel='icon' type='image/x-icon' href='https://raw.githubusercontent.com/roines45/glow/main/Glow/glow_images/glow_favicon/GlowFavicon.ico'>");
             PrintEngineList.Add("\t<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'>");
             PrintEngineList.Add("</head>");
             PrintEngineList.Add("<body>");
@@ -4670,6 +4911,7 @@ namespace Glow{
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_Install.Text}</span><span>{OS_Install_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_SystemWorkTime.Text}</span><span>{OS_SystemWorkTime_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_LastBootTime.Text}</span><span>{OS_LastBootTime_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{OS_SystemLastShutDown.Text}</span><span>{OS_SystemLastShutDown_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_PortableOS.Text}</span><span>{OS_PortableOS_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_MouseWheelStatus.Text}</span><span>{OS_MouseWheelStatus_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_ScrollLockStatus.Text}</span><span>{OS_ScrollLockStatus_V.Text}</span></li>");
@@ -4680,6 +4922,7 @@ namespace Glow{
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_AVProgram.Text}</span><span>{OS_AVProgram_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_FirewallProgram.Text}</span><span>{OS_FirewallProgram_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_AntiSpywareProgram.Text}</span><span>{OS_AntiSpywareProgram_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{OS_Minidump.Text}</span><span>{OS_Minidump_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{OS_Wallpaper.Text}</span><span>{OS_Wallpaper_V.Text}</span></li>");
             PrintEngineList.Add("\t\t\t</ul>");
             PrintEngineList.Add("\t\t</div>");
@@ -4700,8 +4943,15 @@ namespace Glow{
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_BiosMode.Text}</span><span>{MB_BiosMode_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_SecureBoot.Text}</span><span>{MB_SecureBoot_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMStatus.Text}</span><span>{MB_TPMStatus_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMPhysicalVersion.Text}</span><span>{MB_TPMPhysicalVersion_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMMan.Text}</span><span>{MB_TPMMan_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMManID.Text}</span><span>{MB_TPMManID_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMManVersion.Text}</span><span>{MB_TPMManVersion_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMManFullVersion.Text}</span><span>{MB_TPMManFullVersion_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_TPMManPublisher.Text}</span><span>{MB_TPMManPublisher_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_Model.Text}</span><span>{MB_Model_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_PrimaryBusType.Text}</span><span>{MB_PrimaryBusType_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{MB_SecondaryBusType.Text}</span><span>{MB_SecondaryBusType_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_BiosMajorMinor.Text}</span><span>{MB_BiosMajorMinor_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{MB_SMBiosMajorMinor.Text}</span><span>{MB_SMBiosMajorMinor_V.Text}</span></li>");
             PrintEngineList.Add("\t\t\t</ul>");
@@ -4720,6 +4970,7 @@ namespace Glow{
             PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_L3.Text}</span><span>{CPU_L3_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_CoreCount.Text}</span><span>{CPU_CoreCount_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_LogicalCore.Text}</span><span>{CPU_LogicalCore_V.Text}</span></li>");
+            PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_Process.Text}</span><span>{CPU_Process_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_SocketDefinition.Text}</span><span>{CPU_SocketDefinition_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_Family.Text}</span><span>{CPU_Family_V.Text}</span></li>");
             PrintEngineList.Add($"\t\t\t\t<li><span>{CPU_Virtualization.Text}</span><span>{CPU_Virtualization_V.Text}</span></li>");
@@ -4998,6 +5249,18 @@ namespace Glow{
             }else{
                 PrintEngineList.Clear(); save_engine.Dispose();
             }
+        }
+        // ======================================================================================================
+        // SFC AND DISM AUTO TOOL
+        private void sFCandDISMAutoToolToolStripMenuItem_Click(object sender, EventArgs e){
+            GlowSFCandDISMAutoTool sfc_and_dism_tool = new GlowSFCandDISMAutoTool();
+            sfc_and_dism_tool.ShowDialog();
+        }
+        // ======================================================================================================
+        // CACHE CLEANUP TOOL
+        private void cacheCleaningToolToolStripMenuItem_Click(object sender, EventArgs e){
+            GlowCacheCleanupTool cache_cleanup_tool = new GlowCacheCleanupTool();
+            cache_cleanup_tool.ShowDialog();
         }
         // ======================================================================================================
         // WEBSITE LINK
