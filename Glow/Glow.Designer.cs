@@ -155,6 +155,8 @@
             this.OS_EncryptionType_V = new System.Windows.Forms.Label();
             this.OS_EncryptionType = new System.Windows.Forms.Label();
             this.os_panel_6 = new System.Windows.Forms.Panel();
+            this.OS_BSODDate = new System.Windows.Forms.Label();
+            this.OS_BSODDate_V = new System.Windows.Forms.Label();
             this.os_wallpaper_panel_1 = new System.Windows.Forms.Panel();
             this.OS_WallpaperOpen = new System.Windows.Forms.PictureBox();
             this.OS_Wallpaper = new System.Windows.Forms.Label();
@@ -180,6 +182,8 @@
             this.mb_panel_3 = new System.Windows.Forms.Panel();
             this.MB_TPMMan = new System.Windows.Forms.Label();
             this.MB_TPMMan_V = new System.Windows.Forms.Label();
+            this.MB_TPMPhysicalVersion = new System.Windows.Forms.Label();
+            this.MB_TPMPhysicalVersion_V = new System.Windows.Forms.Label();
             this.MB_TPMManPublisher = new System.Windows.Forms.Label();
             this.MB_TPMManPublisher_V = new System.Windows.Forms.Label();
             this.MB_TPMManFullVersion = new System.Windows.Forms.Label();
@@ -188,15 +192,13 @@
             this.MB_TPMManVersion_V = new System.Windows.Forms.Label();
             this.MB_TPMManID = new System.Windows.Forms.Label();
             this.MB_TPMManID_V = new System.Windows.Forms.Label();
-            this.MB_PrimaryBusType = new System.Windows.Forms.Label();
             this.MB_Model = new System.Windows.Forms.Label();
-            this.MB_PrimaryBusType_V = new System.Windows.Forms.Label();
             this.MB_Model_V = new System.Windows.Forms.Label();
             this.mb_panel_2 = new System.Windows.Forms.Panel();
+            this.MB_LastBIOSTime = new System.Windows.Forms.Label();
+            this.MB_LastBIOSTime_V = new System.Windows.Forms.Label();
             this.MB_TPMStatus = new System.Windows.Forms.Label();
             this.MB_TPMStatus_V = new System.Windows.Forms.Label();
-            this.MB_TPMPhysicalVersion = new System.Windows.Forms.Label();
-            this.MB_TPMPhysicalVersion_V = new System.Windows.Forms.Label();
             this.MB_BiosMode = new System.Windows.Forms.Label();
             this.MB_BiosMode_V = new System.Windows.Forms.Label();
             this.MB_SecureBoot = new System.Windows.Forms.Label();
@@ -214,6 +216,8 @@
             this.MB_SMBiosMajorMinor = new System.Windows.Forms.Label();
             this.MB_BiosMajorMinor = new System.Windows.Forms.Label();
             this.MB_SecondaryBusType_V = new System.Windows.Forms.Label();
+            this.MB_PrimaryBusType = new System.Windows.Forms.Label();
+            this.MB_PrimaryBusType_V = new System.Windows.Forms.Label();
             this.mb_bottom_1 = new System.Windows.Forms.Label();
             this.CPU = new System.Windows.Forms.TabPage();
             this.CPU_TLP = new System.Windows.Forms.TableLayoutPanel();
@@ -1121,6 +1125,7 @@
             this.MainContent.SelectedIndex = 0;
             this.MainContent.Size = new System.Drawing.Size(803, 573);
             this.MainContent.TabIndex = 0;
+            this.MainContent.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.MainContent_Selecting);
             // 
             // OS
             // 
@@ -1156,7 +1161,7 @@
             this.OS_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.OS_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.OS_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.OS_TLP.Size = new System.Drawing.Size(772, 1660);
+            this.OS_TLP.Size = new System.Drawing.Size(772, 1708);
             this.OS_TLP.TabIndex = 2;
             // 
             // os_panel_1
@@ -2261,20 +2266,49 @@
             // os_panel_6
             // 
             this.os_panel_6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
+            this.os_panel_6.Controls.Add(this.OS_BSODDate);
+            this.os_panel_6.Controls.Add(this.OS_BSODDate_V);
             this.os_panel_6.Controls.Add(this.os_wallpaper_panel_1);
             this.os_panel_6.Controls.Add(this.OS_Wallpaper_V);
             this.os_panel_6.Dock = System.Windows.Forms.DockStyle.Top;
             this.os_panel_6.Location = new System.Drawing.Point(7, 1612);
             this.os_panel_6.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.os_panel_6.Name = "os_panel_6";
-            this.os_panel_6.Size = new System.Drawing.Size(761, 47);
+            this.os_panel_6.Size = new System.Drawing.Size(761, 95);
             this.os_panel_6.TabIndex = 1;
+            // 
+            // OS_BSODDate
+            // 
+            this.OS_BSODDate.AutoSize = true;
+            this.OS_BSODDate.BackColor = System.Drawing.Color.Transparent;
+            this.OS_BSODDate.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.OS_BSODDate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.OS_BSODDate.Location = new System.Drawing.Point(10, 13);
+            this.OS_BSODDate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.OS_BSODDate.Name = "OS_BSODDate";
+            this.OS_BSODDate.Size = new System.Drawing.Size(251, 20);
+            this.OS_BSODDate.TabIndex = 86;
+            this.OS_BSODDate.Text = "Yüklü Güvenlik Duvarı Programları:";
+            // 
+            // OS_BSODDate_V
+            // 
+            this.OS_BSODDate_V.AutoSize = true;
+            this.OS_BSODDate_V.BackColor = System.Drawing.Color.Transparent;
+            this.OS_BSODDate_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.OS_BSODDate_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.OS_BSODDate_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.OS_BSODDate_V.Location = new System.Drawing.Point(330, 13);
+            this.OS_BSODDate_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.OS_BSODDate_V.Name = "OS_BSODDate_V";
+            this.OS_BSODDate_V.Size = new System.Drawing.Size(37, 20);
+            this.OS_BSODDate_V.TabIndex = 87;
+            this.OS_BSODDate_V.Text = "N/A";
             // 
             // os_wallpaper_panel_1
             // 
             this.os_wallpaper_panel_1.Controls.Add(this.OS_WallpaperOpen);
             this.os_wallpaper_panel_1.Controls.Add(this.OS_Wallpaper);
-            this.os_wallpaper_panel_1.Location = new System.Drawing.Point(10, 13);
+            this.os_wallpaper_panel_1.Location = new System.Drawing.Point(10, 58);
             this.os_wallpaper_panel_1.Name = "os_wallpaper_panel_1";
             this.os_wallpaper_panel_1.Size = new System.Drawing.Size(267, 20);
             this.os_wallpaper_panel_1.TabIndex = 85;
@@ -2316,7 +2350,7 @@
             this.OS_Wallpaper_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.OS_Wallpaper_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.OS_Wallpaper_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.OS_Wallpaper_V.Location = new System.Drawing.Point(330, 13);
+            this.OS_Wallpaper_V.Location = new System.Drawing.Point(330, 58);
             this.OS_Wallpaper_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.OS_Wallpaper_V.Name = "OS_Wallpaper_V";
             this.OS_Wallpaper_V.Size = new System.Drawing.Size(37, 20);
@@ -2330,7 +2364,7 @@
             this.os_bottom_label.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.os_bottom_label.ForeColor = System.Drawing.Color.Black;
             this.os_bottom_label.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.os_bottom_label.Location = new System.Drawing.Point(10, 1652);
+            this.os_bottom_label.Location = new System.Drawing.Point(10, 1700);
             this.os_bottom_label.Margin = new System.Windows.Forms.Padding(3);
             this.os_bottom_label.Name = "os_bottom_label";
             this.os_bottom_label.Size = new System.Drawing.Size(333, 20);
@@ -2367,7 +2401,7 @@
             this.MB_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MB_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.MB_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.MB_TLP.Size = new System.Drawing.Size(772, 1108);
+            this.MB_TLP.Size = new System.Drawing.Size(772, 1158);
             this.MB_TLP.TabIndex = 2;
             // 
             // mb_panel_1
@@ -2589,6 +2623,8 @@
             this.mb_panel_3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
             this.mb_panel_3.Controls.Add(this.MB_TPMMan);
             this.mb_panel_3.Controls.Add(this.MB_TPMMan_V);
+            this.mb_panel_3.Controls.Add(this.MB_TPMPhysicalVersion);
+            this.mb_panel_3.Controls.Add(this.MB_TPMPhysicalVersion_V);
             this.mb_panel_3.Controls.Add(this.MB_TPMManPublisher);
             this.mb_panel_3.Controls.Add(this.MB_TPMManPublisher_V);
             this.mb_panel_3.Controls.Add(this.MB_TPMManFullVersion);
@@ -2597,9 +2633,7 @@
             this.mb_panel_3.Controls.Add(this.MB_TPMManVersion_V);
             this.mb_panel_3.Controls.Add(this.MB_TPMManID);
             this.mb_panel_3.Controls.Add(this.MB_TPMManID_V);
-            this.mb_panel_3.Controls.Add(this.MB_PrimaryBusType);
             this.mb_panel_3.Controls.Add(this.MB_Model);
-            this.mb_panel_3.Controls.Add(this.MB_PrimaryBusType_V);
             this.mb_panel_3.Controls.Add(this.MB_Model_V);
             this.mb_panel_3.Dock = System.Windows.Forms.DockStyle.Top;
             this.mb_panel_3.Location = new System.Drawing.Point(7, 649);
@@ -2614,7 +2648,7 @@
             this.MB_TPMMan.BackColor = System.Drawing.Color.Transparent;
             this.MB_TPMMan.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMMan.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMMan.Location = new System.Drawing.Point(10, 13);
+            this.MB_TPMMan.Location = new System.Drawing.Point(10, 58);
             this.MB_TPMMan.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMMan.Name = "MB_TPMMan";
             this.MB_TPMMan.Size = new System.Drawing.Size(103, 20);
@@ -2628,12 +2662,39 @@
             this.MB_TPMMan_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMMan_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_TPMMan_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMMan_V.Location = new System.Drawing.Point(330, 13);
+            this.MB_TPMMan_V.Location = new System.Drawing.Point(330, 58);
             this.MB_TPMMan_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMMan_V.Name = "MB_TPMMan_V";
             this.MB_TPMMan_V.Size = new System.Drawing.Size(37, 20);
             this.MB_TPMMan_V.TabIndex = 1;
             this.MB_TPMMan_V.Text = "N/A";
+            // 
+            // MB_TPMPhysicalVersion
+            // 
+            this.MB_TPMPhysicalVersion.AutoSize = true;
+            this.MB_TPMPhysicalVersion.BackColor = System.Drawing.Color.Transparent;
+            this.MB_TPMPhysicalVersion.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.MB_TPMPhysicalVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MB_TPMPhysicalVersion.Location = new System.Drawing.Point(10, 13);
+            this.MB_TPMPhysicalVersion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.MB_TPMPhysicalVersion.Name = "MB_TPMPhysicalVersion";
+            this.MB_TPMPhysicalVersion.Size = new System.Drawing.Size(198, 20);
+            this.MB_TPMPhysicalVersion.TabIndex = 12;
+            this.MB_TPMPhysicalVersion.Text = "TPM Fiziksel Varlık Sürümü:";
+            // 
+            // MB_TPMPhysicalVersion_V
+            // 
+            this.MB_TPMPhysicalVersion_V.AutoSize = true;
+            this.MB_TPMPhysicalVersion_V.BackColor = System.Drawing.Color.Transparent;
+            this.MB_TPMPhysicalVersion_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.MB_TPMPhysicalVersion_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.MB_TPMPhysicalVersion_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MB_TPMPhysicalVersion_V.Location = new System.Drawing.Point(330, 13);
+            this.MB_TPMPhysicalVersion_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.MB_TPMPhysicalVersion_V.Name = "MB_TPMPhysicalVersion_V";
+            this.MB_TPMPhysicalVersion_V.Size = new System.Drawing.Size(37, 20);
+            this.MB_TPMPhysicalVersion_V.TabIndex = 13;
+            this.MB_TPMPhysicalVersion_V.Text = "N/A";
             // 
             // MB_TPMManPublisher
             // 
@@ -2641,7 +2702,7 @@
             this.MB_TPMManPublisher.BackColor = System.Drawing.Color.Transparent;
             this.MB_TPMManPublisher.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManPublisher.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManPublisher.Location = new System.Drawing.Point(10, 195);
+            this.MB_TPMManPublisher.Location = new System.Drawing.Point(10, 240);
             this.MB_TPMManPublisher.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManPublisher.Name = "MB_TPMManPublisher";
             this.MB_TPMManPublisher.Size = new System.Drawing.Size(159, 20);
@@ -2655,7 +2716,7 @@
             this.MB_TPMManPublisher_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManPublisher_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_TPMManPublisher_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManPublisher_V.Location = new System.Drawing.Point(330, 195);
+            this.MB_TPMManPublisher_V.Location = new System.Drawing.Point(330, 240);
             this.MB_TPMManPublisher_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManPublisher_V.Name = "MB_TPMManPublisher_V";
             this.MB_TPMManPublisher_V.Size = new System.Drawing.Size(37, 20);
@@ -2668,7 +2729,7 @@
             this.MB_TPMManFullVersion.BackColor = System.Drawing.Color.Transparent;
             this.MB_TPMManFullVersion.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManFullVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManFullVersion.Location = new System.Drawing.Point(10, 150);
+            this.MB_TPMManFullVersion.Location = new System.Drawing.Point(10, 195);
             this.MB_TPMManFullVersion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManFullVersion.Name = "MB_TPMManFullVersion";
             this.MB_TPMManFullVersion.Size = new System.Drawing.Size(183, 20);
@@ -2682,7 +2743,7 @@
             this.MB_TPMManFullVersion_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManFullVersion_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_TPMManFullVersion_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManFullVersion_V.Location = new System.Drawing.Point(330, 150);
+            this.MB_TPMManFullVersion_V.Location = new System.Drawing.Point(330, 195);
             this.MB_TPMManFullVersion_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManFullVersion_V.Name = "MB_TPMManFullVersion_V";
             this.MB_TPMManFullVersion_V.Size = new System.Drawing.Size(37, 20);
@@ -2695,7 +2756,7 @@
             this.MB_TPMManVersion.BackColor = System.Drawing.Color.Transparent;
             this.MB_TPMManVersion.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManVersion.Location = new System.Drawing.Point(10, 105);
+            this.MB_TPMManVersion.Location = new System.Drawing.Point(10, 150);
             this.MB_TPMManVersion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManVersion.Name = "MB_TPMManVersion";
             this.MB_TPMManVersion.Size = new System.Drawing.Size(151, 20);
@@ -2709,7 +2770,7 @@
             this.MB_TPMManVersion_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManVersion_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_TPMManVersion_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManVersion_V.Location = new System.Drawing.Point(330, 105);
+            this.MB_TPMManVersion_V.Location = new System.Drawing.Point(330, 150);
             this.MB_TPMManVersion_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManVersion_V.Name = "MB_TPMManVersion_V";
             this.MB_TPMManVersion_V.Size = new System.Drawing.Size(37, 20);
@@ -2722,7 +2783,7 @@
             this.MB_TPMManID.BackColor = System.Drawing.Color.Transparent;
             this.MB_TPMManID.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManID.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManID.Location = new System.Drawing.Point(10, 58);
+            this.MB_TPMManID.Location = new System.Drawing.Point(10, 103);
             this.MB_TPMManID.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManID.Name = "MB_TPMManID";
             this.MB_TPMManID.Size = new System.Drawing.Size(144, 20);
@@ -2736,25 +2797,12 @@
             this.MB_TPMManID_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMManID_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_TPMManID_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMManID_V.Location = new System.Drawing.Point(330, 58);
+            this.MB_TPMManID_V.Location = new System.Drawing.Point(330, 103);
             this.MB_TPMManID_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMManID_V.Name = "MB_TPMManID_V";
             this.MB_TPMManID_V.Size = new System.Drawing.Size(37, 20);
             this.MB_TPMManID_V.TabIndex = 3;
             this.MB_TPMManID_V.Text = "N/A";
-            // 
-            // MB_PrimaryBusType
-            // 
-            this.MB_PrimaryBusType.AutoSize = true;
-            this.MB_PrimaryBusType.BackColor = System.Drawing.Color.Transparent;
-            this.MB_PrimaryBusType.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.MB_PrimaryBusType.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_PrimaryBusType.Location = new System.Drawing.Point(10, 285);
-            this.MB_PrimaryBusType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.MB_PrimaryBusType.Name = "MB_PrimaryBusType";
-            this.MB_PrimaryBusType.Size = new System.Drawing.Size(154, 20);
-            this.MB_PrimaryBusType.TabIndex = 12;
-            this.MB_PrimaryBusType.Text = "Birincil Veri Yolu Tipi:";
             // 
             // MB_Model
             // 
@@ -2762,26 +2810,12 @@
             this.MB_Model.BackColor = System.Drawing.Color.Transparent;
             this.MB_Model.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_Model.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_Model.Location = new System.Drawing.Point(10, 240);
+            this.MB_Model.Location = new System.Drawing.Point(10, 285);
             this.MB_Model.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_Model.Name = "MB_Model";
             this.MB_Model.Size = new System.Drawing.Size(173, 20);
             this.MB_Model.TabIndex = 10;
             this.MB_Model.Text = "Anakart Model Sürümü:";
-            // 
-            // MB_PrimaryBusType_V
-            // 
-            this.MB_PrimaryBusType_V.AutoSize = true;
-            this.MB_PrimaryBusType_V.BackColor = System.Drawing.Color.Transparent;
-            this.MB_PrimaryBusType_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.MB_PrimaryBusType_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.MB_PrimaryBusType_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_PrimaryBusType_V.Location = new System.Drawing.Point(330, 285);
-            this.MB_PrimaryBusType_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.MB_PrimaryBusType_V.Name = "MB_PrimaryBusType_V";
-            this.MB_PrimaryBusType_V.Size = new System.Drawing.Size(37, 20);
-            this.MB_PrimaryBusType_V.TabIndex = 13;
-            this.MB_PrimaryBusType_V.Text = "N/A";
             // 
             // MB_Model_V
             // 
@@ -2790,7 +2824,7 @@
             this.MB_Model_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_Model_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_Model_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_Model_V.Location = new System.Drawing.Point(330, 240);
+            this.MB_Model_V.Location = new System.Drawing.Point(330, 285);
             this.MB_Model_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_Model_V.Name = "MB_Model_V";
             this.MB_Model_V.Size = new System.Drawing.Size(37, 20);
@@ -2801,10 +2835,10 @@
             // 
             this.mb_panel_2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
             this.mb_panel_2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.mb_panel_2.Controls.Add(this.MB_LastBIOSTime);
+            this.mb_panel_2.Controls.Add(this.MB_LastBIOSTime_V);
             this.mb_panel_2.Controls.Add(this.MB_TPMStatus);
             this.mb_panel_2.Controls.Add(this.MB_TPMStatus_V);
-            this.mb_panel_2.Controls.Add(this.MB_TPMPhysicalVersion);
-            this.mb_panel_2.Controls.Add(this.MB_TPMPhysicalVersion_V);
             this.mb_panel_2.Controls.Add(this.MB_BiosMode);
             this.mb_panel_2.Controls.Add(this.MB_BiosMode_V);
             this.mb_panel_2.Controls.Add(this.MB_SecureBoot);
@@ -2822,17 +2856,44 @@
             this.mb_panel_2.Size = new System.Drawing.Size(761, 319);
             this.mb_panel_2.TabIndex = 0;
             // 
+            // MB_LastBIOSTime
+            // 
+            this.MB_LastBIOSTime.AutoSize = true;
+            this.MB_LastBIOSTime.BackColor = System.Drawing.Color.Transparent;
+            this.MB_LastBIOSTime.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.MB_LastBIOSTime.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MB_LastBIOSTime.Location = new System.Drawing.Point(10, 193);
+            this.MB_LastBIOSTime.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.MB_LastBIOSTime.Name = "MB_LastBIOSTime";
+            this.MB_LastBIOSTime.Size = new System.Drawing.Size(130, 20);
+            this.MB_LastBIOSTime.TabIndex = 8;
+            this.MB_LastBIOSTime.Text = "Son BIOS Zamanı:";
+            // 
+            // MB_LastBIOSTime_V
+            // 
+            this.MB_LastBIOSTime_V.AutoSize = true;
+            this.MB_LastBIOSTime_V.BackColor = System.Drawing.Color.Transparent;
+            this.MB_LastBIOSTime_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.MB_LastBIOSTime_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.MB_LastBIOSTime_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MB_LastBIOSTime_V.Location = new System.Drawing.Point(330, 193);
+            this.MB_LastBIOSTime_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.MB_LastBIOSTime_V.Name = "MB_LastBIOSTime_V";
+            this.MB_LastBIOSTime_V.Size = new System.Drawing.Size(37, 20);
+            this.MB_LastBIOSTime_V.TabIndex = 9;
+            this.MB_LastBIOSTime_V.Text = "N/A";
+            // 
             // MB_TPMStatus
             // 
             this.MB_TPMStatus.AutoSize = true;
             this.MB_TPMStatus.BackColor = System.Drawing.Color.Transparent;
             this.MB_TPMStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMStatus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMStatus.Location = new System.Drawing.Point(10, 238);
+            this.MB_TPMStatus.Location = new System.Drawing.Point(10, 283);
             this.MB_TPMStatus.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMStatus.Name = "MB_TPMStatus";
             this.MB_TPMStatus.Size = new System.Drawing.Size(105, 20);
-            this.MB_TPMStatus.TabIndex = 10;
+            this.MB_TPMStatus.TabIndex = 12;
             this.MB_TPMStatus.Text = "TPM Durumu:";
             // 
             // MB_TPMStatus_V
@@ -2842,39 +2903,12 @@
             this.MB_TPMStatus_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_TPMStatus_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_TPMStatus_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMStatus_V.Location = new System.Drawing.Point(330, 238);
+            this.MB_TPMStatus_V.Location = new System.Drawing.Point(330, 283);
             this.MB_TPMStatus_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_TPMStatus_V.Name = "MB_TPMStatus_V";
             this.MB_TPMStatus_V.Size = new System.Drawing.Size(37, 20);
-            this.MB_TPMStatus_V.TabIndex = 11;
+            this.MB_TPMStatus_V.TabIndex = 13;
             this.MB_TPMStatus_V.Text = "N/A";
-            // 
-            // MB_TPMPhysicalVersion
-            // 
-            this.MB_TPMPhysicalVersion.AutoSize = true;
-            this.MB_TPMPhysicalVersion.BackColor = System.Drawing.Color.Transparent;
-            this.MB_TPMPhysicalVersion.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.MB_TPMPhysicalVersion.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMPhysicalVersion.Location = new System.Drawing.Point(10, 283);
-            this.MB_TPMPhysicalVersion.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.MB_TPMPhysicalVersion.Name = "MB_TPMPhysicalVersion";
-            this.MB_TPMPhysicalVersion.Size = new System.Drawing.Size(198, 20);
-            this.MB_TPMPhysicalVersion.TabIndex = 12;
-            this.MB_TPMPhysicalVersion.Text = "TPM Fiziksel Varlık Sürümü:";
-            // 
-            // MB_TPMPhysicalVersion_V
-            // 
-            this.MB_TPMPhysicalVersion_V.AutoSize = true;
-            this.MB_TPMPhysicalVersion_V.BackColor = System.Drawing.Color.Transparent;
-            this.MB_TPMPhysicalVersion_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
-            this.MB_TPMPhysicalVersion_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            this.MB_TPMPhysicalVersion_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_TPMPhysicalVersion_V.Location = new System.Drawing.Point(330, 283);
-            this.MB_TPMPhysicalVersion_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
-            this.MB_TPMPhysicalVersion_V.Name = "MB_TPMPhysicalVersion_V";
-            this.MB_TPMPhysicalVersion_V.Size = new System.Drawing.Size(37, 20);
-            this.MB_TPMPhysicalVersion_V.TabIndex = 13;
-            this.MB_TPMPhysicalVersion_V.Text = "N/A";
             // 
             // MB_BiosMode
             // 
@@ -2909,11 +2943,11 @@
             this.MB_SecureBoot.BackColor = System.Drawing.Color.Transparent;
             this.MB_SecureBoot.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_SecureBoot.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_SecureBoot.Location = new System.Drawing.Point(10, 193);
+            this.MB_SecureBoot.Location = new System.Drawing.Point(10, 238);
             this.MB_SecureBoot.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_SecureBoot.Name = "MB_SecureBoot";
             this.MB_SecureBoot.Size = new System.Drawing.Size(208, 20);
-            this.MB_SecureBoot.TabIndex = 8;
+            this.MB_SecureBoot.TabIndex = 10;
             this.MB_SecureBoot.Text = "Güvenli Önyükleme Durumu:";
             // 
             // MB_SecureBoot_V
@@ -2923,11 +2957,11 @@
             this.MB_SecureBoot_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_SecureBoot_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_SecureBoot_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_SecureBoot_V.Location = new System.Drawing.Point(330, 193);
+            this.MB_SecureBoot_V.Location = new System.Drawing.Point(330, 238);
             this.MB_SecureBoot_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_SecureBoot_V.Name = "MB_SecureBoot_V";
             this.MB_SecureBoot_V.Size = new System.Drawing.Size(37, 20);
-            this.MB_SecureBoot_V.TabIndex = 9;
+            this.MB_SecureBoot_V.TabIndex = 11;
             this.MB_SecureBoot_V.Text = "N/A";
             // 
             // MB_BiosDate
@@ -3020,11 +3054,13 @@
             this.mb_panel_4.Controls.Add(this.MB_SMBiosMajorMinor);
             this.mb_panel_4.Controls.Add(this.MB_BiosMajorMinor);
             this.mb_panel_4.Controls.Add(this.MB_SecondaryBusType_V);
+            this.mb_panel_4.Controls.Add(this.MB_PrimaryBusType);
+            this.mb_panel_4.Controls.Add(this.MB_PrimaryBusType_V);
             this.mb_panel_4.Dock = System.Windows.Forms.DockStyle.Top;
             this.mb_panel_4.Location = new System.Drawing.Point(7, 970);
             this.mb_panel_4.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.mb_panel_4.Name = "mb_panel_4";
-            this.mb_panel_4.Size = new System.Drawing.Size(761, 137);
+            this.mb_panel_4.Size = new System.Drawing.Size(761, 187);
             this.mb_panel_4.TabIndex = 0;
             // 
             // MB_SecondaryBusType
@@ -3033,7 +3069,7 @@
             this.MB_SecondaryBusType.BackColor = System.Drawing.Color.Transparent;
             this.MB_SecondaryBusType.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_SecondaryBusType.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_SecondaryBusType.Location = new System.Drawing.Point(10, 13);
+            this.MB_SecondaryBusType.Location = new System.Drawing.Point(10, 58);
             this.MB_SecondaryBusType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_SecondaryBusType.Name = "MB_SecondaryBusType";
             this.MB_SecondaryBusType.Size = new System.Drawing.Size(147, 20);
@@ -3047,7 +3083,7 @@
             this.MB_SMBiosMajorMinor_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_SMBiosMajorMinor_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_SMBiosMajorMinor_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_SMBiosMajorMinor_V.Location = new System.Drawing.Point(330, 103);
+            this.MB_SMBiosMajorMinor_V.Location = new System.Drawing.Point(330, 148);
             this.MB_SMBiosMajorMinor_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_SMBiosMajorMinor_V.Name = "MB_SMBiosMajorMinor_V";
             this.MB_SMBiosMajorMinor_V.Size = new System.Drawing.Size(37, 20);
@@ -3061,7 +3097,7 @@
             this.MB_BiosMajorMinor_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_BiosMajorMinor_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_BiosMajorMinor_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_BiosMajorMinor_V.Location = new System.Drawing.Point(330, 58);
+            this.MB_BiosMajorMinor_V.Location = new System.Drawing.Point(330, 103);
             this.MB_BiosMajorMinor_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_BiosMajorMinor_V.Name = "MB_BiosMajorMinor_V";
             this.MB_BiosMajorMinor_V.Size = new System.Drawing.Size(37, 20);
@@ -3074,7 +3110,7 @@
             this.MB_SMBiosMajorMinor.BackColor = System.Drawing.Color.Transparent;
             this.MB_SMBiosMajorMinor.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_SMBiosMajorMinor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_SMBiosMajorMinor.Location = new System.Drawing.Point(10, 103);
+            this.MB_SMBiosMajorMinor.Location = new System.Drawing.Point(10, 148);
             this.MB_SMBiosMajorMinor.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_SMBiosMajorMinor.Name = "MB_SMBiosMajorMinor";
             this.MB_SMBiosMajorMinor.Size = new System.Drawing.Size(194, 20);
@@ -3087,7 +3123,7 @@
             this.MB_BiosMajorMinor.BackColor = System.Drawing.Color.Transparent;
             this.MB_BiosMajorMinor.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_BiosMajorMinor.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_BiosMajorMinor.Location = new System.Drawing.Point(10, 58);
+            this.MB_BiosMajorMinor.Location = new System.Drawing.Point(10, 103);
             this.MB_BiosMajorMinor.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_BiosMajorMinor.Name = "MB_BiosMajorMinor";
             this.MB_BiosMajorMinor.Size = new System.Drawing.Size(201, 20);
@@ -3101,12 +3137,39 @@
             this.MB_SecondaryBusType_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.MB_SecondaryBusType_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             this.MB_SecondaryBusType_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.MB_SecondaryBusType_V.Location = new System.Drawing.Point(330, 13);
+            this.MB_SecondaryBusType_V.Location = new System.Drawing.Point(330, 58);
             this.MB_SecondaryBusType_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.MB_SecondaryBusType_V.Name = "MB_SecondaryBusType_V";
             this.MB_SecondaryBusType_V.Size = new System.Drawing.Size(37, 20);
             this.MB_SecondaryBusType_V.TabIndex = 1;
             this.MB_SecondaryBusType_V.Text = "N/A";
+            // 
+            // MB_PrimaryBusType
+            // 
+            this.MB_PrimaryBusType.AutoSize = true;
+            this.MB_PrimaryBusType.BackColor = System.Drawing.Color.Transparent;
+            this.MB_PrimaryBusType.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.MB_PrimaryBusType.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MB_PrimaryBusType.Location = new System.Drawing.Point(10, 13);
+            this.MB_PrimaryBusType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.MB_PrimaryBusType.Name = "MB_PrimaryBusType";
+            this.MB_PrimaryBusType.Size = new System.Drawing.Size(154, 20);
+            this.MB_PrimaryBusType.TabIndex = 12;
+            this.MB_PrimaryBusType.Text = "Birincil Veri Yolu Tipi:";
+            // 
+            // MB_PrimaryBusType_V
+            // 
+            this.MB_PrimaryBusType_V.AutoSize = true;
+            this.MB_PrimaryBusType_V.BackColor = System.Drawing.Color.Transparent;
+            this.MB_PrimaryBusType_V.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
+            this.MB_PrimaryBusType_V.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
+            this.MB_PrimaryBusType_V.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.MB_PrimaryBusType_V.Location = new System.Drawing.Point(330, 13);
+            this.MB_PrimaryBusType_V.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
+            this.MB_PrimaryBusType_V.Name = "MB_PrimaryBusType_V";
+            this.MB_PrimaryBusType_V.Size = new System.Drawing.Size(37, 20);
+            this.MB_PrimaryBusType_V.TabIndex = 13;
+            this.MB_PrimaryBusType_V.Text = "N/A";
             // 
             // mb_bottom_1
             // 
@@ -3115,7 +3178,7 @@
             this.mb_bottom_1.Font = new System.Drawing.Font("Segoe UI Semibold", 10.75F, System.Drawing.FontStyle.Bold);
             this.mb_bottom_1.ForeColor = System.Drawing.Color.Black;
             this.mb_bottom_1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.mb_bottom_1.Location = new System.Drawing.Point(10, 1100);
+            this.mb_bottom_1.Location = new System.Drawing.Point(10, 1150);
             this.mb_bottom_1.Margin = new System.Windows.Forms.Padding(3);
             this.mb_bottom_1.Name = "mb_bottom_1";
             this.mb_bottom_1.Size = new System.Drawing.Size(333, 20);
@@ -6616,7 +6679,7 @@
             this.OSD_TLP.RowCount = 1;
             this.OSD_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.OSD_TLP.Size = new System.Drawing.Size(795, 547);
-            this.OSD_TLP.TabIndex = 1;
+            this.OSD_TLP.TabIndex = 0;
             // 
             // osd_panel_1
             // 
@@ -6708,9 +6771,9 @@
             this.OSD_DataMainTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -6797,7 +6860,7 @@
             this.SERVICE_TLP.RowCount = 1;
             this.SERVICE_TLP.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.SERVICE_TLP.Size = new System.Drawing.Size(795, 547);
-            this.SERVICE_TLP.TabIndex = 1;
+            this.SERVICE_TLP.TabIndex = 0;
             // 
             // service_panel_1
             // 
@@ -6889,9 +6952,9 @@
             this.SERVICE_DataMainTable.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
             dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(87)))), ((int)(((byte)(160)))));
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -6971,7 +7034,7 @@
             // 
             this.HeaderImage.BackColor = System.Drawing.Color.Transparent;
             this.HeaderImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.HeaderImage.Location = new System.Drawing.Point(7, 9);
+            this.HeaderImage.Location = new System.Drawing.Point(8, 9);
             this.HeaderImage.Margin = new System.Windows.Forms.Padding(3, 3, 3, 10);
             this.HeaderImage.Name = "HeaderImage";
             this.HeaderImage.Size = new System.Drawing.Size(28, 28);
@@ -6982,7 +7045,7 @@
             // 
             this.HeaderText.AutoSize = true;
             this.HeaderText.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.HeaderText.Location = new System.Drawing.Point(39, 13);
+            this.HeaderText.Location = new System.Drawing.Point(40, 13);
             this.HeaderText.Name = "HeaderText";
             this.HeaderText.Size = new System.Drawing.Size(207, 21);
             this.HeaderText.TabIndex = 0;
@@ -7559,6 +7622,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sFCandDISMAutoToolToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cacheCleaningToolToolStripMenuItem;
+        internal System.Windows.Forms.Label OS_BSODDate;
+        internal System.Windows.Forms.Label OS_BSODDate_V;
+        internal System.Windows.Forms.Label MB_LastBIOSTime;
+        internal System.Windows.Forms.Label MB_LastBIOSTime_V;
     }
 }
 

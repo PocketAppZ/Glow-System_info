@@ -60,7 +60,7 @@
             this.SADT_L2.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.SADT_L2.Name = "SADT_L2";
             this.SADT_L2.Size = new System.Drawing.Size(400, 100);
-            this.SADT_L2.TabIndex = 13;
+            this.SADT_L2.TabIndex = 1;
             this.SADT_L2.Text = "N/A";
             this.SADT_L2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -74,7 +74,7 @@
             this.SADT_L1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 25);
             this.SADT_L1.Name = "SADT_L1";
             this.SADT_L1.Size = new System.Drawing.Size(400, 30);
-            this.SADT_L1.TabIndex = 12;
+            this.SADT_L1.TabIndex = 0;
             this.SADT_L1.Text = "SFC and DISM Auto Tool";
             this.SADT_L1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -95,7 +95,7 @@
             this.SADT_StartBtn.Location = new System.Drawing.Point(10, 135);
             this.SADT_StartBtn.Name = "SADT_StartBtn";
             this.SADT_StartBtn.Size = new System.Drawing.Size(400, 37);
-            this.SADT_StartBtn.TabIndex = 11;
+            this.SADT_StartBtn.TabIndex = 2;
             this.SADT_StartBtn.Text = "Onarımı Başlat";
             this.SADT_StartBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.SADT_StartBtn.UseVisualStyleBackColor = false;
@@ -113,7 +113,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(450, 235);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(450, 235);
             this.Name = "GlowSFCandDISMAutoTool";
             this.Padding = new System.Windows.Forms.Padding(7);
